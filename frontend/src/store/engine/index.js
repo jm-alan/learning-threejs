@@ -1,6 +1,11 @@
 import * as types from './types';
 import * as Three from 'three';
 
+const keys = {};
+
+for (let i = 65; i < 65 + 26; i++) keys[String.fromCharCode(i)] = false;
+for (let i = 97; i < 97 + 26; i++) keys[String.fromCharCode(i)] = false;
+
 const initialState = {
   canvas: null,
   scene: null,
@@ -17,7 +22,8 @@ const initialState = {
   elements: {},
   pointLights: {},
   ambientLights: {},
-  renderFunctions: {}
+  renderFunctions: {},
+  keys
 };
 
 export default function reducer (
