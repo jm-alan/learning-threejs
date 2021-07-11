@@ -2,6 +2,7 @@ const CANVAS = 'engine/CANVAS';
 const SCENE = 'engine/SCENE';
 const CAMERA = 'engine/CAMERA';
 const RENDERER = 'engine/RENDERER';
+const DESTROY = 'engine/DESTROY';
 
 export const SetScene = scene => ({
   type: SCENE,
@@ -23,8 +24,14 @@ export const SetCanvas = canvas => ({
   canvas
 });
 
+export const DestroyEngine = () => ({
+  type: DESTROY
+});
+
+const initialState = { canvas: null, scene: null, camera: null, renderer: null };
+
 export default function reducer (
-  state = { mooring: null },
+  state = initialState,
   { type, canvas, scene, camera, renderer }
 ) {
   switch (type) {
@@ -36,6 +43,8 @@ export default function reducer (
       return { ...state, camera };
     case RENDERER:
       return { ...state, renderer };
+    case DESTROY:
+      return initialState;
     default:
       return state;
   }
