@@ -2,7 +2,8 @@ const CANVAS = 'engine/CANVAS';
 const SCENE = 'engine/SCENE';
 const CAMERA = 'engine/CAMERA';
 const RENDERER = 'engine/RENDERER';
-const DESTROY = 'engine/DESTROY';
+const DESTROY_ENGINE = 'engine/DESTROY_ENGINE';
+const DESTROY_CANVAS = 'engine/DESTROY_CANVAS';
 const BUILD_DEFAULT = 'engine/BUILD_DEFAULT';
 
 export const SetScene = scene => ({
@@ -26,7 +27,11 @@ export const SetCanvas = canvas => ({
 });
 
 export const DestroyEngine = () => ({
-  type: DESTROY
+  type: DESTROY_ENGINE
+});
+
+export const DestroyCanvas = () => ({
+  type: DESTROY_CANVAS
 });
 
 export const BuildDefault = () => ({
@@ -51,9 +56,11 @@ export default function reducer (
     case BUILD_DEFAULT:
       state.renderer.setPixelRatio(window.devicePixelRatio);
       state.renderer.setSize(window.innerWidth, window.innerHeight);
-      break;
-    case DESTROY:
-      return initialState;
+      return { ...state };
+    case DESTROY_ENGINE:
+      return { ...initialState, canvas: state.canvas };
+    case DESTROY_CANVAS:
+      return { ...state, canvas: null };
     default:
       return state;
   }

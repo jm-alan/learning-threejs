@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { SetCanvas } from '../../store/engine';
+import { DestroyCanvas, SetCanvas } from '../../store/engine';
 
 export default function Canvas () {
   const dispatch = useDispatch();
@@ -10,6 +10,7 @@ export default function Canvas () {
 
   useEffect(() => {
     dispatch(SetCanvas(canvasRef.current));
+    return () => dispatch(DestroyCanvas());
   }, [dispatch]);
 
   return (
