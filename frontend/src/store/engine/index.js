@@ -1,4 +1,5 @@
 import * as types from './types';
+import * as Three from 'three';
 
 const initialState = {
   canvas: null,
@@ -11,24 +12,18 @@ const initialState = {
   cameraZ: 0,
   geometries: {},
   elements: {},
-  lights: {}
+  pointLights: {},
+  ambientLights: {}
 };
 
 export default function reducer (
   state = initialState,
   {
-    type,
-    canvas,
-    scene,
-    camera,
-    renderer,
-    cameraX,
-    cameraY,
-    cameraZ,
-    name,
-    geometry,
-    element,
-    light
+    type, canvas, scene,
+    camera, renderer, cameraX,
+    cameraY, cameraZ, name,
+    geometry, element, lightType,
+    offset, color
   }
 ) {
   switch (type) {
@@ -55,6 +50,17 @@ export default function reducer (
     case types.RENDER:
       state.renderer.render(state.scene, state.camera);
       return state;
+    case types.LIGHT_COLOR:
+      return {
+        ...state,
+        [`${lightType}s`]: {
+          ...state[`${lightType}s`],
+          [name]: {
+            ...state[`${lightType}s`][name],
+            color
+          }
+        }
+      };
     case types.NEW_GEOMETRY:
       return {
         ...state,
@@ -75,12 +81,95 @@ export default function reducer (
           [name]: element
         }
       };
-    case types.NEW_LIGHT:
+    case types.NEW_POINTLIGHT:
       return {
         ...state,
-        lights: {
-          ...state.lights,
-          [name]: light
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            light: new Three.PointLight(color),
+            color,
+            posX: 0,
+            posY: 0,
+            posZ: 0
+          }
+        }
+      };
+    case types.NEW_AMBIENTLIGHT:
+      return {
+        ...state,
+        ambientLights: {
+          ...state.ambientLights,
+          [name]: {
+            light: new Three.AmbientLight(color),
+            color
+          }
+        }
+      };
+    case types.LIGHTX_RELATIVE:
+      return {
+        ...state,
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            ...state.pointLights[name],
+            posX: state.pointLights[name].posX + offset
+          }
+        }
+      };
+    case types.LIGHTY_RELATIVE:
+      return {
+        ...state,
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            ...state.pointLights[name],
+            posY: state.pointLights[name].posY + offset
+          }
+        }
+      };
+    case types.LIGHTZ_RELATIVE:
+      return {
+        ...state,
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            ...state.pointLights[name],
+            posZ: state.pointLights[name].posZ + offset
+          }
+        }
+      };
+    case types.LIGHTX_ABSOLUTE:
+      return {
+        ...state,
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            ...state.pointLights[name],
+            posX: offset
+          }
+        }
+      };
+    case types.LIGHTY_ABSOLUTE:
+      return {
+        ...state,
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            ...state.pointLights[name],
+            posY: offset
+          }
+        }
+      };
+    case types.LIGHTZ_ABSOLUTE:
+      return {
+        ...state,
+        pointLights: {
+          ...state.pointLights,
+          [name]: {
+            ...state.pointLights[name],
+            posZ: offset
+          }
         }
       };
     case types.BUILD_DEFAULT:
