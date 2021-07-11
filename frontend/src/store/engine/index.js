@@ -7,9 +7,12 @@ const initialState = {
   camera: null,
   renderer: null,
   ready: false,
-  cameraX: 0,
-  cameraY: 0,
-  cameraZ: 0,
+  cameraPosX: 0,
+  cameraPosY: 0,
+  cameraPosZ: 0,
+  cameraRotX: 0,
+  cameraRotY: 0,
+  cameraRotZ: 0,
   geometries: {},
   elements: {},
   pointLights: {},
@@ -21,8 +24,9 @@ export default function reducer (
   state = initialState,
   {
     type, canvas, scene,
-    camera, renderer, cameraX,
-    cameraY, cameraZ, name,
+    camera, renderer, cameraPosX,
+    cameraPosY, cameraPosZ, cameraRotX,
+    cameraRotY, cameraRotZ, name,
     props, element, lightType,
     offset, color, renderFunction
   }
@@ -34,18 +38,42 @@ export default function reducer (
       return { ...state, scene };
     case types.CAMERA:
       return { ...state, camera };
-    case types.CAMERAX_ABSOLUTE:
-      return { ...state, cameraX };
-    case types.CAMERAY_ABSOLUTE:
-      return { ...state, cameraY };
-    case types.CAMERAZ_ABSOLUTE:
-      return { ...state, cameraZ };
-    case types.CAMERAX_RELATIVE:
-      return { ...state, cameraX: state.cameraX + cameraX };
-    case types.CAMERAY_RELATIVE:
-      return { ...state, cameraY: state.cameraY + cameraY };
-    case types.CAMERAZ_RELATIVE:
-      return { ...state, cameraZ: state.cameraZ + cameraZ };
+    case types.CAMERA_POSX_ABSOLUTE:
+      state.camera.position.setX(cameraPosX);
+      return { ...state, cameraPosX };
+    case types.CAMERA_POSY_ABSOLUTE:
+      state.camera.position.setY(cameraPosY);
+      return { ...state, cameraPosY };
+    case types.CAMERA_POSZ_ABSOLUTE:
+      state.camera.position.setZ(cameraPosZ);
+      return { ...state, cameraPosZ };
+    case types.CAMERA_POSX_RELATIVE:
+      state.camera.position.setX(state.cameraPosX + cameraPosX);
+      return { ...state, cameraPosX: state.cameraPosX + cameraPosX };
+    case types.CAMERA_POSY_RELATIVE:
+      state.camera.position.setY(state.cameraPosY + cameraPosY);
+      return { ...state, cameraPosY: state.cameraPosY + cameraPosY };
+    case types.CAMERA_POSZ_RELATIVE:
+      state.camera.position.setZ(state.cameraPosZ + cameraPosZ);
+      return { ...state, cameraPosZ: state.cameraPosZ + cameraPosZ };
+    case types.CAMERA_ROTX_ABSOLUTE:
+      state.camera.rotation.setX(cameraRotX);
+      return { ...state, cameraRotX };
+    case types.CAMERA_ROTY_ABSOLUTE:
+      state.camera.rotation.setY(cameraRotY);
+      return { ...state, cameraRotY };
+    case types.CAMERA_ROTZ_ABSOLUTE:
+      state.camera.rotation.setZ(cameraRotZ);
+      return { ...state, cameraRotZ };
+    case types.CAMERA_ROTX_RELATIVE:
+      state.camera.rotation.setX(state.cameraRotX + cameraRotX);
+      return { ...state, cameraRotX: state.cameraRotX + cameraRotX };
+    case types.CAMERA_ROTY_RELATIVE:
+      state.camera.rotation.setY(state.cameraRotY + cameraRotY);
+      return { ...state, cameraRotY: state.cameraRotY + cameraRotY };
+    case types.CAMERA_ROTZ_RELATIVE:
+      state.camera.rotation.setZ(state.cameraRotZ + cameraRotZ);
+      return { ...state, cameraRotZ: state.cameraRotZ + cameraRotZ };
     case types.RENDERER:
       return { ...state, renderer };
     case types.RENDER:
@@ -212,7 +240,7 @@ export default function reducer (
     case types.BUILD_DEFAULT:
       state.renderer.setPixelRatio(window.devicePixelRatio);
       state.renderer.setSize(window.innerWidth, window.innerHeight);
-      return { ...state, cameraZ: 30, ready: true };
+      return { ...state, ready: true };
     case types.DESTROY_ENGINE:
       return { ...initialState, canvas: state.canvas };
     case types.DESTROY_CANVAS:
