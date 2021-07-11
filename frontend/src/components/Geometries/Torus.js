@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddToScene, CreateGeometry } from '../../store/engine/actions';
-import * as Three from 'three';
+import { CreateGeometry } from '../../store/engine/actions';
 
 export default function Torus () {
   const dispatch = useDispatch();
@@ -11,18 +10,14 @@ export default function Torus () {
 
   useEffect(() => {
     if (ready && !testTorus) {
-      const torusGeometry = new Three.TorusGeometry(10, 3, 16, 100);
-      const torusMaterial = new Three.MeshStandardMaterial({ color: 0xFFFFFF });
-      const torusMesh = new Three.Mesh(torusGeometry, torusMaterial);
-      dispatch(CreateGeometry('testTorus', torusMesh));
+      dispatch(CreateGeometry(
+        'testTorus',
+        'Torus',
+        [20, 3, 16, 100],
+        'MeshBasic'
+      ));
     }
   }, [dispatch, testTorus, ready]);
-
-  useEffect(() => {
-    if (testTorus) {
-      dispatch(AddToScene('testTorus', testTorus));
-    }
-  }, [dispatch, testTorus]);
 
   return null;
 }
