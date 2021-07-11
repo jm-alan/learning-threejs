@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
 
+import * as engine from './store/engine/actions';
 import App from './App';
 import Modal from './components/Modal';
 import configureStore from './store';
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.dispatch = store.dispatch;
   window.csrfetch = csrfetch;
   window.findCookie = findCookie;
+  window.engine = engine;
 }
 
 function Root () {
