@@ -1,3 +1,5 @@
+import * as Three from 'three';
+
 const CANVAS = 'engine/CANVAS';
 const SCENE = 'engine/SCENE';
 const CAMERA = 'engine/CAMERA';
@@ -9,6 +11,7 @@ const CAMERAZ_RELATIVE = 'engine/CAMERAZ/RELATIVE';
 const CAMERAX_ABSOLUTE = 'engine/CAMERAX/ABSOLUTE';
 const CAMERAY_ABSOLUTE = 'engine/CAMERAY/ABSOLUTE';
 const CAMERAZ_ABSOLUTE = 'engine/CAMERAZ/ABSOLUTE';
+const NEW_GEOMETRY = 'engine/NEW_GEOMETRY';
 const DESTROY_ENGINE = 'engine/DESTROY_ENGINE';
 const DESTROY_CANVAS = 'engine/DESTROY_CANVAS';
 const BUILD_DEFAULT = 'engine/BUILD_DEFAULT';
@@ -31,6 +34,11 @@ export const SetRenderer = renderer => ({
 export const SetCanvas = canvas => ({
   type: CANVAS,
   canvas
+});
+
+export const CreateGeometry = (shape, name, specs) => ({
+  type: NEW_GEOMETRY,
+  geometry: { shape, name, specs }
 });
 
 export const MoveCameraX = {
@@ -101,7 +109,8 @@ const initialState = {
   renderer: null,
   cameraX: 0,
   cameraY: 0,
-  cameraZ: 0
+  cameraZ: 0,
+  geometries: {}
 };
 
 export default function reducer (
@@ -114,7 +123,8 @@ export default function reducer (
     renderer,
     cameraX,
     cameraY,
-    cameraZ
+    cameraZ,
+    geometry
   }
 ) {
   switch (type) {
@@ -141,6 +151,14 @@ export default function reducer (
     case RENDER:
       state.renderer.render(state.scene, state.camera);
       return state;
+    case NEW_GEOMETRY:
+      return {
+        ...state,
+        geometries: {
+          ...state.geometries,
+          [geometry.name]: new Three[geometry.shape](...geometry.specs)
+        }
+      };
     case BUILD_DEFAULT:
       state.renderer.setPixelRatio(window.devicePixelRatio);
       state.renderer.setSize(window.innerWidth, window.innerHeight);
