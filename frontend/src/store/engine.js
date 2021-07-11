@@ -1,5 +1,3 @@
-import * as Three from 'three';
-
 const CANVAS = 'engine/CANVAS';
 const SCENE = 'engine/SCENE';
 const CAMERA = 'engine/CAMERA';
@@ -11,7 +9,9 @@ const CAMERAZ_RELATIVE = 'engine/CAMERAZ/RELATIVE';
 const CAMERAX_ABSOLUTE = 'engine/CAMERAX/ABSOLUTE';
 const CAMERAY_ABSOLUTE = 'engine/CAMERAY/ABSOLUTE';
 const CAMERAZ_ABSOLUTE = 'engine/CAMERAZ/ABSOLUTE';
+const ADD_TO_SCENE = 'engine/SCENE/ADD';
 const NEW_GEOMETRY = 'engine/NEW_GEOMETRY';
+const NEW_LIGHT = 'engine/NEW_LIGHT';
 const DESTROY_GEOMETRY = 'engine/DESTROY_GEOMETRY';
 const DESTROY_ENGINE = 'engine/DESTROY_ENGINE';
 const DESTROY_CANVAS = 'engine/DESTROY_CANVAS';
@@ -37,23 +37,27 @@ export const SetCanvas = canvas => ({
   canvas
 });
 
-export const CreateGeometry = (shape, name, specs, type, color, wireframe) => ({
+export const CreateGeometry = (name, geometry) => ({
   type: NEW_GEOMETRY,
-  geometry: {
-    shape,
-    name,
-    specs,
-    material: {
-      type,
-      color,
-      wireframe
-    }
-  }
+  name,
+  geometry
 });
 
 export const DestroyGeometry = name => ({
   type: DESTROY_GEOMETRY,
   name
+});
+
+export const AddToScene = (name, element) => ({
+  type: ADD_TO_SCENE,
+  name,
+  element
+});
+
+export const CreateLight = (name, light) => ({
+  type: NEW_LIGHT,
+  name,
+  light
 });
 
 export const MoveCameraX = {
@@ -126,7 +130,9 @@ const initialState = {
   cameraX: 0,
   cameraY: 0,
   cameraZ: 0,
-  geometries: {}
+  geometries: {},
+  elements: {},
+  lights: {}
 };
 
 export default function reducer (
@@ -140,8 +146,10 @@ export default function reducer (
     cameraX,
     cameraY,
     cameraZ,
+    name,
     geometry,
-    name
+    element,
+    light
   }
 ) {
   switch (type) {
@@ -164,7 +172,7 @@ export default function reducer (
     case CAMERAZ_RELATIVE:
       return { ...state, cameraZ: state.cameraZ + cameraZ };
     case RENDERER:
-      return { ...state, renderer, ready: true };
+      return { ...state, renderer };
     case RENDER:
       state.renderer.render(state.scene, state.camera);
       return state;
@@ -173,22 +181,33 @@ export default function reducer (
         ...state,
         geometries: {
           ...state.geometries,
-          [geometry.name]: new Three.Mesh(
-            new Three[geometry.shape](...geometry.specs),
-            new Three[geometry.material.type]({
-              color: geometry.material.color,
-              wireframe: geometry.material.wireframe
-            })
-          )
+          [name]: geometry
         }
       };
     case DESTROY_GEOMETRY:
       delete state.geometries[name];
       return { ...state };
+    case ADD_TO_SCENE:
+      state.scene.add(element);
+      return {
+        ...state,
+        elements: {
+          ...state.elements,
+          [name]: element
+        }
+      };
+    case NEW_LIGHT:
+      return {
+        ...state,
+        lights: {
+          ...state.lights,
+          [name]: light
+        }
+      };
     case BUILD_DEFAULT:
       state.renderer.setPixelRatio(window.devicePixelRatio);
       state.renderer.setSize(window.innerWidth, window.innerHeight);
-      return state;
+      return { ...state, cameraZ: 30, ready: true };
     case DESTROY_ENGINE:
       return { ...initialState, canvas: state.canvas };
     case DESTROY_CANVAS:

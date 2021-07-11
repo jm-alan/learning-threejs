@@ -13,6 +13,7 @@ export default function Engine () {
   const cameraX = useSelector(state => state.engine.cameraX);
   const cameraY = useSelector(state => state.engine.cameraY);
   const cameraZ = useSelector(state => state.engine.cameraZ);
+  const testTorus = useSelector(state => state.engine.geometries.testTorus);
 
   useEffect(() => {
     if (canvas) {
@@ -31,14 +32,23 @@ export default function Engine () {
   }, [dispatch, canvas]);
 
   useEffect(() => {
-    if (renderer) {
+    if (scene && camera && canvas && renderer) {
       dispatch(BuildDefault());
     }
   }, [dispatch, renderer]);
 
   useEffect(() => {
-    if (renderer && scene && camera) dispatch(Render());
-  }, [dispatch, renderer, scene, camera]);
+    const animate = () => {
+      window.requestAnimationFrame(animate);
+      if (renderer && scene && camera) dispatch(Render());
+      if (testTorus) {
+        testTorus.rotation.x += 0.01;
+        testTorus.rotation.y += 0.005;
+        testTorus.rotation.z += 0.01;
+      }
+    };
+    animate();
+  }, [dispatch, renderer, scene, camera, testTorus]);
 
   useEffect(() => {
     if (camera) {

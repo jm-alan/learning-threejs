@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Canvas from './components/Canvas';
-import NavBar from './components/NavBar';
+import Torus from './components/Geometries/Torus';
 import csrfetch from './store/csrfetch';
 import { RestoreUser } from './store/session';
 
@@ -20,9 +20,9 @@ export default function App () {
 
   return loaded && (
     <>
-      <NavBar />
       <Switch>
         <Route path='/'>
+          <Torus />
           <Canvas />
         </Route>
       </Switch>
