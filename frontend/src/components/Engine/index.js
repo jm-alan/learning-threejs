@@ -38,7 +38,7 @@ export default function Engine () {
 
   useEffect(() => {
     if (renderer && scene && camera) dispatch(Render());
-  }, [dispatch, scene, camera]);
+  }, [dispatch, renderer, scene, camera]);
 
   useEffect(() => {
     if (camera) {
