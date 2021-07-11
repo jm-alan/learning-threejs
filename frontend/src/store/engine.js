@@ -3,6 +3,7 @@ const SCENE = 'engine/SCENE';
 const CAMERA = 'engine/CAMERA';
 const RENDERER = 'engine/RENDERER';
 const DESTROY = 'engine/DESTROY';
+const BUILD_DEFAULT = 'engine/BUILD_DEFAULT';
 
 export const SetScene = scene => ({
   type: SCENE,
@@ -28,6 +29,10 @@ export const DestroyEngine = () => ({
   type: DESTROY
 });
 
+export const BuildDefault = () => ({
+  type: BUILD_DEFAULT
+});
+
 const initialState = { canvas: null, scene: null, camera: null, renderer: null };
 
 export default function reducer (
@@ -43,6 +48,10 @@ export default function reducer (
       return { ...state, camera };
     case RENDERER:
       return { ...state, renderer };
+    case BUILD_DEFAULT:
+      state.renderer.setPixelRatio(window.devicePixelRatio);
+      state.renderer.setSize(window.innerWidth, window.innerHeight);
+      break;
     case DESTROY:
       return initialState;
     default:
