@@ -44,6 +44,22 @@ export default function reducer (
       return { ...state, scene };
     case types.CAMERA:
       return { ...state, camera };
+    case types.PRESS_KEY:
+      return {
+        ...state,
+        keys: {
+          ...state.keys,
+          [name]: true
+        }
+      };
+    case types.RELEASE_KEY:
+      return {
+        ...state,
+        keys: {
+          ...state.keys,
+          [name]: false
+        }
+      };
     case types.CAMERA_POSX_ABSOLUTE:
       state.camera.position.setX(cameraPosX);
       return { ...state, cameraPosX };
