@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Canvas from './components/Canvas';
 import Torus from './components/Geometries/Torus';
+import Camera from './components/Camera';
 import PointTest from './components/Lights/PointTest';
 import { useEventListener } from './utils/hooks';
 // import csrfetch from './store/csrfetch';
@@ -25,15 +26,20 @@ export default function App () {
   // ! RESTORE "loaded &&"
 
   useEffect(() => {
-    const clickPrinter = () => console.log('click registered');
-    addEvent.click(clickPrinter);
-    return () => removeEvent.click(clickPrinter);
-  }, []);
+    const keyPrinter = e => console.log(e);
+    addEvent.keydown(keyPrinter);
+    addEvent.keyup(keyPrinter);
+    return () => {
+      removeEvent.keydown(keyPrinter);
+      removeEvent.keyup(keyPrinter);
+    };
+  }, [addEvent, removeEvent]);
 
   return (
     <>
       <Switch>
         <Route path='/'>
+          <Camera />
           <Torus />
           <PointTest />
           <Canvas />
