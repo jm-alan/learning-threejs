@@ -54,10 +54,12 @@ export const AddToScene = (name, element) => ({
   element
 });
 
-export const AddRenderFunction = (name, renderFunction) => ({
+export const AddRenderFunction = (name, action) => ({
   type: types.ADD_RENDER_FUNCTION,
-  name,
-  renderFunction
+  renderObj: {
+    name,
+    action
+  }
 });
 
 export const RemoveRenderFunction = name => ({
