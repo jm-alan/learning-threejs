@@ -13,7 +13,8 @@ const initialState = {
   geometries: {},
   elements: {},
   pointLights: {},
-  ambientLights: {}
+  ambientLights: {},
+  renderFunctions: {}
 };
 
 export default function reducer (
@@ -22,8 +23,8 @@ export default function reducer (
     type, canvas, scene,
     camera, renderer, cameraX,
     cameraY, cameraZ, name,
-    geometry, element, lightType,
-    offset, color
+    props, element, lightType,
+    offset, color, renderFunction
   }
 ) {
   switch (type) {
@@ -50,6 +51,17 @@ export default function reducer (
     case types.RENDER:
       state.renderer.render(state.scene, state.camera);
       return state;
+    case types.ADD_RENDER_FUNCTION:
+      return {
+        ...state,
+        renderFunctions: {
+          ...state.renderFunctions,
+          [name]: renderFunction
+        }
+      };
+    case types.REMOVE_RENDER_FUNCTION:
+      delete state.renderFunctions[name];
+      return { ...state };
     case types.LIGHT_COLOR:
       state[`${lightType}s`][name].light.color.set(color);
       return {
@@ -67,7 +79,21 @@ export default function reducer (
         ...state,
         geometries: {
           ...state.geometries,
-          [name]: geometry
+          [name]: {
+            mesh: mountToScene(
+              state,
+              name,
+              new Three.Mesh(
+                new Three[`${props.geometryType}Geometry`](...props.geometrySpecs),
+                new Three[`${props.materialType}Material`]({
+                  color: props.materialColor,
+                  wireframe: props.materialWireframe
+                })
+              )
+            ),
+            ...props.initialPosition,
+            ...props.initialRotation
+          }
         }
       };
     case types.DESTROY_GEOMETRY:
@@ -88,11 +114,15 @@ export default function reducer (
         pointLights: {
           ...state.pointLights,
           [name]: {
-            light: mountToScene(state, new Three.PointLight(color)),
+            light: mountToScene(state, name, new Three.PointLight(color)),
             color,
             posX: 0,
             posY: 0,
             posZ: 0
+          },
+          elements: {
+            ...state.elements,
+            [name]: element
           }
         }
       };
@@ -102,7 +132,7 @@ export default function reducer (
         ambientLights: {
           ...state.ambientLights,
           [name]: {
-            light: mountToScene(state, new Three.AmbientLight(color)),
+            light: mountToScene(state, name, new Three.AmbientLight(color)),
             color
           }
         }
@@ -192,7 +222,7 @@ export default function reducer (
   }
 }
 
-function mountToScene (state, element) {
+function mountToScene (state, name, element) {
   state.scene.add(element);
   return element;
 }
