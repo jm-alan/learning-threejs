@@ -1,41 +1,40 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AddToScene, CreatePointLight } from '../../store/engine/actions';
+import { CreatePointLight, MoveLightX, MoveLightY } from '../../store/engine/actions';
 
 export default function PointTest () {
   const dispatch = useDispatch();
 
-  const pointTest = useSelector(state => state.engine.pointLights.pointTest?.light);
-  const pointTestColor = useSelector(state => state.engine.pointLights.pointTest?.color);
-  const posX = useSelector(state => state.engine.pointLights.pointTest?.posX);
-  const posY = useSelector(state => state.engine.pointLights.pointTest?.posY);
-  const posZ = useSelector(state => state.engine.pointLights.pointTest?.posZ);
+  const pointOne = useSelector(state => state.engine.pointLights.pointOne?.light);
+  const pointTwo = useSelector(state => state.engine.pointLights.pointTwo?.light);
+  const pointThree = useSelector(state => state.engine.pointLights.pointThree?.light);
+  const pointFour = useSelector(state => state.engine.pointLights.pointFour?.light);
   const ready = useSelector(state => state.engine.ready);
 
   useEffect(() => {
-    if (ready && !pointTest) {
-      dispatch(CreatePointLight('pointTest', 0xFFFFFF));
+    if (ready) {
+      if (!pointOne) dispatch(CreatePointLight('pointOne', 0xFFFFFF));
+      if (!pointTwo) dispatch(CreatePointLight('pointTwo', 0xFFFFFF));
+      if (!pointThree) dispatch(CreatePointLight('pointThree', 0xFFFFFF));
+      if (!pointFour) dispatch(CreatePointLight('pointFour', 0xFFFFFF));
     }
-  }, [dispatch, ready]);
+  }, [dispatch, ready, pointOne, pointTwo, pointThree, pointFour]);
 
   useEffect(() => {
-    if (pointTest) {
-      dispatch(AddToScene('pointTest', pointTest));
+    if (pointOne) {
+      dispatch(MoveLightX.absolute('pointOne', -100));
     }
-  }, [dispatch, pointTest]);
-
-  useEffect(() => {
-    if (pointTest) {
-      pointTest.position.set(posX, posY, posZ);
+    if (pointTwo) {
+      dispatch(MoveLightX.absolute('pointTwo', 100));
     }
-  }, [pointTest, posX, posY, posZ]);
-
-  useEffect(() => {
-    if (pointTest) {
-      pointTest.color.set(pointTestColor);
+    if (pointThree) {
+      dispatch(MoveLightY.absolute('pointThree', -100));
     }
-  }, [pointTest, pointTestColor]);
+    if (pointFour) {
+      dispatch(MoveLightY.absolute('pointFour', 100));
+    }
+  }, [dispatch, pointOne, pointTwo, pointThree, pointFour]);
 
   return null;
 }
