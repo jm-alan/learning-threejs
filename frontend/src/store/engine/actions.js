@@ -51,6 +51,13 @@ export const CreateAmbientLight = (name, light, color) => ({
   color
 });
 
+export const SetLightColor = (lightType, name, color) => ({
+  type: types.LIGHT_COLOR,
+  lightType,
+  name,
+  color
+});
+
 export const MoveCameraX = {
   relative (cameraX) {
     return {
