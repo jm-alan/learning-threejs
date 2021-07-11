@@ -1,11 +1,6 @@
 import * as types from './types';
 import * as Three from 'three';
 
-const keys = {};
-
-for (let i = 65; i < 65 + 26; i++) keys[String.fromCharCode(i)] = false;
-for (let i = 97; i < 97 + 26; i++) keys[String.fromCharCode(i)] = false;
-
 const initialState = {
   canvas: null,
   scene: null,
@@ -22,8 +17,8 @@ const initialState = {
   elements: {},
   pointLights: {},
   ambientLights: {},
-  renderFunctions: {},
-  keys
+  renderObjects: [],
+  keys: {}
 };
 
 export default function reducer (
@@ -34,7 +29,7 @@ export default function reducer (
     cameraPosY, cameraPosZ, cameraRotX,
     cameraRotY, cameraRotZ, name,
     props, element, lightType,
-    offset, color, renderFunction
+    offset, color, renderObj
   }
 ) {
   switch (type) {
@@ -104,14 +99,18 @@ export default function reducer (
     case types.ADD_RENDER_FUNCTION:
       return {
         ...state,
-        renderFunctions: {
-          ...state.renderFunctions,
-          [name]: renderFunction
-        }
+        renderObjects: [
+          ...state.renderObjects,
+          renderObj
+        ]
       };
     case types.REMOVE_RENDER_FUNCTION:
-      delete state.renderFunctions[name];
-      return { ...state };
+      return {
+        ...state,
+        renderObjects: state.renderObjects.filter(
+          ({ name: deleteName }) => deleteName !== name
+        )
+      };
     case types.LIGHT_COLOR:
       state[`${lightType}s`][name].light.color.set(color);
       return {
