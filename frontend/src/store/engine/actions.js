@@ -37,10 +37,18 @@ export const AddToScene = (name, element) => ({
   element
 });
 
-export const CreateLight = (name, light) => ({
-  type: types.NEW_LIGHT,
+export const CreatePointLight = (name, light, color) => ({
+  type: types.NEW_POINTLIGHT,
   name,
-  light
+  light,
+  color
+});
+
+export const CreateAmbientLight = (name, light, color) => ({
+  type: types.NEW_AMBIENTLIGHT,
+  name,
+  light,
+  color
 });
 
 export const MoveCameraX = {
