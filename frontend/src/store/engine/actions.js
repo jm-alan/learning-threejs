@@ -44,6 +44,10 @@ export const DestroyGeometry = name => ({
   name
 });
 
+export const RotateGeometry = (name, axis, offset) => ({
+
+});
+
 export const AddToScene = (name, element) => ({
   type: types.ADD_TO_SCENE,
   name,
@@ -81,46 +85,91 @@ export const SetLightColor = (lightType, name, color) => ({
 });
 
 export const MoveCameraX = {
-  relative (cameraX) {
+  relative (cameraPosX) {
     return {
-      type: types.CAMERAX_RELATIVE,
-      cameraX
+      type: types.CAMERA_POSX_RELATIVE,
+      cameraPosX
     };
   },
-  absolute (cameraX) {
+  absolute (cameraPosX) {
     return {
-      type: types.CAMERAX_ABSOLUTE,
-      cameraX
+      type: types.CAMERA_POSX_ABSOLUTE,
+      cameraPosX
     };
   }
 };
 
 export const MoveCameraY = {
-  relative (cameraY) {
+  relative (cameraPosY) {
     return {
-      type: types.CAMERAY_RELATIVE,
-      cameraY
+      type: types.CAMERA_POSY_RELATIVE,
+      cameraPosY
     };
   },
-  absolute (cameraY) {
+  absolute (cameraPosY) {
     return {
-      type: types.CAMERAY_ABSOLUTE,
-      cameraY
+      type: types.CAMERA_POSY_ABSOLUTE,
+      cameraPosY
     };
   }
 };
 
 export const MoveCameraZ = {
-  relative (cameraZ) {
+  relative (cameraPosZ) {
     return {
-      type: types.CAMERAZ_RELATIVE,
-      cameraZ
+      type: types.CAMERA_POSZ_RELATIVE,
+      cameraPosZ
     };
   },
-  absolute (cameraZ) {
+  absolute (cameraPosZ) {
     return {
-      type: types.CAMERAZ_ABSOLUTE,
-      cameraZ
+      type: types.CAMERA_POSZ_ABSOLUTE,
+      cameraPosZ
+    };
+  }
+};
+
+export const RotCameraX = {
+  relative (cameraRotX) {
+    return {
+      type: types.CAMERA_ROTX_RELATIVE,
+      cameraRotX
+    };
+  },
+  absolute (cameraRotX) {
+    return {
+      type: types.CAMERA_ROTX_ABSOLUTE,
+      cameraRotX
+    };
+  }
+};
+
+export const RotCameraY = {
+  relative (cameraRotY) {
+    return {
+      type: types.CAMERA_ROTY_RELATIVE,
+      cameraRotY
+    };
+  },
+  absolute (cameraRotY) {
+    return {
+      type: types.CAMERA_ROTY_ABSOLUTE,
+      cameraRotY
+    };
+  }
+};
+
+export const RotCameraZ = {
+  relative (cameraRotZ) {
+    return {
+      type: types.CAMERA_ROTZ_RELATIVE,
+      cameraRotZ
+    };
+  },
+  absolute (cameraRotZ) {
+    return {
+      type: types.CAMERA_ROTZ_ABSOLUTE,
+      cameraRotZ
     };
   }
 };
