@@ -7,7 +7,6 @@ import * as engine from './store/engine/actions';
 import App from './App';
 import Modal from './components/Modal';
 import configureStore from './store';
-import Engine from './components/Engine';
 import Errors from './components/Errors';
 import csrfetch from './store/csrfetch';
 import { SetMooring } from './store/modal';
@@ -37,7 +36,6 @@ function Root () {
     <BrowserRouter>
       <Errors />
       <App />
-      <Engine />
       <Modal />
       <div ref={mooringRef} id='modal' />
     </BrowserRouter>

@@ -7,6 +7,7 @@ import Torus from './components/Geometries/Torus';
 import Camera from './components/Camera';
 import PointTest from './components/Lights/PointTest';
 import { useEventListener } from './utils/hooks';
+import Engine from './components/Engine';
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -39,10 +40,12 @@ export default function App () {
     <>
       <Switch>
         <Route path='/'>
-          <Camera />
-          <Torus />
-          <PointTest />
-          <Canvas />
+          <Engine>
+            <Camera />
+            <Torus />
+            <PointTest />
+            <Canvas />
+          </Engine>
         </Route>
       </Switch>
     </>
