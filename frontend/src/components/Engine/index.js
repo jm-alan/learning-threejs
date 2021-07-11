@@ -41,17 +41,17 @@ export default function Engine () {
     }
   }, [dispatch, scene, camera, canvas, renderer]);
 
-  useEffect(() => {
-    const animate = () => {
-      window.requestAnimationFrame(animate);
-      if (renderer && scene && camera) dispatch(Render());
-      if (testTorus) {
-        testTorus.rotation.x += 0.1;
-        testTorus.rotation.y += 0.1;
-      }
-    };
-    animate();
-  }, [dispatch, renderer, scene, camera, testTorus]);
+  // useEffect(() => {
+  //   const animate = () => {
+  //     window.requestAnimationFrame(animate);
+  //     if (renderer && scene && camera) dispatch(Render());
+  //     if (testTorus) {
+  //       testTorus.rotation.x += 0.1;
+  //       testTorus.rotation.y += 0.1;
+  //     }
+  //   };
+  //   animate();
+  // }, [dispatch, renderer, scene, camera, testTorus]);
 
   useEffect(() => {
     if (camera) {
@@ -61,15 +61,15 @@ export default function Engine () {
     }
   }, [dispatch, camera, cameraX, cameraY, cameraZ]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (pointOne) dispatch(SetLightColor('pointLight', 'pointOne', Math.round(Math.random() * 0xFFFFFF)));
-      if (pointTwo) dispatch(SetLightColor('pointLight', 'pointTwo', Math.round(Math.random() * 0xFFFFFF)));
-      if (pointThree) dispatch(SetLightColor('pointLight', 'pointThree', Math.round(Math.random() * 0xFFFFFF)));
-      if (pointFour) dispatch(SetLightColor('pointLight', 'pointFour', Math.round(Math.random() * 0xFFFFFF)));
-    }, 100);
-    return () => clearInterval(interval);
-  }, [dispatch, pointOne, pointTwo, pointThree, pointFour]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (pointOne) dispatch(SetLightColor('pointLight', 'pointOne', Math.round(Math.random() * 0xFFFFFF)));
+  //     if (pointTwo) dispatch(SetLightColor('pointLight', 'pointTwo', Math.round(Math.random() * 0xFFFFFF)));
+  //     if (pointThree) dispatch(SetLightColor('pointLight', 'pointThree', Math.round(Math.random() * 0xFFFFFF)));
+  //     if (pointFour) dispatch(SetLightColor('pointLight', 'pointFour', Math.round(Math.random() * 0xFFFFFF)));
+  //   }, 100);
+  //   return () => clearInterval(interval);
+  // }, [dispatch, pointOne, pointTwo, pointThree, pointFour]);
 
   return null;
 }
