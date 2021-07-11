@@ -20,10 +20,19 @@ export const SetCanvas = canvas => ({
   canvas
 });
 
-export const CreateGeometry = (name, geometry) => ({
+export const CreateGeometry = (
+  name, geometryType, geometrySpecs,
+  materialType, materialColor, materialWireframe = false
+) => ({
   type: types.NEW_GEOMETRY,
   name,
-  geometry
+  props: {
+    geometryType,
+    geometrySpecs,
+    materialType,
+    materialColor,
+    materialWireframe
+  }
 });
 
 export const DestroyGeometry = name => ({
