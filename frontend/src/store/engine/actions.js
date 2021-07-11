@@ -84,6 +84,16 @@ export const SetLightColor = (lightType, name, color) => ({
   color
 });
 
+export const PressKey = key => ({
+  type: types.PRESS_KEY,
+  key
+});
+
+export const ReleaseKey = key => ({
+  type: types.RELEASE_KEY,
+  key
+});
+
 export const MoveCameraX = {
   relative (cameraPosX) {
     return {
