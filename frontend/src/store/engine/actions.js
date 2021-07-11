@@ -37,17 +37,15 @@ export const AddToScene = (name, element) => ({
   element
 });
 
-export const CreatePointLight = (name, light, color) => ({
+export const CreatePointLight = (name, color) => ({
   type: types.NEW_POINTLIGHT,
   name,
-  light,
   color
 });
 
-export const CreateAmbientLight = (name, light, color) => ({
+export const CreateAmbientLight = (name, color) => ({
   type: types.NEW_AMBIENTLIGHT,
   name,
-  light,
   color
 });
 
