@@ -12,6 +12,7 @@ const CAMERAX_ABSOLUTE = 'engine/CAMERAX/ABSOLUTE';
 const CAMERAY_ABSOLUTE = 'engine/CAMERAY/ABSOLUTE';
 const CAMERAZ_ABSOLUTE = 'engine/CAMERAZ/ABSOLUTE';
 const NEW_GEOMETRY = 'engine/NEW_GEOMETRY';
+const DESTROY_GEOMETRY = 'engine/DESTROY_GEOMETRY';
 const DESTROY_ENGINE = 'engine/DESTROY_ENGINE';
 const DESTROY_CANVAS = 'engine/DESTROY_CANVAS';
 const BUILD_DEFAULT = 'engine/BUILD_DEFAULT';
@@ -36,9 +37,23 @@ export const SetCanvas = canvas => ({
   canvas
 });
 
-export const CreateGeometry = (shape, name, specs) => ({
+export const CreateGeometry = (shape, name, specs, type, color, wireframe) => ({
   type: NEW_GEOMETRY,
-  geometry: { shape, name, specs }
+  geometry: {
+    shape,
+    name,
+    specs,
+    material: {
+      type,
+      color,
+      wireframe
+    }
+  }
+});
+
+export const DestroyGeometry = name => ({
+  type: DESTROY_GEOMETRY,
+  name
 });
 
 export const MoveCameraX = {
@@ -107,6 +122,7 @@ const initialState = {
   scene: null,
   camera: null,
   renderer: null,
+  ready: false,
   cameraX: 0,
   cameraY: 0,
   cameraZ: 0,
@@ -124,7 +140,8 @@ export default function reducer (
     cameraX,
     cameraY,
     cameraZ,
-    geometry
+    geometry,
+    name
   }
 ) {
   switch (type) {
@@ -147,7 +164,7 @@ export default function reducer (
     case CAMERAZ_RELATIVE:
       return { ...state, cameraZ: state.cameraZ + cameraZ };
     case RENDERER:
-      return { ...state, renderer };
+      return { ...state, renderer, ready: true };
     case RENDER:
       state.renderer.render(state.scene, state.camera);
       return state;
@@ -156,9 +173,18 @@ export default function reducer (
         ...state,
         geometries: {
           ...state.geometries,
-          [geometry.name]: new Three[geometry.shape](...geometry.specs)
+          [geometry.name]: new Three.Mesh(
+            new Three[geometry.shape](...geometry.specs),
+            new Three[geometry.material.type]({
+              color: geometry.material.color,
+              wireframe: geometry.material.wireframe
+            })
+          )
         }
       };
+    case DESTROY_GEOMETRY:
+      delete state.geometries[name];
+      return { ...state };
     case BUILD_DEFAULT:
       state.renderer.setPixelRatio(window.devicePixelRatio);
       state.renderer.setSize(window.innerWidth, window.innerHeight);
