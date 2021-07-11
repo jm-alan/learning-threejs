@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Canvas from './components/Canvas';
 import Torus from './components/Geometries/Torus';
+import PointTest from './components/Lights/PointTest';
 import csrfetch from './store/csrfetch';
 import { RestoreUser } from './store/session';
 
@@ -23,6 +24,7 @@ export default function App () {
       <Switch>
         <Route path='/'>
           <Torus />
+          <PointTest />
           <Canvas />
         </Route>
       </Switch>
