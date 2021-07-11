@@ -51,6 +51,7 @@ export default function reducer (
       state.renderer.render(state.scene, state.camera);
       return state;
     case types.LIGHT_COLOR:
+      state[`${lightType}s`][name].light.color.set(color);
       return {
         ...state,
         [`${lightType}s`]: {
@@ -87,7 +88,7 @@ export default function reducer (
         pointLights: {
           ...state.pointLights,
           [name]: {
-            light: new Three.PointLight(color),
+            light: mountToScene(state, new Three.PointLight(color)),
             color,
             posX: 0,
             posY: 0,
@@ -101,12 +102,13 @@ export default function reducer (
         ambientLights: {
           ...state.ambientLights,
           [name]: {
-            light: new Three.AmbientLight(color),
+            light: mountToScene(state, new Three.AmbientLight(color)),
             color
           }
         }
       };
     case types.LIGHTX_RELATIVE:
+      state.pointLights[name].light.position.setX(state.pointLights[name].posX + offset);
       return {
         ...state,
         pointLights: {
@@ -118,6 +120,7 @@ export default function reducer (
         }
       };
     case types.LIGHTY_RELATIVE:
+      state.pointLights[name].light.position.setY(state.pointLights[name].posY + offset);
       return {
         ...state,
         pointLights: {
@@ -129,6 +132,7 @@ export default function reducer (
         }
       };
     case types.LIGHTZ_RELATIVE:
+      state.pointLights[name].light.position.setZ(state.pointLights[name].posZ + offset);
       return {
         ...state,
         pointLights: {
@@ -140,6 +144,7 @@ export default function reducer (
         }
       };
     case types.LIGHTX_ABSOLUTE:
+      state.pointLights[name].light.position.setX(offset);
       return {
         ...state,
         pointLights: {
@@ -151,6 +156,7 @@ export default function reducer (
         }
       };
     case types.LIGHTY_ABSOLUTE:
+      state.pointLights[name].light.position.setY(offset);
       return {
         ...state,
         pointLights: {
@@ -162,6 +168,7 @@ export default function reducer (
         }
       };
     case types.LIGHTZ_ABSOLUTE:
+      state.pointLights[name].light.position.setZ(offset);
       return {
         ...state,
         pointLights: {
@@ -183,4 +190,9 @@ export default function reducer (
     default:
       return state;
   }
+}
+
+function mountToScene (state, element) {
+  state.scene.add(element);
+  return element;
 }
