@@ -22,7 +22,9 @@ export const SetCanvas = canvas => ({
 
 export const CreateGeometry = (
   name, geometryType, geometrySpecs,
-  materialType, materialColor, materialWireframe = false
+  materialType, materialColor = 0xFFFFFF, materialWireframe = false,
+  initialPosition = { posX: 0, posY: 0, posZ: 0 },
+  initialRotation = { rotX: 0, rotY: 0, rotZ: 0 }
 ) => ({
   type: types.NEW_GEOMETRY,
   name,
@@ -31,7 +33,9 @@ export const CreateGeometry = (
     geometrySpecs,
     materialType,
     materialColor,
-    materialWireframe
+    materialWireframe,
+    initialPosition,
+    initialRotation
   }
 });
 
@@ -46,7 +50,18 @@ export const AddToScene = (name, element) => ({
   element
 });
 
-export const CreatePointLight = (name, color) => ({
+export const AddRenderFunction = (name, renderFunction) => ({
+  type: types.ADD_RENDER_FUNCTION,
+  name,
+  renderFunction
+});
+
+export const RemoveRenderFunction = name => ({
+  type: types.REMOVE_RENDER_FUNCTION,
+  name
+});
+
+export const CreatePointLight = (name, color = 0xFFFFFF) => ({
   type: types.NEW_POINTLIGHT,
   name,
   color
