@@ -23,7 +23,7 @@ export default function PointTest () {
       if (!pointFive) dispatch(CreatePointLight('pointFive', 0xFFFFFF));
       if (!pointSix) dispatch(CreatePointLight('pointSix', 0xFFFFFF));
     }
-  }, [dispatch, ready, pointOne, pointTwo, pointThree, pointFour]);
+  }, [dispatch, ready, pointOne, pointTwo, pointThree, pointFour, pointFive, pointSix]);
 
   // useEffect(() => {
   //   if (pointOne) dispatch(MoveLightX.absolute('pointOne', -100));

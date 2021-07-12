@@ -1,5 +1,13 @@
 import * as types from './types';
 
+export const Ready = () => ({
+  type: types.READY
+});
+
+export const Unready = () => ({
+  type: types.UNREADY
+});
+
 export const SetScene = scene => ({
   type: types.SCENE,
   scene

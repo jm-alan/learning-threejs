@@ -266,3 +266,5 @@ function mountToScene (state, name, element) {
   state.scene.add(element);
   return element;
 }
+
+function eulerMove (state, camera) {}
