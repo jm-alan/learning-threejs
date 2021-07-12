@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Canvas from './components/Canvas';
 import Torus from './components/Geometries/Torus';
 import Camera from './components/Camera';
-import PointTest from './components/Lights/PointTest';
+import PointLight from './components/Lights/PointLight';
 import Engine from './components/Engine';
 import KeyListener from './components/Engine/KeyListener';
 import Movement from './components/Camera/Movement';
@@ -37,7 +37,7 @@ export default function App () {
               specs={[20, 3, 16, 100]}
               material='MeshStandard'
             />
-            <PointTest />
+            <PointLight />
             <Canvas />
           </Engine>
         </Route>

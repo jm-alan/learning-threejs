@@ -9,7 +9,7 @@ import {
 } from '../../store/engine/pointLights/actions';
 import { AddToScene } from '../../store/engine/scene/actions';
 
-export default function PointTest () {
+export default function PointLight ({ key, color, intensity, initialPosition }) {
   const dispatch = useDispatch();
 
   const pointOne = useSelector(state => state.engine.pointLights.all.pointOne?.light);
