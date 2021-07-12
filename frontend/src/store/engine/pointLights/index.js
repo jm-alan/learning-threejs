@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { all: {} },
-  { type, name, props, offset }
+  { type, name, props, color, offset }
 ) {
   switch (type) {
     case types.NEW:
@@ -13,21 +13,26 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            light: new Three.PointLight(props.color),
+            light: new Three.PointLight(
+              props.color,
+              props.intensity,
+              props.distance,
+              props.decay
+            ),
             color: props.color,
             ...props.initialPosition
           }
         }
       };
     case types.COLOR:
-      state.all[name].light.color.set(props.color);
+      state.all[name].light.color.set(color);
       return {
         ...state,
         all: {
           ...state.all,
           [name]: {
             ...state.all[name],
-            color: props.color
+            color
           }
         }
       };
