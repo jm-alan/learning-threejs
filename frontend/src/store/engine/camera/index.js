@@ -5,7 +5,6 @@ import * as types from './types';
 export default function reducer (
   state = {
     current: null,
-    ready: false,
     posX: 0,
     posY: 0,
     posZ: 0,
@@ -32,11 +31,10 @@ export default function reducer (
           window.innerWidth / window.innerHeight,
           0.1,
           1000
-        ),
-        ready: true
+        )
       };
     case types.DESTROY:
-      return { ...state, current: null, ready: false };
+      return { ...state, current: null };
     case types.POSX_ABSOLUTE:
       state.current.position.setX(posX);
       return { ...state, posX };
