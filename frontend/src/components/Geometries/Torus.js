@@ -7,10 +7,10 @@ export default function Torus ({ key, specs, material, color, wireframe, initial
   const dispatch = useDispatch();
 
   const ready = useSelector(state => state.engine.renderer.ready);
-  const object = useSelector(state => state.engine.geometries.all[key]);
+  const torus = useSelector(state => state.engine.geometries.all[key]);
 
   useEffect(() => {
-    if (ready && !object) {
+    if (ready && !torus) {
       dispatch(CreateGeometry(
         key,
         'Torus',
@@ -22,11 +22,11 @@ export default function Torus ({ key, specs, material, color, wireframe, initial
         initialRotation
       ));
     }
-  }, [dispatch, object, ready]);
+  }, [dispatch, torus, ready]);
 
   useEffect(() => {
-    if (object) dispatch(AddToScene(object));
-  }, [dispatch, object]);
+    if (torus) dispatch(AddToScene(torus));
+  }, [dispatch, torus]);
 
   return null;
 }
