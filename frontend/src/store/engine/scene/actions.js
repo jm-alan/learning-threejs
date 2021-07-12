@@ -12,3 +12,8 @@ export const AddToScene = element => ({
   type: types.ADD,
   element
 });
+
+export const RemoveFromScene = element => ({
+  type: types.REMOVE,
+  element
+});
