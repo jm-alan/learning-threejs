@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { current: null },
-  { type, element }
+  { type, object }
 ) {
   switch (type) {
     case types.CREATE:
@@ -15,7 +15,10 @@ export default function reducer (
     case types.DESTROY:
       return { ...state, current: null };
     case types.ADD:
-      state.current.add(element);
+      state.current.add(object);
+      return state;
+    case types.REMOVE:
+      state.current.remove(object);
       return state;
     default:
       return state;

@@ -8,12 +8,12 @@ export const DestroyScene = () => ({
   type: types.DESTROY
 });
 
-export const AddToScene = element => ({
+export const AddToScene = ({ object }) => ({
   type: types.ADD,
-  element
+  object
 });
 
-export const RemoveFromScene = element => ({
+export const RemoveFromScene = ({ object }) => ({
   type: types.REMOVE,
-  element
+  object
 });
