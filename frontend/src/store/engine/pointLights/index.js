@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { all: {} },
-  { type, name, props, parent, offset }
+  { type, name, props, offset }
 ) {
   switch (type) {
     case types.NEW:
@@ -101,6 +101,14 @@ export default function reducer (
             ...state.all[name],
             posZ: state.all[name].posZ + offset
           }
+        }
+      };
+    case types.DESTROY:
+      delete state.all[name];
+      return {
+        ...state,
+        all: {
+          ...state.all
         }
       };
     default:
