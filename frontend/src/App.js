@@ -32,7 +32,11 @@ export default function App () {
             <KeyListener />
             <Camera />
             <Movement />
-            <Torus />
+            <Torus
+              key='testTorus'
+              specs={[20, 3, 16, 100]}
+              material='MeshStandard'
+            />
             <PointTest />
             <Canvas />
           </Engine>
