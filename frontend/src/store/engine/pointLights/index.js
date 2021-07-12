@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { all: {} },
-  { type, name, props, color, offset }
+  { type, name, props, color, offset, intensity }
 ) {
   switch (type) {
     case types.NEW:
@@ -13,7 +13,7 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            light: new Three.PointLight(
+            object: new Three.PointLight(
               props.color,
               props.intensity,
               props.distance,
@@ -25,7 +25,7 @@ export default function reducer (
         }
       };
     case types.COLOR:
-      state.all[name].light.color.set(color);
+      state.all[name].object.color.set(color);
       return {
         ...state,
         all: {
@@ -36,8 +36,20 @@ export default function reducer (
           }
         }
       };
+    case types.INTENSITY:
+      state.all[name].object.intensity.set(intensity);
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [name]: {
+            ...state.all[name],
+            intensity
+          }
+        }
+      };
     case types.MOVEX_ABSOLUTE:
-      state.all[name].light.position.setX(offset);
+      state.all[name].object.position.setX(offset);
       return {
         ...state,
         all: {
@@ -49,7 +61,7 @@ export default function reducer (
         }
       };
     case types.MOVEY_ABSOLUTE:
-      state.all[name].light.position.setY(offset);
+      state.all[name].object.position.setY(offset);
       return {
         ...state,
         all: {
@@ -61,7 +73,7 @@ export default function reducer (
         }
       };
     case types.MOVEZ_ABSOLUTE:
-      state.all[name].light.position.setZ(offset);
+      state.all[name].object.position.setZ(offset);
       return {
         ...state,
         all: {
@@ -73,7 +85,7 @@ export default function reducer (
         }
       };
     case types.MOVEX_RELATIVE:
-      state.all[name].light.position.setX(state.all[name].posX + offset);
+      state.all[name].object.position.setX(state.all[name].posX + offset);
       return {
         ...state,
         all: {
@@ -85,7 +97,7 @@ export default function reducer (
         }
       };
     case types.MOVEY_RELATIVE:
-      state.all[name].light.position.setY(state.all[name].posY + offset);
+      state.all[name].object.position.setY(state.all[name].posY + offset);
       return {
         ...state,
         all: {
@@ -97,7 +109,7 @@ export default function reducer (
         }
       };
     case types.MOVEZ_RELATIVE:
-      state.all[name].light.position.setZ(state.all[name].posZ + offset);
+      state.all[name].object.position.setZ(state.all[name].posZ + offset);
       return {
         ...state,
         all: {
