@@ -48,11 +48,11 @@ export default function reducer (
         }
       };
     case types.RELEASE_KEY:
+      delete state.keys[name];
       return {
         ...state,
         keys: {
-          ...state.keys,
-          [name]: false
+          ...state.keys
         }
       };
     case types.CAMERA_POSX_ABSOLUTE:

@@ -15,7 +15,7 @@ export default function Movement () {
   const A = useSelector(state => state.engine.keys.KeyA);
   const S = useSelector(state => state.engine.keys.KeyS);
   const D = useSelector(state => state.engine.keys.KeyD);
-  const ControlLeft = useSelector(state => state.engine.keys.ControlLeft);
+  const ShiftLeft = useSelector(state => state.engine.keys.ShiftLeft);
   const Space = useSelector(state => state.engine.keys.Space);
 
   useEffect(() => {
@@ -50,9 +50,9 @@ export default function Movement () {
 
   useEffect(() => {
     const moveDown = () => dispatch(MoveCameraY.relative(-1));
-    if (ControlLeft) dispatch(AddRenderFunction('down', moveDown));
-    if (!ControlLeft) dispatch(RemoveRenderFunction('down'));
-  }, [dispatch, ControlLeft]);
+    if (ShiftLeft) dispatch(AddRenderFunction('down', moveDown));
+    if (!ShiftLeft) dispatch(RemoveRenderFunction('down'));
+  }, [dispatch, ShiftLeft]);
 
   return null;
 }

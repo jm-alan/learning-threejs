@@ -10,8 +10,16 @@ export default function KeyListener () {
   const keys = useSelector(state => state.engine.keys);
 
   useEffect(() => {
-    const onKeyDown = e => !keys[e.code] && dispatch(PressKey(e.code));
-    const onKeyUp = e => dispatch(ReleaseKey(e.code));
+    const onKeyDown = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      !keys[e.code] && dispatch(PressKey(e.code));
+    };
+    const onKeyUp = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch(ReleaseKey(e.code));
+    };
     add.keydown(onKeyDown);
     add.keyup(onKeyUp);
     return () => {

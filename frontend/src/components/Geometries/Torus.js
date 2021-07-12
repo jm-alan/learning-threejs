@@ -14,7 +14,7 @@ export default function Torus () {
         'testTorus',
         'Torus',
         [20, 3, 16, 100],
-        'MeshBasic'
+        'MeshStandard'
       ));
     }
   }, [dispatch, testTorus, ready]);
