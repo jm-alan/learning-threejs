@@ -3,14 +3,16 @@ import * as types from './types';
 export const CreatePointLight = (
   name,
   color = 0xFFFFFF,
+  intensity,
+  distance,
+  decay,
   initialPosition = {
     posX: 0, posY: 0, posZ: 0
-  },
-  intensity
+  }
 ) => ({
   type: types.NEW,
   name,
-  props: { color, initialPosition, intensity }
+  props: { color, intensity, distance, decay, initialPosition }
 });
 
 export const DestroyPointLight = (name, parent) => ({
