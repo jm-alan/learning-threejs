@@ -1,25 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Three from 'three';
 
-import { SetCamera } from '../../store/engine/actions';
+import { CreatePerspectiveCamera } from '../../store/engine/camera/actions';
 
 export default function Camera () {
   const dispatch = useDispatch();
 
-  const camera = useSelector(state => state.engine.camera);
+  const camera = useSelector(state => state.engine.camera.current);
 
   useEffect(() => {
-    if (!camera) {
-      dispatch(SetCamera(
-        new Three.PerspectiveCamera(
-          75,
-          window.innerWidth / window.innerHeight,
-          0.1,
-          1000
-        )
-      ));
-    }
+    if (!camera) dispatch(CreatePerspectiveCamera());
   }, [dispatch, camera]);
 
   return null;

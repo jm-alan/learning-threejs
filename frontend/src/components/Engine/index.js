@@ -1,26 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Three from 'three';
-import {
-  BuildDefault,
-  DestroyEngine,
-  MoveCameraZ,
-  Render,
-  // SetCamera,
-  // SetLightColor,
-  SetRenderer,
-  SetScene
-} from '../../store/engine/actions';
+import { MoveCameraZ } from '../../store/engine/camera/actions';
+import { BuildDefault, CreateRenderer, DestroyRenderer, Render } from '../../store/engine/renderer/actions';
+
+import { CreateScene, DestroyScene } from '../../store/engine/scene/actions';
 
 export default function Engine ({ children }) {
   const dispatch = useDispatch();
 
-  const ready = useSelector(state => state.engine.ready);
-  const canvas = useSelector(state => state.engine.canvas);
-  const renderer = useSelector(state => state.engine.renderer);
-  const scene = useSelector(state => state.engine.scene);
-  const camera = useSelector(state => state.engine.camera);
-  const renderObjects = useSelector(state => state.engine.renderObjects);
+  const ready = useSelector(state => state.engine.renderer.ready);
+  const canvas = useSelector(state => state.engine.canvas.current);
+  const renderer = useSelector(state => state.engine.renderer.current);
+  const scene = useSelector(state => state.engine.scene.current);
+  const camera = useSelector(state => state.engine.camera.current);
+  const renderObjects = useSelector(state => state.engine.renderer.functions);
   // const pointOne = useSelector(state => state.engine.pointLights.pointOne?.light);
   // const pointTwo = useSelector(state => state.engine.pointLights.pointTwo?.light);
   // const pointThree = useSelector(state => state.engine.pointLights.pointThree?.light);
@@ -28,10 +21,13 @@ export default function Engine ({ children }) {
 
   useEffect(() => {
     if (canvas) {
-      dispatch(SetScene(new Three.Scene()));
-      dispatch(SetRenderer(new Three.WebGLRenderer({ canvas })));
+      dispatch(CreateScene());
+      dispatch(CreateRenderer(canvas));
     }
-    return () => dispatch(DestroyEngine());
+    return () => {
+      dispatch(DestroyRenderer());
+      dispatch(DestroyScene());
+    };
   }, [dispatch, canvas]);
 
   useEffect(() => {
@@ -43,15 +39,15 @@ export default function Engine ({ children }) {
 
   useEffect(() => {
     const animate = () => {
-      if (ready) {
-        dispatch(Render());
+      if (scene && camera && ready) {
+        dispatch(Render(scene, camera));
         for (const renderObj of renderObjects) renderObj.action();
       }
       return window.requestAnimationFrame(animate);
     };
     const captureFrame = animate();
     return () => window.cancelAnimationFrame(captureFrame);
-  }, [dispatch, ready, renderObjects]);
+  }, [dispatch, scene, camera, ready, renderObjects]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {

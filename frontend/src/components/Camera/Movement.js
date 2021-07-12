@@ -1,22 +1,17 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  AddRenderFunction,
-  MoveCameraX,
-  MoveCameraY,
-  MoveCameraZ,
-  RemoveRenderFunction
-} from '../../store/engine/actions';
+import { AddRenderFunction, RemoveRenderFunction } from '../../store/engine/renderer/actions';
+import { MoveCameraX, MoveCameraY, MoveCameraZ } from '../../store/engine/camera/actions';
 
 export default function Movement () {
   const dispatch = useDispatch();
 
-  const W = useSelector(state => state.engine.keys.KeyW);
-  const A = useSelector(state => state.engine.keys.KeyA);
-  const S = useSelector(state => state.engine.keys.KeyS);
-  const D = useSelector(state => state.engine.keys.KeyD);
-  const ShiftLeft = useSelector(state => state.engine.keys.ShiftLeft);
-  const Space = useSelector(state => state.engine.keys.Space);
+  const W = useSelector(state => state.engine.keys.pressed.KeyW);
+  const A = useSelector(state => state.engine.keys.pressed.KeyA);
+  const S = useSelector(state => state.engine.keys.pressed.KeyS);
+  const D = useSelector(state => state.engine.keys.pressed.KeyD);
+  const ShiftLeft = useSelector(state => state.engine.keys.pressed.ShiftLeft);
+  const Space = useSelector(state => state.engine.keys.pressed.Space);
 
   useEffect(() => {
     const moveForward = () => dispatch(MoveCameraZ.relative(-1));
@@ -43,13 +38,17 @@ export default function Movement () {
   }, [dispatch, D]);
 
   useEffect(() => {
-    const moveUp = () => dispatch(MoveCameraY.relative(1));
+    const moveUp = () => {
+      dispatch(MoveCameraY.relative(1));
+    };
     if (Space) dispatch(AddRenderFunction('up', moveUp));
     if (!Space) dispatch(RemoveRenderFunction('up'));
   }, [dispatch, Space]);
 
   useEffect(() => {
-    const moveDown = () => dispatch(MoveCameraY.relative(-1));
+    const moveDown = () => {
+      dispatch(MoveCameraY.relative(-1));
+    };
     if (ShiftLeft) dispatch(AddRenderFunction('down', moveDown));
     if (!ShiftLeft) dispatch(RemoveRenderFunction('down'));
   }, [dispatch, ShiftLeft]);
