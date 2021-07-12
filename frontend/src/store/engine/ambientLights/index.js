@@ -34,6 +34,18 @@ export default function reducer (
           }
         }
       };
+    case types.INTENSITY:
+      state.all[name].object.intensity.set(intensity);
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [name]: {
+            ...state.all[name],
+            intensity
+          }
+        }
+      };
     default:
       return state;
   }
