@@ -13,7 +13,7 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            mesh: new Three.Mesh(
+            object: new Three.Mesh(
               new Three[`${props.geometryType}Geometry`](...props.geometrySpecs),
               new Three[`${props.materialType}Material`]({
                 color: props.materialColor,
@@ -23,6 +23,14 @@ export default function reducer (
             ...props.initialPosition,
             ...props.initialRotation
           }
+        }
+      };
+    case types.DESTROY:
+      delete state.all[name];
+      return {
+        ...state,
+        all: {
+          ...state.all
         }
       };
     default:
