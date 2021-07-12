@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { all: {} },
-  { type, name, color, parent }
+  { type, name, color, intensity }
 ) {
   switch (type) {
     case types.NEW:
@@ -13,17 +13,17 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            light: new Three.AmbientLight(color),
-            color
+            object: new Three.AmbientLight(color, intensity),
+            color,
+            intensity
           }
         }
       };
     case types.DESTROY:
-      parent.remove(state.all[name]);
       delete state.all[name];
       return { ...state, all: { ...state.all } };
     case types.COLOR:
-      state.all[name].color.set(color);
+      state.all[name].object.color.set(color);
       return {
         ...state,
         all: {
