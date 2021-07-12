@@ -5,11 +5,12 @@ export const CreatePointLight = (
   color = 0xFFFFFF,
   initialPosition = {
     posX: 0, posY: 0, posZ: 0
-  }
+  },
+  intensity
 ) => ({
   type: types.NEW,
   name,
-  props: { color, initialPosition }
+  props: { color, initialPosition, intensity }
 });
 
 export const DestroyPointLight = (name, parent) => ({
@@ -22,6 +23,12 @@ export const SetPointLightColor = (name, color) => ({
   type: types.COLOR,
   name,
   color
+});
+
+export const SetPointLightIntensity = (name, intensity) => ({
+  type: types.INTENSITY,
+  name,
+  intensity
 });
 
 export const MovePointLightX = {
