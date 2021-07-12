@@ -97,20 +97,11 @@ export default function reducer (
       state.renderer.render(state.scene, state.camera);
       return state;
     case types.ADD_RENDER_FUNCTION:
-      return {
-        ...state,
-        renderObjects: [
-          ...state.renderObjects,
-          renderObj
-        ]
-      };
+      state.renderObjects.push(renderObj);
+      return state;
     case types.REMOVE_RENDER_FUNCTION:
-      return {
-        ...state,
-        renderObjects: state.renderObjects.filter(
-          ({ name: deleteName }) => deleteName !== name
-        )
-      };
+      state.renderObjects.splice(state.renderObjects.findIndex(({ name: deleteName }) => name === deleteName), 1);
+      return state;
     case types.LIGHT_COLOR:
       state[`${lightType}s`][name].light.color.set(color);
       return {

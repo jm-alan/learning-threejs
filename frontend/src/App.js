@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
@@ -6,8 +5,9 @@ import Canvas from './components/Canvas';
 import Torus from './components/Geometries/Torus';
 import Camera from './components/Camera';
 import PointTest from './components/Lights/PointTest';
-import { useEventListener } from './utils/hooks';
 import Engine from './components/Engine';
+import KeyListener from './components/Engine/KeyListener';
+import Movement from './components/Camera/Movement';
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -22,26 +22,16 @@ export default function App () {
   //   dispatch(RestoreUser());
   // }, [dispatch]);
 
-  const [addEvent, removeEvent] = useEventListener(document);
-
   // ! RESTORE "loaded &&"
-
-  useEffect(() => {
-    const keyPrinter = e => console.log(e);
-    addEvent.keydown(keyPrinter);
-    addEvent.keyup(keyPrinter);
-    return () => {
-      removeEvent.keydown(keyPrinter);
-      removeEvent.keyup(keyPrinter);
-    };
-  }, [addEvent, removeEvent]);
 
   return (
     <>
       <Switch>
         <Route path='/'>
           <Engine>
+            <KeyListener />
             <Camera />
+            <Movement />
             <Torus />
             <PointTest />
             <Canvas />

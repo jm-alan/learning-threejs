@@ -1,7 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Three from 'three';
-import { BuildDefault, DestroyEngine, MoveCameraZ, Render, SetCamera, SetLightColor, SetRenderer, SetScene } from '../../store/engine/actions';
+import {
+  BuildDefault,
+  DestroyEngine,
+  MoveCameraZ,
+  Render,
+  // SetCamera,
+  // SetLightColor,
+  SetRenderer,
+  SetScene
+} from '../../store/engine/actions';
 
 export default function Engine ({ children }) {
   const dispatch = useDispatch();
@@ -11,12 +20,11 @@ export default function Engine ({ children }) {
   const renderer = useSelector(state => state.engine.renderer);
   const scene = useSelector(state => state.engine.scene);
   const camera = useSelector(state => state.engine.camera);
-  const renderFunctions = useSelector(state => state.engine.renderFunctions);
-  const testTorus = useSelector(state => state.engine.geometries.testTorus?.mesh);
-  const pointOne = useSelector(state => state.engine.pointLights.pointOne?.light);
-  const pointTwo = useSelector(state => state.engine.pointLights.pointTwo?.light);
-  const pointThree = useSelector(state => state.engine.pointLights.pointThree?.light);
-  const pointFour = useSelector(state => state.engine.pointLights.pointFour?.light);
+  const renderObjects = useSelector(state => state.engine.renderObjects);
+  // const pointOne = useSelector(state => state.engine.pointLights.pointOne?.light);
+  // const pointTwo = useSelector(state => state.engine.pointLights.pointTwo?.light);
+  // const pointThree = useSelector(state => state.engine.pointLights.pointThree?.light);
+  // const pointFour = useSelector(state => state.engine.pointLights.pointFour?.light);
 
   useEffect(() => {
     if (canvas) {
@@ -35,14 +43,15 @@ export default function Engine ({ children }) {
 
   useEffect(() => {
     const animate = () => {
-      window.requestAnimationFrame(animate);
       if (ready) {
         dispatch(Render());
-        for (const key in renderFunctions) renderFunctions[key]();
+        for (const renderObj of renderObjects) renderObj.action();
       }
+      return window.requestAnimationFrame(animate);
     };
-    animate();
-  }, [dispatch, ready, testTorus, renderFunctions]);
+    const captureFrame = animate();
+    return () => window.cancelAnimationFrame(captureFrame);
+  }, [dispatch, ready, renderObjects]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
