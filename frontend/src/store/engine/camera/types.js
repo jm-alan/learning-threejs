@@ -1,5 +1,7 @@
 export const CREATE = 'engine/CAMERA/CREATE';
 export const DESTROY = 'engine/CAMERA/DESTROY';
+export const CURRENT = 'engine/CAMERA/CURRENT';
+export const READY = 'engine/CAMERA/READY';
 export const POSX_RELATIVE = 'engine/CAMERA/POSX/RELATIVE';
 export const POSY_RELATIVE = 'engine/CAMERA/POSY/RELATIVE';
 export const POSZ_RELATIVE = 'engine/CAMERA/POSZ/RELATIVE';
