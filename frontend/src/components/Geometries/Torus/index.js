@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CreateGeometry } from '../../store/engine/geometries/actions';
-import { AddToScene } from '../../store/engine/scene/actions';
+import { CreateGeometry } from '../../../store/engine/geometries/actions';
+import { AddToScene } from '../../../store/engine/scene/actions';
 
 export default function Torus ({
   objectKey, specs, material,
   color, wireframe, initialPosition,
   initialRotation, children
 }) {
+  children && !Array.isArray(children) && (children = [children]);
   const dispatch = useDispatch();
 
   const ready = useSelector(state => state.engine.renderer.ready);
