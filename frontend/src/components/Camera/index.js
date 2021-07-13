@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CreatePerspectiveCamera } from '../../store/engine/camera/actions';
+import {
+  CreatePerspectiveCamera,
+  DestroyPerspectiveCamera,
+  ReadyCamera,
+  ReadyCameraPos,
+  ReadyCameraRot,
+  SetCamera
+} from '../../store/engine/cameras/actions';
 
 export default function Camera () {
   const dispatch = useDispatch();
