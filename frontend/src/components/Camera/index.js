@@ -16,7 +16,8 @@ export default function Camera ({
 }) {
   const dispatch = useDispatch();
 
-  const currentCamera = useSelector(state => state.engine.cameras.name);
+  const calledCamera = useSelector(state => state.engine.cameras.name);
+  const currentCamera = useSelector(state => state.engine.cameras.current.name);
   const ready = useSelector(state => state.engine.cameras.all[objectKey]?.ready);
   const object = useSelector(state => state.engine.cameras.all[objectKey]?.object);
   const readyPos = useSelector(state => state.engine.cameras.all[objectKey]?.readyPos);
@@ -69,8 +70,8 @@ export default function Camera ({
       object.position.setX(initialPosition.posX);
       object.position.setY(initialPosition.posY);
       object.position.setZ(initialPosition.posZ);
-    }
-    dispatch(ReadyCameraPos(objectKey));
+      dispatch(ReadyCameraPos(objectKey));
+    } else if (!readyPos) dispatch(ReadyCameraPos(objectKey));
   }, [dispatch, object, objectKey, readyPos, initialPosition]);
 
   useEffect(() => {
@@ -78,8 +79,8 @@ export default function Camera ({
       object.rotateX(initialRotation.rotX);
       object.rotateY(initialRotation.rotY);
       object.rotateZ(initialRotation.rotZ);
-    }
-    dispatch(ReadyCameraRot(objectKey));
+      dispatch(ReadyCameraRot(objectKey));
+    } else if (!readyRot) dispatch(ReadyCameraRot(objectKey));
   }, [dispatch, readyRot, object, objectKey, initialRotation]);
 
   useEffect(() => {
@@ -87,7 +88,11 @@ export default function Camera ({
   }, [dispatch, object, objectKey, readyPos, readyRot, ready]);
 
   useEffect(() => {
-    if (currentCamera && currentCamera === objectKey) dispatch(SetCamera(objectKey));
+    if (
+      calledCamera &&
+      calledCamera === objectKey &&
+      currentCamera !== calledCamera
+    ) dispatch(SetCamera(objectKey));
   }, [dispatch, currentCamera, objectKey]);
 
   return null;
