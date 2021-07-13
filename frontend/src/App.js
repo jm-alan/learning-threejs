@@ -8,6 +8,7 @@ import PointLight from './components/Lights/PointLight';
 import Engine from './components/Engine';
 import KeyListener from './components/Engine/KeyListener';
 import Movement from './components/Camera/Movement';
+import Overlays from './components/Overlays';
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -29,6 +30,7 @@ export default function App () {
       <Switch>
         <Route path='/'>
           <Engine>
+            <Overlays />
             <KeyListener />
             <Camera />
             <Movement />
