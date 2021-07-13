@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { AddRenderFunction, RemoveRenderFunction } from '../../store/engine/renderer/actions';
-import { MoveCameraX, MoveCameraY, MoveCameraZ } from '../../store/engine/camera/actions';
+import { MoveCameraX, MoveCameraY, MoveCameraZ } from '../../store/engine/cameras/actions';
 
 export default function Movement () {
   const dispatch = useDispatch();
@@ -13,46 +13,55 @@ export default function Movement () {
   const D = useSelector(state => state.engine.keys.pressed.KeyD);
   const ShiftLeft = useSelector(state => state.engine.keys.pressed.ShiftLeft);
   const Space = useSelector(state => state.engine.keys.pressed.Space);
+  const currentCamera = useSelector(state => state.engine.cameras.name);
 
   useEffect(() => {
-    const moveForward = () => dispatch(MoveCameraZ.relative(-1));
-    if (W) dispatch(AddRenderFunction('forward', moveForward));
-    if (!W) dispatch(RemoveRenderFunction('forward'));
-  }, [dispatch, W]);
+    if (currentCamera) {
+      const moveForward = () => dispatch(MoveCameraZ.relative(currentCamera, -1));
+      if (W) dispatch(AddRenderFunction('forward', moveForward));
+      if (!W) dispatch(RemoveRenderFunction('forward'));
+    }
+  }, [dispatch, currentCamera, W]);
 
   useEffect(() => {
-    const moveBackward = () => dispatch(MoveCameraZ.relative(1));
-    if (S) dispatch(AddRenderFunction('backward', moveBackward));
-    if (!S) dispatch(RemoveRenderFunction('backward'));
-  }, [dispatch, S]);
+    if (currentCamera) {
+      const moveBackward = () => dispatch(MoveCameraZ.relative(currentCamera, 1));
+      if (S) dispatch(AddRenderFunction('backward', moveBackward));
+      if (!S) dispatch(RemoveRenderFunction('backward'));
+    }
+  }, [dispatch, currentCamera, S]);
 
   useEffect(() => {
-    const moveLeft = () => dispatch(MoveCameraX.relative(-1));
-    if (A) dispatch(AddRenderFunction('left', moveLeft));
-    if (!A) dispatch(RemoveRenderFunction('left'));
-  }, [dispatch, A]);
+    if (currentCamera) {
+      const moveLeft = () => dispatch(MoveCameraX.relative(currentCamera, -1));
+      if (A) dispatch(AddRenderFunction('left', moveLeft));
+      if (!A) dispatch(RemoveRenderFunction('left'));
+    }
+  }, [dispatch, currentCamera, A]);
 
   useEffect(() => {
-    const moveRight = () => dispatch(MoveCameraX.relative(1));
-    if (D) dispatch(AddRenderFunction('right', moveRight));
-    if (!D) dispatch(RemoveRenderFunction('right'));
-  }, [dispatch, D]);
+    if (currentCamera) {
+      const moveRight = () => dispatch(MoveCameraX.relative(currentCamera, 1));
+      if (D) dispatch(AddRenderFunction('right', moveRight));
+      if (!D) dispatch(RemoveRenderFunction('right'));
+    }
+  }, [dispatch, currentCamera, D]);
 
   useEffect(() => {
-    const moveUp = () => {
-      dispatch(MoveCameraY.relative(1));
-    };
-    if (Space) dispatch(AddRenderFunction('up', moveUp));
-    if (!Space) dispatch(RemoveRenderFunction('up'));
-  }, [dispatch, Space]);
+    if (currentCamera) {
+      const moveUp = () => dispatch(MoveCameraY.relative(currentCamera, 1));
+      if (Space) dispatch(AddRenderFunction('up', moveUp));
+      if (!Space) dispatch(RemoveRenderFunction('up'));
+    }
+  }, [dispatch, currentCamera, Space]);
 
   useEffect(() => {
-    const moveDown = () => {
-      dispatch(MoveCameraY.relative(-1));
-    };
-    if (ShiftLeft) dispatch(AddRenderFunction('down', moveDown));
-    if (!ShiftLeft) dispatch(RemoveRenderFunction('down'));
-  }, [dispatch, ShiftLeft]);
+    if (currentCamera) {
+      const moveDown = () => dispatch(MoveCameraY.relative(currentCamera, -1));
+      if (ShiftLeft) dispatch(AddRenderFunction('down', moveDown));
+      if (!ShiftLeft) dispatch(RemoveRenderFunction('down'));
+    }
+  }, [dispatch, currentCamera, ShiftLeft]);
 
   return null;
 }
