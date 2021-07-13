@@ -10,6 +10,16 @@ export const DestroyPerspectiveCamera = name => ({
   name
 });
 
+export const SetCamera = name => ({
+  type: types.CURRENT,
+  name
+});
+
+export const ReadyCamera = name => ({
+  type: types.READY,
+  name
+});
+
 export const MoveCameraX = {
   relative (posX) {
     return {
