@@ -1,6 +1,7 @@
 export const CREATE = 'engine/CAMERA/CREATE';
 export const DESTROY = 'engine/CAMERA/DESTROY';
 export const CURRENT = 'engine/CAMERA/CURRENT';
+export const NAME = 'engine/CAMERA/NAME';
 export const READY = 'engine/CAMERA/READY';
 export const READY_POS = 'engine/CAMERA/POS/READY';
 export const READY_ROT = 'engine/CAMERA/ROT/READY';
