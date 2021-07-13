@@ -10,7 +10,10 @@ import {
   SetCamera
 } from '../../store/engine/cameras/actions';
 
-export default function Camera () {
+export default function Camera ({
+  objectKey, FOV, frustNear,
+  frustFar, initialPosition, initialRotation
+}) {
   const dispatch = useDispatch();
 
   const camera = useSelector(state => state.engine.camera.current);
