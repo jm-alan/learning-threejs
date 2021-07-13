@@ -22,3 +22,11 @@ export const RemoveRenderFunction = name => ({
   type: types.REMOVE_FUNCTION,
   name
 });
+
+export const PauseRender = () => ({
+  type: types.PAUSE
+});
+
+export const ResumeRender = () => ({
+  type: types.UNPAUSE
+});
