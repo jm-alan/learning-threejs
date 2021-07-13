@@ -35,7 +35,13 @@ export const SetModalSize = (size = {}) => ({
 });
 
 export default function reducer (
-  state = { Current: null, mooring: null },
+  state = {
+    Current: null,
+    mooring: null,
+    backgroundColor: '',
+    position: {},
+    size: {}
+  },
   { type, Current, mooring, backgroundColor, position, size }
 ) {
   switch (type) {
