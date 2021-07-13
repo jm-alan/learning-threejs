@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MoveCameraZ } from '../../store/engine/camera/actions';
 import { BuildDefault, CreateRenderer, DestroyRenderer } from '../../store/engine/renderer/actions';
 import { CreateScene, DestroyScene } from '../../store/engine/scene/actions';
 
@@ -12,7 +11,7 @@ export default function Engine ({ children }) {
   const canvas = useSelector(state => state.engine.canvas.current);
   const renderer = useSelector(state => state.engine.renderer.current);
   const scene = useSelector(state => state.engine.scene.current);
-  const camera = useSelector(state => state.engine.camera.current);
+  const camera = useSelector(state => state.engine.cameras.current.object);
   const renderObjects = useSelector(state => state.engine.renderer.functions);
   const paused = useSelector(state => state.engine.renderer.paused);
 
@@ -30,7 +29,6 @@ export default function Engine ({ children }) {
   useEffect(() => {
     if (canvas && scene && camera && renderer) {
       dispatch(BuildDefault());
-      dispatch(MoveCameraZ.absolute(30));
     }
   }, [dispatch, scene, camera, canvas, renderer]);
 
