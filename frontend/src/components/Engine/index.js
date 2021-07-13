@@ -14,6 +14,7 @@ export default function Engine ({ children }) {
   const scene = useSelector(state => state.engine.scene.current);
   const camera = useSelector(state => state.engine.camera.current);
   const renderObjects = useSelector(state => state.engine.renderer.functions);
+  const paused = useSelector(state => state.engine.renderer.paused);
 
   useEffect(() => {
     if (canvas) {
@@ -27,15 +28,15 @@ export default function Engine ({ children }) {
   }, [dispatch, canvas]);
 
   useEffect(() => {
-    if (canvas && scene && camera && renderer && !ready) {
+    if (canvas && scene && camera && renderer) {
       dispatch(BuildDefault());
       dispatch(MoveCameraZ.absolute(30));
     }
-  }, [dispatch, scene, camera, canvas, renderer, ready]);
+  }, [dispatch, scene, camera, canvas, renderer]);
 
   useEffect(() => {
     const animate = () => {
-      if (scene && camera && renderer && ready) {
+      if (scene && camera && renderer && ready && !paused) {
         renderer.render(scene, camera);
         for (const renderObj of renderObjects) renderObj.action();
       }
@@ -43,7 +44,7 @@ export default function Engine ({ children }) {
     };
     const captureFrame = animate();
     return () => window.cancelAnimationFrame(captureFrame);
-  }, [dispatch, scene, camera, ready, renderer, renderObjects]);
+  }, [dispatch, scene, camera, ready, renderer, renderObjects, paused]);
 
   return children;
 }
