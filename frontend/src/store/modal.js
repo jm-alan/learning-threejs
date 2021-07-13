@@ -1,6 +1,9 @@
 const SET_MODAL = 'modal/CURRENT';
 const TEARDOWN = 'modal/TEARDOWN';
 const MOORING = 'modal/MOORING';
+const COLOR = 'modal/COLOR';
+const POSITION = 'modal/POSITION';
+const SIZE = 'modal/SIZE';
 
 export const SetModal = Current => ({
   type: SET_MODAL,
@@ -16,9 +19,24 @@ export const SetMooring = mooring => ({
   mooring
 });
 
+export const ColorModalContent = backgroundColor => ({
+  type: COLOR,
+  backgroundColor
+});
+
+export const SetModalPosition = (position = {}) => ({
+  type: POSITION,
+  position
+});
+
+export const SetModalSize = (size = {}) => ({
+  type: SIZE,
+  size
+});
+
 export default function reducer (
   state = { Current: null, mooring: null },
-  { type, Current, mooring }
+  { type, Current, mooring, backgroundColor, position, size }
 ) {
   switch (type) {
     case SET_MODAL:
@@ -27,6 +45,12 @@ export default function reducer (
       return { ...state, Current: null };
     case MOORING:
       return { ...state, mooring };
+    case COLOR:
+      return { ...state, backgroundColor };
+    case POSITION:
+      return { ...state, ...position };
+    case SIZE:
+      return { ...state, ...size };
     default:
       return state;
   }
