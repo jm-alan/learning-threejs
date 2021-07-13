@@ -11,7 +11,7 @@ export default function Director () {
 
   useEffect(() => {
     if (cameraOneReady && (currentCamera !== 'cameraOne')) dispatch(CallCamera('cameraOne'));
-  }, [dispatch, cameraOneReady]);
+  }, [dispatch, currentCamera, cameraOneReady]);
 
   return null;
 }
