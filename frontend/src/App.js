@@ -33,11 +33,26 @@ export default function App () {
             <Camera />
             <Movement />
             <Torus
-              key='testTorus'
+              objectKey='testTorus'
               specs={[20, 3, 16, 100]}
               material='MeshStandard'
             />
-            <PointLight />
+            <PointLight
+              objectKey='pointOne'
+              initialPosition={{
+                posX: 0,
+                posY: 0,
+                posZ: 100
+              }}
+            />
+            <PointLight
+              objectKey='pointTwo'
+              initialPosition={{
+                posX: 0,
+                posY: 0,
+                posZ: -100
+              }}
+            />
             <Canvas />
           </Engine>
         </Route>
