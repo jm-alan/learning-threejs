@@ -13,13 +13,9 @@ export default function reducer (
     rotZ: 0
   },
   {
-    type,
-    posX,
-    posY,
-    posZ,
-    rotX,
-    rotY,
-    rotZ
+    type, props, name,
+    posX, posY, posZ,
+    rotX, rotY, rotZ
   }
 ) {
   switch (type) {
