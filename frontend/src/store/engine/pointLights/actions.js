@@ -3,7 +3,7 @@ import * as types from './types';
 export const CreatePointLight = (
   name,
   color = 0xFFFFFF,
-  intensity,
+  intensity = 1,
   distance,
   decay,
   initialPosition = {
