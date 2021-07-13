@@ -36,7 +36,7 @@ export default function Engine ({ children }) {
     const animate = () => {
       if (scene && camera && renderer && ready && !paused) {
         renderer.render(scene, camera);
-        for (const renderObj of renderObjects) renderObj.action();
+        for (let i = 0; i < renderObjects.length; i++) renderObjects[i].action();
       }
       return window.requestAnimationFrame(animate);
     };
