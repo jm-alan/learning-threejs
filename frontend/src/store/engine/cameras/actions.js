@@ -1,8 +1,9 @@
 import * as types from './types';
 
 export const CreatePerspectiveCamera = (
-  name, FOV, frustNear,
-  frustFar, initialPosition, initialRotation
+  name, FOV = 75, frustNear = 0.1,
+  frustFar = 1000, initialPosition = { posX: 0, posY: 0, posZ: 0 },
+  initialRotation = { rotX: 0, rotY: 0, rotZ: 0 }
 ) => ({
   type: types.CREATE,
   name,
@@ -25,96 +26,123 @@ export const SetCamera = name => ({
   name
 });
 
+export const CallCamera = name => ({
+  type: types.NAME,
+  name
+});
+
 export const ReadyCamera = name => ({
   type: types.READY,
   name
 });
 
+export const ReadyCameraPos = name => ({
+  type: types.READY_POS,
+  name
+});
+
+export const ReadyCameraRot = name => ({
+  type: types.READY_ROT,
+  name
+});
+
 export const MoveCameraX = {
-  relative (posX) {
+  relative (name, posX) {
     return {
       type: types.POSX_RELATIVE,
+      name,
       posX
     };
   },
-  absolute (posX) {
+  absolute (name, posX) {
     return {
       type: types.POSX_ABSOLUTE,
+      name,
       posX
     };
   }
 };
 
 export const MoveCameraY = {
-  relative (posY) {
+  relative (name, posY) {
     return {
       type: types.POSY_RELATIVE,
+      name,
       posY
     };
   },
-  absolute (posY) {
+  absolute (name, posY) {
     return {
       type: types.POSY_ABSOLUTE,
+      name,
       posY
     };
   }
 };
 
 export const MoveCameraZ = {
-  relative (posZ) {
+  relative (name, posZ) {
     return {
       type: types.POSZ_RELATIVE,
+      name,
       posZ
     };
   },
-  absolute (posZ) {
+  absolute (name, posZ) {
     return {
       type: types.POSZ_ABSOLUTE,
+      name,
       posZ
     };
   }
 };
 
 export const RotCameraX = {
-  relative (rotX) {
+  relative (name, rotX) {
     return {
       type: types.ROTX_RELATIVE,
+      name,
       rotX
     };
   },
-  absolute (rotX) {
+  absolute (name, rotX) {
     return {
       type: types.ROTX_ABSOLUTE,
+      name,
       rotX
     };
   }
 };
 
 export const RotCameraY = {
-  relative (rotY) {
+  relative (name, rotY) {
     return {
       type: types.ROTY_RELATIVE,
+      name,
       rotY
     };
   },
-  absolute (rotY) {
+  absolute (name, rotY) {
     return {
       type: types.ROTY_ABSOLUTE,
+      name,
       rotY
     };
   }
 };
 
 export const RotCameraZ = {
-  relative (rotZ) {
+  relative (name, rotZ) {
     return {
       type: types.ROTZ_RELATIVE,
+      name,
       rotZ
     };
   },
-  absolute (rotZ) {
+  absolute (name, rotZ) {
     return {
       type: types.ROTZ_ABSOLUTE,
+      name,
       rotZ
     };
   }
