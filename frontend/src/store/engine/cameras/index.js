@@ -4,16 +4,7 @@ import * as types from './types';
 
 const initialCamera = {
   name: null,
-  object: null,
-  readyPos: false,
-  readyRot: false,
-  ready: false,
-  posX: null,
-  posY: null,
-  posZ: null,
-  rotX: null,
-  rotY: null,
-  rotZ: null
+  object: null
 };
 
 export default function reducer (
@@ -37,7 +28,10 @@ export default function reducer (
     case types.CURRENT:
       return {
         ...state,
-        current: state.all[name]
+        current: {
+          name,
+          object: state.all[name].object
+        }
       };
     case types.CREATE:
       return {
