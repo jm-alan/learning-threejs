@@ -93,7 +93,7 @@ export default function Camera ({
       calledCamera === objectKey &&
       currentCamera !== calledCamera
     ) dispatch(SetCamera(objectKey));
-  }, [dispatch, currentCamera, objectKey]);
+  }, [dispatch, calledCamera, currentCamera, objectKey]);
 
   return null;
 }
