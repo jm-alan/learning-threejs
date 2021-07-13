@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateGeometry } from '../../store/engine/geometries/actions';
 import { AddToScene } from '../../store/engine/scene/actions';
 
-export default function Torus ({ objectKey, specs, material, color, wireframe, initialPosition, initialRotation }) {
+export default function Torus ({
+  objectKey, specs, material,
+  color, wireframe, initialPosition,
+  initialRotation, children
+}) {
   const dispatch = useDispatch();
 
   const ready = useSelector(state => state.engine.renderer.ready);
@@ -28,5 +32,5 @@ export default function Torus ({ objectKey, specs, material, color, wireframe, i
     if (torus) dispatch(AddToScene(torus));
   }, [dispatch, torus]);
 
-  return null;
+  return children ?? null;
 }
