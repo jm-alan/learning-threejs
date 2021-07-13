@@ -39,7 +39,7 @@ export default function App () {
               initialPosition={{
                 posX: 0,
                 posY: 0,
-                posZ: 30
+                posZ: 50
               }}
             />
             <Movement />
