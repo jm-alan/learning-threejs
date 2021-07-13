@@ -61,6 +61,7 @@ function Root () {
       <App />
       <Modal />
       <div ref={mooringRef} id='modal' />
+      <div id='overlays' />
     </BrowserRouter>
   );
 }
