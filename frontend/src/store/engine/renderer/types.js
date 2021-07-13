@@ -4,3 +4,5 @@ export const BUILD_DEFAULT = 'engine/RENDERER/BUILD_DEFAULT';
 export const ADD_FUNCTION = 'engine/RENDERER/FUNCTIONS/ADD';
 export const REMOVE_FUNCTION = 'engine/RENDERER/FUNCTIONS/REMOVE';
 export const DUMP_FUNCTIONS = 'engine/RENDERER/FUNCTIONS/DUMP';
+export const PAUSE = 'engine/RENDERER/PAUSE';
+export const UNPAUSE = 'engine/RENDERER/UNPAUSE';
