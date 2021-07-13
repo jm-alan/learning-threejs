@@ -45,7 +45,7 @@ export default function App () {
             <Movement />
             <Torus
               objectKey='testTorus'
-              specs={[20, 3, 16, 100]}
+              specs={[10, 5, 5, 50]}
               material='MeshStandard'
             />
             <PointLight
