@@ -32,7 +32,9 @@ export default function App () {
           <Engine>
             <Overlays />
             <KeyListener />
-            <Camera />
+            <Camera
+              objectKey='cameraOne'
+            />
             <Movement />
             <Torus
               objectKey='testTorus'
