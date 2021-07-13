@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 
 import * as pointLights from './store/engine/pointLights/actions';
 import * as ambientLights from './store/engine/ambientLights/actions';
@@ -45,15 +45,9 @@ function Root () {
   const dispatch = useDispatch();
   const mooringRef = useRef(null);
 
-  // const activeEngine = useSelector(state => state.engine);
-
   useEffect(() => {
     dispatch(SetMooring(mooringRef.current));
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (process.env.NODE_ENV !== 'production') window.activeEngine = activeEngine;
-  // }, [activeEngine]);
 
   return (
     <BrowserRouter>
