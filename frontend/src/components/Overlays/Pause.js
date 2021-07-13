@@ -18,8 +18,10 @@ export default function Pause () {
   }, [dispatch]);
 
   return (
-    <h1>
-      The Game is Paused!
-    </h1>
+    <div id='pause'>
+      <h1>
+        The Game is Paused!
+      </h1>
+    </div>
   );
 }

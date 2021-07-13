@@ -5,6 +5,8 @@ import Pause from './Pause';
 import { SetModal, TearDown } from '../../store/modal';
 import { ShowModal, HideModal } from '../../store/UX';
 
+import './index.css';
+
 export default function Overlays () {
   const dispatch = useDispatch();
 
