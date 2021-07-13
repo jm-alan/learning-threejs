@@ -36,6 +36,11 @@ export default function App () {
             <KeyListener />
             <Camera
               objectKey='cameraOne'
+              initialPosition={{
+                posX: 0,
+                posY: 0,
+                posZ: 30
+              }}
             />
             <Movement />
             <Torus
