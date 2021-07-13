@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateGeometry } from '../../store/engine/geometries/actions';
 import { AddToScene } from '../../store/engine/scene/actions';
 
-export default function Torus ({ key, specs, material, color, wireframe, initialPosition, initialRotation }) {
+export default function Torus ({ objectKey, specs, material, color, wireframe, initialPosition, initialRotation }) {
   const dispatch = useDispatch();
 
   const ready = useSelector(state => state.engine.renderer.ready);
-  const torus = useSelector(state => state.engine.geometries.all[key]);
+  const torus = useSelector(state => state.engine.geometries.all[objectKey]);
 
   useEffect(() => {
     if (ready && !torus) {
       dispatch(CreateGeometry(
-        key,
+        objectKey,
         'Torus',
         specs,
         material,
@@ -22,7 +22,7 @@ export default function Torus ({ key, specs, material, color, wireframe, initial
         initialRotation
       ));
     }
-  }, [dispatch, torus, ready]);
+  }, [dispatch, objectKey, specs, material, color, wireframe, initialPosition, initialRotation, torus, ready]);
 
   useEffect(() => {
     if (torus) dispatch(AddToScene(torus));
