@@ -20,12 +20,14 @@ export default function reducer (
               props.decay
             ),
             color: props.color,
+            intensity: props.intensity,
+            distance: props.distance,
+            decay: props.decay,
             ...props.initialPosition
           }
         }
       };
     case types.COLOR:
-      state.all[name].object.color.set(color);
       return {
         ...state,
         all: {
@@ -37,7 +39,6 @@ export default function reducer (
         }
       };
     case types.INTENSITY:
-      state.all[name].object.intensity.set(intensity);
       return {
         ...state,
         all: {
@@ -49,7 +50,6 @@ export default function reducer (
         }
       };
     case types.MOVEX_ABSOLUTE:
-      state.all[name].object.position.setX(offset);
       return {
         ...state,
         all: {
@@ -61,7 +61,6 @@ export default function reducer (
         }
       };
     case types.MOVEY_ABSOLUTE:
-      state.all[name].object.position.setY(offset);
       return {
         ...state,
         all: {
@@ -73,7 +72,6 @@ export default function reducer (
         }
       };
     case types.MOVEZ_ABSOLUTE:
-      state.all[name].object.position.setZ(offset);
       return {
         ...state,
         all: {
@@ -85,7 +83,6 @@ export default function reducer (
         }
       };
     case types.MOVEX_RELATIVE:
-      state.all[name].object.position.setX(state.all[name].posX + offset);
       return {
         ...state,
         all: {
@@ -97,7 +94,6 @@ export default function reducer (
         }
       };
     case types.MOVEY_RELATIVE:
-      state.all[name].object.position.setY(state.all[name].posY + offset);
       return {
         ...state,
         all: {
@@ -109,7 +105,6 @@ export default function reducer (
         }
       };
     case types.MOVEZ_RELATIVE:
-      state.all[name].object.position.setZ(state.all[name].posZ + offset);
       return {
         ...state,
         all: {
