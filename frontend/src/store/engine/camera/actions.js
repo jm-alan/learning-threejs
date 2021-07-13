@@ -1,8 +1,18 @@
 import * as types from './types';
 
-export const CreatePerspectiveCamera = name => ({
+export const CreatePerspectiveCamera = (
+  name, FOV, frustNear,
+  frustFar, initialPosition, initialRotation
+) => ({
   type: types.CREATE,
-  name
+  name,
+  props: {
+    FOV,
+    frustNear,
+    frustFar,
+    initialPosition,
+    initialRotation
+  }
 });
 
 export const DestroyPerspectiveCamera = name => ({
