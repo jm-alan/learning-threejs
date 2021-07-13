@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Auth from '.';
+
+import Auth from './';
+import AuthInput from './AuthInput';
 import { SetErrors } from '../../store/errors';
 import { SignUp } from '../../store/session';
-import AuthInput from './AuthInput';
 
 export default function SignupForm () {
   const dispatch = useDispatch();

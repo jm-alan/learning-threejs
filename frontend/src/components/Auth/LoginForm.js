@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Auth from '.';
+
+import Auth from './';
 import { LogIn } from '../../store/session';
 import AuthInput from './AuthInput';
 

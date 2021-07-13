@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { TearDown } from '../../store/modal';
 import { HideModal } from '../../store/UX';
 

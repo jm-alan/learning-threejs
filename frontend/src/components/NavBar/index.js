@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { SetModal } from '../../store/modal';
-import { LogOut } from '../../store/session';
-import { ShowModal } from '../../store/UX';
 
 import LoginForm from '../Auth/LoginForm';
 import SignupForm from '../Auth/SignupForm';
+import { SetModal } from '../../store/modal';
+import { LogOut } from '../../store/session';
+import { ShowModal } from '../../store/UX';
 
 export default function NavBar () {
   const dispatch = useDispatch();
