@@ -38,9 +38,7 @@ export default function reducer (
   state = {
     Current: null,
     mooring: null,
-    backgroundColor: '',
-    position: {},
-    size: {}
+    backgroundColor: ''
   },
   { type, Current, mooring, backgroundColor, position, size }
 ) {
