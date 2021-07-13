@@ -5,7 +5,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 
 import * as pointLights from './store/engine/pointLights/actions';
 import * as ambientLights from './store/engine/ambientLights/actions';
-import * as camera from './store/engine/camera/actions';
+import * as camera from './store/engine/cameras/actions';
 import * as canvas from './store/engine/canvas/actions';
 import * as geometries from './store/engine/geometries/actions';
 import * as keys from './store/engine/keys/actions';
