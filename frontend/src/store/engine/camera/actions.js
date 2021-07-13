@@ -1,11 +1,13 @@
 import * as types from './types';
 
-export const CreatePerspectiveCamera = () => ({
-  type: types.CREATE
+export const CreatePerspectiveCamera = name => ({
+  type: types.CREATE,
+  name
 });
 
-export const DestroyPerspectiveCamera = () => ({
-  type: types.DESTROY
+export const DestroyPerspectiveCamera = name => ({
+  type: types.DESTROY,
+  name
 });
 
 export const MoveCameraX = {
@@ -25,15 +27,7 @@ export const MoveCameraX = {
 
 export const MoveCameraY = {
   relative (posY) {
-    console.log('PosY relative==============================');
-    console.log('PosY relative==============================');
-    console.log('PosY relative==============================');
-    console.log('PosY relative==============================');
     console.log(posY);
-    console.log('PosY relative==============================');
-    console.log('PosY relative==============================');
-    console.log('PosY relative==============================');
-    console.log('PosY relative==============================');
     return {
       type: types.POSY_RELATIVE,
       posY
