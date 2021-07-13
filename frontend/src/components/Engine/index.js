@@ -35,7 +35,7 @@ export default function Engine ({ children }) {
 
   useEffect(() => {
     const animate = () => {
-      if (scene && camera && ready) {
+      if (scene && camera && renderer && ready) {
         renderer.render(scene, camera);
         for (const renderObj of renderObjects) renderObj.action();
       }
@@ -43,7 +43,7 @@ export default function Engine ({ children }) {
     };
     const captureFrame = animate();
     return () => window.cancelAnimationFrame(captureFrame);
-  }, [dispatch, scene, camera, ready, renderObjects]);
+  }, [dispatch, scene, camera, ready, renderer, renderObjects]);
 
   return children;
 }

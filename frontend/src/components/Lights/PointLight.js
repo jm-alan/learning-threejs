@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreatePointLight } from '../../store/engine/pointLights/actions';
 import { AddToScene, RemoveFromScene } from '../../store/engine/scene/actions';
 
-export default function PointLight ({ objectKey, initialColor, initialPosition, initialIntensity, initialDistance, initialDecay }) {
+export default function PointLight ({
+  objectKey, initialColor, initialPosition,
+  initialIntensity, initialDistance, initialDecay,
+  children
+}) {
   const dispatch = useDispatch();
 
   const ready = useSelector(state => state.engine.renderer.ready);
@@ -61,5 +65,5 @@ export default function PointLight ({ objectKey, initialColor, initialPosition, 
     if (light) light.object.color.set(color);
   }, [light, color]);
 
-  return null;
+  return children ?? null;
 }
