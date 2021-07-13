@@ -9,6 +9,7 @@ import Engine from './components/Engine';
 import KeyListener from './components/Engine/KeyListener';
 import Movement from './components/Camera/Movement';
 import Overlays from './components/Overlays';
+import Director from './components/Director';
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -30,6 +31,7 @@ export default function App () {
       <Switch>
         <Route path='/'>
           <Engine>
+            <Director />
             <Overlays />
             <KeyListener />
             <Camera
