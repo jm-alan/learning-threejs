@@ -47,7 +47,6 @@ export const MoveCameraX = {
 
 export const MoveCameraY = {
   relative (posY) {
-    console.log(posY);
     return {
       type: types.POSY_RELATIVE,
       posY
