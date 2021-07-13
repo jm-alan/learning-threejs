@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { current: null, ready: false, functions: [] },
-  { type, canvas, scene, camera, name, renderObj }
+  { type, canvas, name, renderObj }
 ) {
   switch (type) {
     case types.CREATE:
@@ -14,9 +14,6 @@ export default function reducer (
       };
     case types.DESTROY:
       return { ...state, current: null, ready: false };
-    case types.RENDER:
-      state.current.render(scene, camera);
-      return state;
     case types.BUILD_DEFAULT:
       state.current.setPixelRatio(window.devicePixelRatio);
       state.current.setSize(window.innerWidth, window.innerHeight);
