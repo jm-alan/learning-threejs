@@ -45,15 +45,15 @@ function Root () {
   const dispatch = useDispatch();
   const mooringRef = useRef(null);
 
-  const activeEngine = useSelector(state => state.engine);
+  // const activeEngine = useSelector(state => state.engine);
 
   useEffect(() => {
     dispatch(SetMooring(mooringRef.current));
   }, [dispatch]);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') window.activeEngine = activeEngine;
-  }, [activeEngine]);
+  // useEffect(() => {
+  //   if (process.env.NODE_ENV !== 'production') window.activeEngine = activeEngine;
+  // }, [activeEngine]);
 
   return (
     <BrowserRouter>
