@@ -9,5 +9,17 @@ export const HideDebugMenu = () => ({
 });
 
 export const SetOverlayMooring = mooring => ({
-  type: types.MOORING
+  type: types.MOORING,
+  mooring
+});
+
+export const AddOverlay = (name, component) => ({
+  type: types.ADD,
+  name,
+  component
+});
+
+export const RemoveOverlay = name => ({
+  type: types.REMOVE,
+  name
 });
