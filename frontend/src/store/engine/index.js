@@ -7,6 +7,8 @@ import renderer from './renderer';
 import geometries from './geometries';
 import pointLights from './pointLights';
 import keys from './keys';
+import mode from './mode';
+import overlays from './overlays';
 
 export default combineReducers({
   canvas,
@@ -15,5 +17,7 @@ export default combineReducers({
   renderer,
   geometries,
   pointLights,
-  keys
+  keys,
+  mode,
+  overlays
 });
