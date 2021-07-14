@@ -14,7 +14,7 @@ export const TearDown = () => ({
   type: TEARDOWN
 });
 
-export const SetMooring = mooring => ({
+export const SetModalMooring = mooring => ({
   type: MOORING,
   mooring
 });
