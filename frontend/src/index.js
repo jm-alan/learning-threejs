@@ -16,11 +16,12 @@ import Modal from './components/Modal';
 import configureStore from './store';
 import Errors from './components/Errors';
 import csrfetch from './store/csrfetch';
+import findCookie from './utils/findCookie';
 import { SetModalMooring } from './store/modal';
 import { SetOverlayMooring } from './store/engine/overlays/actions';
 
 import './index.css';
-import findCookie from './utils/findCookie';
+import './utils/prototypes';
 
 const store = configureStore();
 
