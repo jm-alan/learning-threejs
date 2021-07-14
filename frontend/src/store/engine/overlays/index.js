@@ -16,7 +16,7 @@ export default function reducer (
         ...state,
         current: {
           ...state.current,
-          name: component
+          [name]: component
         }
       };
     case types.REMOVE:
