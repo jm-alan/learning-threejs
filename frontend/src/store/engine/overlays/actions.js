@@ -7,3 +7,7 @@ export const ShowDebugMenu = () => ({
 export const HideDebugMenu = () => ({
   type: types.HIDE_DEBUG
 });
+
+export const SetOverlayMooring = mooring => ({
+  type: types.MOORING
+});
