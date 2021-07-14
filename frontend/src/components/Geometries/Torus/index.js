@@ -34,5 +34,7 @@ export default function Torus ({
     if (torus) dispatch(AddToScene(torus));
   }, [dispatch, torus]);
 
+  if (children) for (const child of children) child.props.object = torus;
+
   return children ?? null;
 }
