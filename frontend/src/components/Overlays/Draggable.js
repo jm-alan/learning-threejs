@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import { useEventListener } from '../../utils/hooks';
 
 export default function Draggable ({ children }) {
-  const [promptDraggable, setPromptDraggable] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
+  const [backgroundColor, setBackgroundColor] = useState('steelblue');
+  const [ratio, setRatio] = useState(window.devicePixelRatio);
 
-  const makeShiny = () => setPromptDraggable(true);
-  const makeDull = () => setPromptDraggable(false);
+  const makeShiny = () => setBackgroundColor('skyblue');
+  const makeDull = () => setBackgroundColor('steelblue');
   const startDragging = () => setDragging(true);
   const stopDragging = () => setDragging(false);
 
@@ -17,8 +18,8 @@ export default function Draggable ({ children }) {
 
   useEffect(() => {
     const mouseMove = ({ movementX, movementY }) => {
-      setLeft(p => p + movementX);
-      setTop(p => p + movementY);
+      setLeft(p => p + (movementX / ratio));
+      setTop(p => p + (movementY / ratio));
     };
     if (dragging) {
       add.mousemove(mouseMove);
@@ -28,59 +29,46 @@ export default function Draggable ({ children }) {
       remove.mousemove(mouseMove);
       remove.mouseup(stopDragging);
     };
-  }, [add, remove, dragging]);
+  }, [add, remove, ratio, dragging]);
+
+  useEffect(() => {
+    const ratioSetter = setRatio(window.devicePixelRatio);
+    add.resize(ratioSetter);
+    return () => remove.resize(ratioSetter);
+  }, [add, remove]);
 
   return (
     <div
       className='draggable'
-      style={{
-        top,
-        left
-      }}
+      style={{ top, left }}
     >
       <div
         onMouseEnter={makeShiny}
         onMouseLeave={makeDull}
         onMouseDown={startDragging}
         className='draggable-border top'
-        style={{
-          backgroundColor: promptDraggable
-            ? 'skyblue'
-            : 'steelblue'
-        }}
+        style={{ backgroundColor }}
       />
       <div
         onMouseEnter={makeShiny}
         onMouseLeave={makeDull}
         onMouseDown={startDragging}
         className='draggable-border bottom'
-        style={{
-          backgroundColor: promptDraggable
-            ? 'skyblue'
-            : 'steelblue'
-        }}
+        style={{ backgroundColor }}
       />
       <div
         onMouseEnter={makeShiny}
         onMouseLeave={makeDull}
         onMouseDown={startDragging}
         className='draggable-border left'
-        style={{
-          backgroundColor: promptDraggable
-            ? 'skyblue'
-            : 'steelblue'
-        }}
+        style={{ backgroundColor }}
       />
       <div
         onMouseEnter={makeShiny}
         onMouseLeave={makeDull}
         onMouseDown={startDragging}
         className='draggable-border right'
-        style={{
-          backgroundColor: promptDraggable
-            ? 'skyblue'
-            : 'steelblue'
-        }}
+        style={{ backgroundColor }}
       />
       <div className='draggable-content'>
         {children}
