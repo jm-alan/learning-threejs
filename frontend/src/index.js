@@ -16,7 +16,8 @@ import Modal from './components/Modal';
 import configureStore from './store';
 import Errors from './components/Errors';
 import csrfetch from './store/csrfetch';
-import { SetMooring } from './store/modal';
+import { SetModalMooring } from './store/modal';
+import { SetOverlayMooring } from './store/engine/overlays/actions';
 
 import './index.css';
 import findCookie from './utils/findCookie';
@@ -43,10 +44,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root () {
   const dispatch = useDispatch();
-  const mooringRef = useRef(null);
+  const modalMooringRef = useRef(null);
+  const overlayMooringRef = useRef(null);
 
   useEffect(() => {
-    dispatch(SetMooring(mooringRef.current));
+    dispatch(SetModalMooring(modalMooringRef.current));
+    dispatch(SetOverlayMooring(overlayMooringRef.current));
   }, [dispatch]);
 
   return (
@@ -54,8 +57,8 @@ function Root () {
       <Errors />
       <App />
       <Modal />
-      <div ref={mooringRef} id='modal' />
-      <div id='overlays' />
+      <div ref={modalMooringRef} id='modal' />
+      <div ref={overlayMooringRef} id='overlay' />
     </BrowserRouter>
   );
 }
