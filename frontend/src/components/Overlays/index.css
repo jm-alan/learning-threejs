@@ -6,3 +6,105 @@
   align-items: center;
   justify-content: center;
 }
+
+#debug {
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 20vw;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  color: blanchedalmond;
+}
+
+#debug-camera {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.debug-header {
+  width: 100%;
+  text-align: center;
+}
+
+.debug-header > * {
+  margin: 5px 0px;
+}
+
+.debug-organizer {
+  display: flex;
+  align-items: center;
+}
+
+.debug-organizer.outer {
+  height: 100%;
+  width: 100%;
+}
+
+.debug-organizer.mid {
+  height: 100%;
+  width: 100%;
+  padding: 0px 5px;
+}
+
+.debug-organizer.mid > * {
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.debug-organizer.vertical {
+  flex-direction: column;
+  overflow-y: auto;
+  justify-content: space-between;
+}
+
+.draggable {
+  position: absolute;
+  display: flex;
+  padding: 10px;
+  height: min-content;
+  width: min-content;
+}
+
+.draggable-content {
+  height: 100%;
+  width: 100%;
+}
+
+.draggable-border {
+  cursor: pointer;
+  position: absolute;
+  transition: background-color 0.25s;
+}
+
+.draggable-border:is(.top, .bottom) {
+  width: 100%;
+  height: 10px;
+  left: 0px;
+}
+
+.draggable-border:is(.left, .right) {
+  height: 100%;
+  width: 10px;
+  top: 0px;
+}
+
+.draggable-border.top {
+  top: 0px;
+}
+
+.draggable-border.bottom {
+  bottom: 0px;
+}
+
+.draggable-border.left {
+  left: 0px;
+}
+
+.draggable-border.right {
+  right: 0px;
+}
