@@ -37,9 +37,27 @@ export default function App () {
             <Camera
               objectKey='cameraOne'
               initialPosition={{
-                posX: 0,
+                posX: -10,
                 posY: 0,
                 posZ: 50
+              }}
+              initialRotation={{
+                rotX: 0,
+                rotY: 0,
+                rotZ: 0
+              }}
+            />
+            <Camera
+              objectKey='cameraTwo'
+              initialPosition={{
+                posX: 10,
+                posY: 0,
+                posZ: 50
+              }}
+              initialRotation={{
+                rotX: 0,
+                rotY: 0,
+                rotZ: 0
               }}
             />
             <Movement />
