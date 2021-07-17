@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BuildDefault, CreateRenderer, DestroyRenderer } from '../../store/engine/renderer/actions';
@@ -13,6 +13,12 @@ export default function Engine ({ children }) {
   const camera = useSelector(state => state.engine.cameras.current.object);
   const renderObjects = useSelector(state => state.engine.renderer.functions);
   const paused = useSelector(state => state.engine.renderer.paused);
+
+  const renderProps = useRef({ paused: false });
+
+  useEffect(() => {
+    renderProps.current.paused = paused;
+  }, [paused]);
 
   useEffect(() => {
     if (canvas) {
@@ -31,13 +37,13 @@ export default function Engine ({ children }) {
 
   useEffect(() => {
     const animate = () => {
-      if (ready && !paused) {
+      if (ready && !renderProps.current.paused) {
         renderer.render(scene, camera);
         for (let i = 0; i < renderObjects.length; i++) renderObjects[i].action();
         return window.requestAnimationFrame(animate);
       }
     };
-    const captureFrame = animate();
+    const captureFrame = window.requestAnimationFrame(animate);
     return () => window.cancelAnimationFrame(captureFrame);
   }, [dispatch, scene, camera, ready, renderer, renderObjects, paused]);
 
