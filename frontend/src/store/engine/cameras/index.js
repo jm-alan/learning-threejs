@@ -9,7 +9,7 @@ const initialCamera = {
 
 export default function reducer (
   state = {
-    current: initialCamera,
+    current: { ...initialCamera },
     all: {},
     called: null
   },
@@ -39,7 +39,6 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            name,
             readyPos: false,
             readyRot: false,
             ready: false,
@@ -55,8 +54,22 @@ export default function reducer (
         }
       };
     case types.DESTROY:
-      if (state.current.name === name) state.current = { ...initialCamera };
       delete state.all[name];
+      if (name === state.current.name) {
+        delete state.current.object;
+        delete state.current.name;
+        delete state.current;
+        return {
+          ...state,
+          called: null,
+          current: {
+            ...initialCamera
+          },
+          all: {
+            ...state.all
+          }
+        };
+      }
       return {
         ...state,
         all: {
