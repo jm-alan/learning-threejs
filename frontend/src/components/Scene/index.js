@@ -21,7 +21,5 @@ export default function Scene ({ children, name }) {
     dispatch(SetScene(name));
   }, [dispatch, name, currentScene, calledScene]);
 
-  children(name);
-
-  return null;
+  return children(name);
 }
