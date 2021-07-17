@@ -24,6 +24,11 @@ export const DestroyGeometry = name => ({
   name
 });
 
+export const ReadyGeometry = name => ({
+  type: types.READY,
+  name
+});
+
 export const ReadyGeometryPos = name => ({
   type: types.READY_POS,
   name
