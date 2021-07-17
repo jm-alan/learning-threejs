@@ -27,7 +27,7 @@ export const SetCamera = name => ({
 });
 
 export const CallCamera = name => ({
-  type: types.NAME,
+  type: types.CALL,
   name
 });
 
