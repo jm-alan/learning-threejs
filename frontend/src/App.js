@@ -10,6 +10,7 @@ import KeyListener from './components/Engine/KeyListener';
 import Movement from './components/Camera/Movement';
 import Overlays from './components/Overlays';
 import Director from './components/Director';
+import Rotate from './components/Geometries/Animations/Rotate';
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -36,51 +37,47 @@ export default function App () {
             <KeyListener />
             <Camera
               objectKey='cameraOne'
-              initialPosition={{
-                posX: -10,
-                posY: 0,
-                posZ: 50
-              }}
-              initialRotation={{
-                rotX: 0,
-                rotY: 0,
-                rotZ: 0
-              }}
-            />
-            <Camera
-              objectKey='cameraTwo'
-              initialPosition={{
-                posX: 10,
-                posY: 0,
-                posZ: 50
-              }}
-              initialRotation={{
-                rotX: 0,
-                rotY: 0,
-                rotZ: 0
-              }}
+              FOV={90}
+              initialPosition={{ posX: 0, posY: 0, posZ: 20 }}
+              initialRotation={{ rotX: 0, rotY: 0, rotZ: 0 }}
             />
             <Movement />
             <Torus
-              objectKey='testTorus'
-              specs={[10, 5, 5, 50]}
+              name='torusOne'
+              specs={[5, 2, 30, 30]}
               material='MeshStandard'
-            />
+              initialPosition={{ posX: -10, posY: 0, posZ: 0 }}
+            >
+              {objectKey => (
+                <Rotate
+                  objectKey={objectKey}
+                  name='testTorusRotateYStandard'
+                  rotY={0.01}
+                />
+              )}
+            </Torus>
+            <Torus
+              objectKey='torusTwo'
+              specs={[5, 2, 30, 30]}
+              material='MeshStandard'
+              initialPosition={{ posX: 10, posY: 0, posZ: 0 }}
+            >
+              {object => (
+                <Rotate
+                  object={object}
+                  name='testTorusRotateX'
+                  rotX={-0.01}
+                />
+              )}
+            </Torus>
             <PointLight
               objectKey='pointOne'
-              initialPosition={{
-                posX: 0,
-                posY: 0,
-                posZ: 100
-              }}
+              initialPosition={{ posX: 100, posY: 0, posZ: 10 }}
             />
             <PointLight
               objectKey='pointTwo'
-              initialPosition={{
-                posX: 0,
-                posY: 0,
-                posZ: -100
-              }}
+              initialPosition={{ posX: -100, posY: 0, posZ: 10 }}
+              initialColor={0xFF0000}
             />
             <Canvas />
           </Engine>
