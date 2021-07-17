@@ -56,10 +56,10 @@ export default function reducer (
         }
       };
     case types.ADD:
-      state.current.object.add(object);
+      state.all[name].add(object);
       return state;
     case types.REMOVE:
-      state.current.object.remove(object);
+      state.all[name].remove(object);
       return state;
     default:
       return state;
