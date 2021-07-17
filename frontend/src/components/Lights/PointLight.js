@@ -35,7 +35,7 @@ export default function PointLight ({
   useEffect(() => {
     if (ready && light) dispatch(AddToScene(sceneName, light));
     return () => !ready && light && dispatch(RemoveFromScene(sceneName, light));
-  }, [dispatch, ready, light]);
+  }, [dispatch, sceneName, ready, light]);
 
   useEffect(() => {
     if (light) light.object.position.setX(posX);

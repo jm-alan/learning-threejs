@@ -68,12 +68,12 @@ export default function Torus ({
   }, [
     dispatch, name, specs, material, color, wireframe,
     initialPosition, initialRotation, torus, renderReady,
-    trashable
+    trashable, sceneName
   ]);
 
   useEffect(() => {
     objectReady && dispatch(AddToScene(sceneName, torus));
-  }, [dispatch, objectReady, torus]);
+  }, [dispatch, sceneName, objectReady, torus]);
 
   useEffect(() => {
     object && !readyPos && (() => {
