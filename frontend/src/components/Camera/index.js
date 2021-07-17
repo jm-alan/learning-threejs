@@ -42,57 +42,56 @@ export default function Camera ({
   }, [dispatch, objectKey, FOV, frustNear, frustFar, initialPosition, initialRotation]);
 
   useEffect(() => {
-    if (object) object.position.setX(posX);
+    object && object.position.setX(posX);
   }, [object, posX]);
 
   useEffect(() => {
-    if (object) object.position.setY(posY);
+    object && object.position.setY(posY);
   }, [object, posY]);
 
   useEffect(() => {
-    if (object) object.position.setZ(posZ);
+    object && object.position.setZ(posZ);
   }, [object, posZ]);
 
   useEffect(() => {
-    if (object) object.rotateX(rotX);
+    object && object.rotateX(rotX);
   }, [object, rotX]);
 
   useEffect(() => {
-    if (object) object.rotateY(rotY);
+    object && object.rotateY(rotY);
   }, [object, rotY]);
 
   useEffect(() => {
-    if (object) object.rotateZ(rotZ);
+    object && object.rotateZ(rotZ);
   }, [object, rotZ]);
 
   useEffect(() => {
-    if (object && !readyPos && initialPosition) {
-      object.position.setX(initialPosition.posX);
-      object.position.setY(initialPosition.posY);
-      object.position.setZ(initialPosition.posZ);
+    object && !readyPos && (() => {
+      initialPosition && object.position.setX(initialPosition.posX);
+      initialPosition && object.position.setY(initialPosition.posY);
+      initialPosition && object.position.setZ(initialPosition.posZ);
       dispatch(ReadyCameraPos(objectKey));
-    } else if (!readyPos) dispatch(ReadyCameraPos(objectKey));
+    })();
   }, [dispatch, object, objectKey, readyPos, initialPosition]);
 
   useEffect(() => {
-    if (object && !readyRot && initialRotation) {
-      object.rotateX(initialRotation.rotX);
-      object.rotateY(initialRotation.rotY);
-      object.rotateZ(initialRotation.rotZ);
+    object && !readyRot && (() => {
+      initialRotation && object.rotateX(initialRotation.rotX);
+      initialRotation && object.rotateY(initialRotation.rotY);
+      initialRotation && object.rotateZ(initialRotation.rotZ);
       dispatch(ReadyCameraRot(objectKey));
-    } else if (!readyRot) dispatch(ReadyCameraRot(objectKey));
-  }, [dispatch, readyRot, object, objectKey, initialRotation]);
+    })();
+  }, [dispatch, object, objectKey, readyRot, initialRotation]);
 
   useEffect(() => {
-    if (object && !ready && readyPos && readyRot) dispatch(ReadyCamera(objectKey));
+    !ready && readyPos && readyRot && dispatch(ReadyCamera(objectKey));
   }, [dispatch, object, objectKey, readyPos, readyRot, ready]);
 
   useEffect(() => {
-    if (
-      calledCamera &&
-      calledCamera === objectKey &&
-      currentCamera !== calledCamera
-    ) dispatch(SetCamera(objectKey));
+    calledCamera &&
+    calledCamera === objectKey &&
+    currentCamera !== calledCamera &&
+    dispatch(SetCamera(objectKey));
   }, [dispatch, calledCamera, currentCamera, objectKey]);
 
   return null;
