@@ -11,7 +11,7 @@ export default function reducer (
   state = {
     current: initialCamera,
     all: {},
-    name: null
+    called: null
   },
   {
     type, props, name,
@@ -20,7 +20,7 @@ export default function reducer (
   }
 ) {
   switch (type) {
-    case types.NAME:
+    case types.CALL:
       return {
         ...state,
         name
