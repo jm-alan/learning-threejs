@@ -88,7 +88,6 @@ export default function Camera ({
   }, [dispatch, object, objectKey, readyPos, readyRot, ready]);
 
   useEffect(() => {
-    calledCamera &&
     calledCamera === objectKey &&
     currentCamera !== calledCamera &&
     dispatch(SetCamera(objectKey));
