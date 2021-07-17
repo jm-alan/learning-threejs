@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import canvas from './canvas';
-import scene from './scene';
+import scenes from './scenes';
 import cameras from './cameras';
 import renderer from './renderer';
 import geometries from './geometries';
@@ -12,7 +12,7 @@ import overlays from './overlays';
 
 export default combineReducers({
   canvas,
-  scene,
+  scenes,
   cameras,
   renderer,
   geometries,
