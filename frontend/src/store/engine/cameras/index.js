@@ -23,7 +23,7 @@ export default function reducer (
     case types.CALL:
       return {
         ...state,
-        name
+        called: name
       };
     case types.CURRENT:
       return {
