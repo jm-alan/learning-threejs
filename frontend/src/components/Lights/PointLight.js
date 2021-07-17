@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CreatePointLight } from '../../store/engine/pointLights/actions';
-import { AddToScene, RemoveFromScene } from '../../store/engine/scene/actions';
+import { AddToScene, RemoveFromScene } from '../../store/engine/scenes/actions';
 
 export default function PointLight ({
   objectKey, initialColor, initialPosition,
   initialIntensity, initialDistance, initialDecay,
-  children
+  sceneName, children
 }) {
   const dispatch = useDispatch();
 
@@ -33,8 +33,8 @@ export default function PointLight ({
   }, [dispatch, ready, light, objectKey, initialColor, initialPosition, initialIntensity, initialDistance, initialDecay]);
 
   useEffect(() => {
-    if (ready && light) dispatch(AddToScene(light));
-    return () => !ready && light && dispatch(RemoveFromScene(light));
+    if (ready && light) dispatch(AddToScene(sceneName, light));
+    return () => !ready && light && dispatch(RemoveFromScene(sceneName, light));
   }, [dispatch, ready, light]);
 
   useEffect(() => {
