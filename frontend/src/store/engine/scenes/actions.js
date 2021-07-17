@@ -1,7 +1,7 @@
 import * as types from './types';
 
-export const SetScene = name => ({
-  type: types.CURRENT,
+export const CallScene = name => ({
+  type: types.CALL,
   name
 });
 

@@ -1,4 +1,4 @@
-export const CURRENT = 'engine/SCENE/CURRENT';
+export const CALL = 'engine/SCENE/CALL';
 export const CREATE = 'engine/SCENE/CREATE';
 export const DESTROY = 'engine/SCENE/DESTROY';
 export const ADD = 'engine/SCENE/ADD';
