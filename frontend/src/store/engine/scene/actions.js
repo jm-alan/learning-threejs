@@ -1,5 +1,10 @@
 import * as types from './types';
 
+export const SetScene = name => ({
+  type: types.CURRENT,
+  name
+});
+
 export const CreateScene = () => ({
   type: types.CREATE
 });
