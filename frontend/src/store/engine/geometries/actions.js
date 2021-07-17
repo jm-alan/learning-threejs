@@ -19,7 +19,119 @@ export const CreateGeometry = (
   }
 });
 
-export const DestroyGeometry = (name, parent) => ({
+export const DestroyGeometry = name => ({
   type: types.DESTROY,
   name
 });
+
+export const ReadyGeometryPos = name => ({
+  type: types.READY_POS,
+  name
+});
+
+export const ReadyGeometryRot = name => ({
+  type: types.READY_ROT,
+  name
+});
+
+export const MoveGeometryX = {
+  relative (name, posX) {
+    return {
+      type: types.POSX_RELATIVE,
+      name,
+      posX
+    };
+  },
+  absolute (name, posX) {
+    return {
+      type: types.POSX_ABSOLUTE,
+      name,
+      posX
+    };
+  }
+};
+
+export const MoveGeometryY = {
+  relative (name, posY) {
+    return {
+      type: types.POSY_RELATIVE,
+      name,
+      posY
+    };
+  },
+  absolute (name, posY) {
+    return {
+      type: types.POSY_ABSOLUTE,
+      name,
+      posY
+    };
+  }
+};
+
+export const MoveGeometryZ = {
+  relative (name, posZ) {
+    return {
+      type: types.POSZ_RELATIVE,
+      name,
+      posZ
+    };
+  },
+  absolute (name, posZ) {
+    return {
+      type: types.POSZ_ABSOLUTE,
+      name,
+      posZ
+    };
+  }
+};
+
+export const RotGeometryX = {
+  relative (name, rotX) {
+    return {
+      type: types.ROTX_RELATIVE,
+      name,
+      rotX
+    };
+  },
+  absolute (name, rotX) {
+    return {
+      type: types.ROTX_ABSOLUTE,
+      name,
+      rotX
+    };
+  }
+};
+
+export const RotGeometryY = {
+  relative (name, rotY) {
+    return {
+      type: types.ROTY_RELATIVE,
+      name,
+      rotY
+    };
+  },
+  absolute (name, rotY) {
+    return {
+      type: types.ROTY_ABSOLUTE,
+      name,
+      rotY
+    };
+  }
+};
+
+export const RotGeometryZ = {
+  relative (name, rotZ) {
+    return {
+      type: types.ROTZ_RELATIVE,
+      name,
+      rotZ
+    };
+  },
+  absolute (name, rotZ) {
+    return {
+      type: types.ROTZ_ABSOLUTE,
+      name,
+      rotZ
+    };
+  }
+};
