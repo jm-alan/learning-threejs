@@ -5,12 +5,14 @@ export const SetScene = name => ({
   name
 });
 
-export const CreateScene = () => ({
-  type: types.CREATE
+export const CreateScene = name => ({
+  type: types.CREATE,
+  name
 });
 
-export const DestroyScene = () => ({
-  type: types.DESTROY
+export const DestroyScene = name => ({
+  type: types.DESTROY,
+  name
 });
 
 export const AddToScene = ({ object }) => ({
