@@ -28,9 +28,11 @@ export default function reducer (
       state.functions.splice(0, state.functions.length);
       return state;
     case types.PAUSE:
-      return { ...state, paused: true };
+      state.paused = true;
+      return state;
     case types.UNPAUSE:
-      return { ...state, paused: false };
+      state.paused = false;
+      return state;
     default:
       return state;
   }
