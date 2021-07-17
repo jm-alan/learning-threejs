@@ -24,6 +24,9 @@ export default function reducer (
                 wireframe: props.materialWireframe
               })
             ),
+            ready: false,
+            readyPos: false,
+            readyRot: false,
             ...props.initialPosition,
             ...props.initialRotation
           }
