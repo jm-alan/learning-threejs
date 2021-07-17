@@ -97,137 +97,41 @@ export default function reducer (
         }
       };
     case types.POSX_ABSOLUTE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            posX
-          }
-        }
-      };
+      state.all[name].posX = posX;
+      return state;
     case types.POSY_ABSOLUTE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            posY
-          }
-        }
-      };
+      state.all[name].posY = posY;
+      return state;
     case types.POSZ_ABSOLUTE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            posZ
-          }
-        }
-      };
+      state.all[name].posZ = posZ;
+      return state;
     case types.POSX_RELATIVE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            posX: state.all[name].posX + posX
-          }
-        }
-      };
+      state.all[name].posX += posX;
+      return state;
     case types.POSY_RELATIVE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            posY: state.all[name].posY + posY
-          }
-        }
-      };
+      state.all[name].posY += posY;
+      return state;
     case types.POSZ_RELATIVE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            posZ: state.all[name].posZ + posZ
-          }
-        }
-      };
+      state.all[name].posZ += posZ;
+      return state;
     case types.ROTX_ABSOLUTE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            rotX
-          }
-        }
-      };
+      state.all[name].rotX = rotX;
+      return state;
     case types.ROTY_ABSOLUTE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            rotY
-          }
-        }
-      };
+      state.all[name].rotY = rotY;
+      return state;
     case types.ROTZ_ABSOLUTE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            rotZ
-          }
-        }
-      };
+      state.all[name].rotZ = rotZ;
+      return state;
     case types.ROTX_RELATIVE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            rotX: state.all[name].rotX + rotX
-          }
-        }
-      };
+      state.all[name].rotX += rotX;
+      return state;
     case types.ROTY_RELATIVE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            rotY: state.all[name].rotY + rotY
-          }
-        }
-      };
+      state.all[name].rotY += rotY;
+      return state;
     case types.ROTZ_RELATIVE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            rotZ: state.all[name].rotZ + rotZ
-          }
-        }
-      };
+      state.all[name].rotZ += rotZ;
+      return state;
     default:
       return state;
   }
