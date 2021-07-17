@@ -10,7 +10,7 @@ import * as canvas from './store/engine/canvas/actions';
 import * as geometries from './store/engine/geometries/actions';
 import * as keys from './store/engine/keys/actions';
 import * as renderer from './store/engine/renderer/actions';
-import * as scene from './store/engine/scene/actions';
+import * as scene from './store/engine/scenes/actions';
 import App from './App';
 import Modal from './components/Modal';
 import configureStore from './store';
