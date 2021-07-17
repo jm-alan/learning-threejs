@@ -5,6 +5,11 @@ export const CallScene = name => ({
   name
 });
 
+export const SetScene = name => ({
+  type: types.CURRENT,
+  name
+});
+
 export const CreateScene = name => ({
   type: types.CREATE,
   name
