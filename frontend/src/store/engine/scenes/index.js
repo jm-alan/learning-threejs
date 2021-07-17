@@ -16,7 +16,7 @@ export default function reducer (
   { type, object, name }
 ) {
   switch (type) {
-    case types.CURRENT:
+    case types.CALL:
       return {
         ...state,
         current: {
