@@ -10,7 +10,7 @@ export default function Debug ({ children }) {
   const [camera, callCamera] = useState('');
 
   const allCameras = useSelector(state => state.engine.cameras.all);
-  const calledCamera = useSelector(state => state.engine.cameras.name);
+  const calledCamera = useSelector(state => state.engine.cameras.called);
   const currentCamera = useSelector(state => state.engine.cameras.current);
   const managedCamera = useSelector(state => state.engine.cameras.all[calledCamera]);
   const managedCameraExists = !!managedCamera && managedCamera.name === currentCamera.name;

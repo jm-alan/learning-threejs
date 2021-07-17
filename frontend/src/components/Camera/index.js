@@ -16,7 +16,7 @@ export default function Camera ({
 }) {
   const dispatch = useDispatch();
 
-  const calledCamera = useSelector(state => state.engine.cameras.name);
+  const calledCamera = useSelector(state => state.engine.cameras.called);
   const currentCamera = useSelector(state => state.engine.cameras.current.name);
   const ready = useSelector(state => state.engine.cameras.all[objectKey]?.ready);
   const object = useSelector(state => state.engine.cameras.all[objectKey]?.object);
