@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CreateGeometry, DestroyGeometry, ReadyGeometry, ReadyGeometryPos, ReadyGeometryRot } from '../../../store/engine/geometries/actions';
-import { AddToScene, RemoveFromScene } from '../../../store/engine/scene/actions';
+import { AddToScene, RemoveFromScene } from '../../../store/engine/scenes/actions';
 
 export default function Torus ({
   name, specs, material,
-  color, wireframe, initialPosition,
-  initialRotation, children
+  sceneName, color, wireframe,
+  initialPosition, initialRotation, children
 }) {
   const dispatch = useDispatch();
 
@@ -62,7 +62,7 @@ export default function Torus ({
         initialRotation
       ));
     return () => {
-      trashable && torus && dispatch(RemoveFromScene(torus));
+      trashable && torus && dispatch(RemoveFromScene(sceneName, torus));
       trashable && torus && dispatch(DestroyGeometry(name));
     };
   }, [
@@ -72,7 +72,7 @@ export default function Torus ({
   ]);
 
   useEffect(() => {
-    objectReady && dispatch(AddToScene(torus));
+    objectReady && dispatch(AddToScene(sceneName, torus));
   }, [dispatch, objectReady, torus]);
 
   useEffect(() => {
