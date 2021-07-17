@@ -9,7 +9,7 @@ export default function Engine ({ children }) {
   const ready = useSelector(state => state.engine.renderer.ready);
   const canvas = useSelector(state => state.engine.canvas.current);
   const renderer = useSelector(state => state.engine.renderer.current);
-  const scene = useSelector(state => state.engine.scene.current.object);
+  const scene = useSelector(state => state.engine.scenes.current.object);
   const camera = useSelector(state => state.engine.cameras.current.object);
   const renderObjects = useSelector(state => state.engine.renderer.functions);
   const paused = useSelector(state => state.engine.renderer.paused);
