@@ -19,6 +19,11 @@ export default function reducer (
     case types.CALL:
       return {
         ...state,
+        called: name
+      };
+    case types.CURRENT:
+      return {
+        ...state,
         current: {
           name,
           object: state.all[name]
