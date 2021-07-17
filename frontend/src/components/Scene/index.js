@@ -8,10 +8,11 @@ export default function Scene ({ children, name }) {
   const object = useSelector(state => state.engine.scenes.all[name]);
 
   useEffect(() => {
-    if (!object) dispatch(CreateScene(name));
-    return () => dispatch(DestroyScene(name));
+    !object && dispatch(CreateScene(name));
+    return () => object && dispatch(DestroyScene(name));
   }, [dispatch, object, name]);
 
   children(name);
+
   return null;
 }
