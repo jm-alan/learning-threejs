@@ -1,3 +1,4 @@
+// import { useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ import Overlays from './components/Overlays';
 import Director from './components/Director';
 import Rotate from './components/Geometries/Animations/Rotate';
 import Scene from './components/Scene';
+import Home from './components/Home';
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -31,7 +33,7 @@ export default function App () {
   return (
     <>
       <Switch>
-        <Route path='/'>
+        <Route exact path='/stages/0/'>
           <Engine>
             <Director>
               <Camera
@@ -71,14 +73,14 @@ export default function App () {
                     </Torus>
                     <Torus
                       sceneName={sceneName}
-                      objectKey='torusTwo'
+                      name='torusTwo'
                       specs={[5, 2, 30, 30]}
                       material='MeshStandard'
                       initialPosition={{ posX: 10, posY: 0, posZ: 0 }}
                     >
-                      {object => (
+                      {objectKey => (
                         <Rotate
-                          object={object}
+                          objectKey={objectKey}
                           name='testTorusRotateX'
                           rotX={-0.01}
                         />
@@ -93,6 +95,9 @@ export default function App () {
             <Movement />
             <Canvas />
           </Engine>
+        </Route>
+        <Route exacth path='/'>
+          <Home />
         </Route>
       </Switch>
     </>
