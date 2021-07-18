@@ -1,5 +1,7 @@
 export const NEW = 'engine/GEOMETRIES/NEW';
-export const DESTROY = 'engine/GEOMETRIES/DESTROY';
+export const DESTROY_STRUCTURE = 'engine/GEOMETRIES/DESTROY_STRUCTURE';
+export const DESTROY_MATERIAL = 'engine/GEOMETRIES/DESTROY_MATERIAL';
+export const DESTROY_MESH = 'engine/GEOMETRIES/DESTROY_MESH';
 export const READY = 'engine/GEOMETRIES/READY';
 export const READY_POS = 'engine/GEOMETRIES/POS/READY';
 export const READY_ROT = 'engine/GEOMETRIES/ROT/READY';
