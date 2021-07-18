@@ -19,8 +19,18 @@ export const CreateGeometry = (
   }
 });
 
-export const DestroyGeometry = name => ({
-  type: types.DESTROY,
+export const DestroyStructure = name => ({
+  type: types.DESTROY_STRUCTURE,
+  name
+});
+
+export const DestroyMaterial = name => ({
+  type: types.DESTROY_MATERIAL,
+  name
+});
+
+export const DestroyMesh = name => ({
+  type: types.DESTROY_MESH,
   name
 });
 
