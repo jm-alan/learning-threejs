@@ -27,6 +27,9 @@ export default function reducer (
     case types.DUMP_FUNCTIONS:
       state.functions.splice(0, state.functions.length);
       return state;
+    case types.DUMP_LISTS:
+      state.current.renderLists.dispose();
+      return state;
     case types.PAUSE:
       state.paused = true;
       return state;
