@@ -24,13 +24,18 @@ export default function KeyListener () {
       e.stopPropagation();
       dispatch(ReleaseKey(e.code));
     };
-    add.keydown(onKeyDown);
-    add.keyup(onKeyUp);
+    if (!paused) {
+      add.keydown(onKeyDown);
+      add.keyup(onKeyUp);
+    } else if (paused) {
+      remove.keydown(onKeyDown);
+      remove.keyup(onKeyUp);
+    }
     return () => {
       remove.keydown(onKeyDown);
       remove.keyup(onKeyUp);
     };
-  }, [dispatch, add, remove, keys]);
+  }, [dispatch, paused, add, remove, keys]);
 
   useEffect(() => {
     const onEscape = ({ code }) => {
