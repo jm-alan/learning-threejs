@@ -30,3 +30,11 @@ export const PauseRender = () => ({
 export const ResumeRender = () => ({
   type: types.UNPAUSE
 });
+
+export const DumpRenderFunctions = () => ({
+  type: types.DUMP_FUNCTIONS
+});
+
+export const DumpRenderLists = () => ({
+  type: types.DUMP_LISTS
+});
