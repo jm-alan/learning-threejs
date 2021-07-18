@@ -32,7 +32,13 @@ export default function reducer (
           }
         }
       };
-    case types.DESTROY:
+    case types.DESTROY_STRUCTURE:
+      state.all[name].object.geometry.dispose();
+      return state;
+    case types.DESTROY_MATERIAL:
+      state.all[name].object.material.dispose();
+      return state;
+    case types.DESTROY_MESH:
       delete state.all[name];
       return {
         ...state,
