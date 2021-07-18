@@ -1,7 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CreateGeometry, DestroyGeometry, ReadyGeometry, ReadyGeometryPos, ReadyGeometryRot } from '../../../store/engine/geometries/actions';
+import {
+  CreateGeometry,
+  DestroyMaterial,
+  DestroyMesh,
+  DestroyStructure,
+  ReadyGeometry,
+  ReadyGeometryPos,
+  ReadyGeometryRot
+} from '../../../store/engine/geometries/actions';
+import { DumpRenderLists } from '../../../store/engine/renderer/actions';
 import { AddToScene, RemoveFromScene } from '../../../store/engine/scenes/actions';
 
 export default function Torus ({
@@ -62,8 +71,11 @@ export default function Torus ({
         initialRotation
       ));
     return () => {
-      trashable && torus && dispatch(RemoveFromScene(sceneName, torus));
-      trashable && torus && dispatch(DestroyGeometry(name));
+      trashable && dispatch(DestroyMaterial(name));
+      trashable && dispatch(DestroyStructure(name));
+      trashable && dispatch(RemoveFromScene(sceneName, torus));
+      trashable && dispatch(DestroyMesh(name));
+      trashable && dispatch(DumpRenderLists());
     };
   }, [
     dispatch, name, specs, material, color, wireframe,
