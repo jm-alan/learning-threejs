@@ -12,6 +12,24 @@ export default function reducer (
 ) {
   switch (type) {
     case types.NEW:
+      if (state.all[name]) {
+        return {
+          ...state,
+          all: {
+            ...state.all,
+            [name]: {
+              ...state.all[name],
+              object: new Three.Mesh(
+                new Three[`${state.all[name].type}Geometry`](...state.all[name].specs),
+                new Three[`${state.all[name].material}Material`]({
+                  color: state.all[name].color,
+                  wireframe: state.all[name].wireframe
+                })
+              )
+            }
+          }
+        };
+      }
       return {
         ...state,
         all: {
@@ -24,6 +42,11 @@ export default function reducer (
                 wireframe: props.materialWireframe
               })
             ),
+            specs: props.geometrySpecs,
+            type: props.geometryType,
+            material: props.materialType,
+            color: props.materialColor,
+            wireframe: props.materialWireframe,
             trashable: false,
             ready: false,
             readyPos: false,
@@ -55,16 +78,11 @@ export default function reducer (
         }
       };
     case types.TRASHABLE:
-      return {
-        ...state,
-        all: {
-          ...state.all,
-          [name]: {
-            ...state.all[name],
-            trashable: true
-          }
-        }
-      };
+      state.all[name].trashable = true;
+      return state;
+    case types.UNTRASHABLE:
+      state.all[name].trashable = false;
+      return state;
     case types.READY_POS:
       return {
         ...state,
