@@ -34,6 +34,11 @@ export const DestroyMesh = name => ({
   name
 });
 
+export const TrashGeometry = name => ({
+  type: types.TRASHABLE,
+  name
+});
+
 export const ReadyGeometry = name => ({
   type: types.READY,
   name
