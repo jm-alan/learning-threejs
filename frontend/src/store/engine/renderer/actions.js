@@ -39,3 +39,11 @@ export const DumpRenderFunctions = () => ({
 export const DumpRenderLists = () => ({
   type: types.DUMP_LISTS
 });
+
+export const MarkFunctionsChanged = () => ({
+  type: types.CHANGED
+});
+
+export const MarkFunctionsUnchanged = () => ({
+  type: types.UNCHANGED
+});
