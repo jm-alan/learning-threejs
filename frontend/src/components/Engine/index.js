@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BuildDefault, CreateRenderer, DestroyRenderer } from '../../store/engine/renderer/actions';
+import { BuildDefault, CreateRenderer, DestroyRenderer, MarkFunctionsUnchanged } from '../../store/engine/renderer/actions';
 
 export default function Engine ({ children }) {
   const dispatch = useDispatch();
@@ -13,12 +13,21 @@ export default function Engine ({ children }) {
   const camera = useSelector(state => state.engine.cameras.current.object);
   const renderObjects = useSelector(state => state.engine.renderer.functions);
   const paused = useSelector(state => state.engine.renderer.paused);
+  const functionsChanged = useSelector(state => state.engine.renderer.changed);
 
   const renderProps = useRef({ paused: false });
+  const renderKeys = useRef([]);
 
   useEffect(() => {
     renderProps.current.paused = paused;
   }, [paused]);
+
+  useEffect(() => {
+    if (functionsChanged) {
+      renderKeys.current = Object.keys(renderObjects);
+    }
+    dispatch(MarkFunctionsUnchanged());
+  }, [dispatch, functionsChanged, renderObjects]);
 
   useEffect(() => {
     if (canvas) {
@@ -36,10 +45,21 @@ export default function Engine ({ children }) {
   }, [dispatch, scene, camera, canvas, renderer]);
 
   useEffect(() => {
+    console.log('=================================');
+    console.log('=================================');
+    console.log('=================================');
+    console.log('=================================');
+    console.log('=================================');
+    console.log(renderKeys.current, renderObjects);
+    console.log('=================================');
+    console.log('=================================');
+    console.log('=================================');
+    console.log('=================================');
+    console.log('=================================');
     const animate = () => {
       if (ready && !renderProps.current.paused) {
         renderer.render(scene, camera);
-        for (let i = 0; i < renderObjects.length; i++) renderObjects[i].action();
+        for (let i = 0; i < renderKeys.current.length; i++) renderObjects[renderKeys.current[i]]();
         return window.requestAnimationFrame(animate);
       }
     };

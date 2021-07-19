@@ -4,7 +4,7 @@ import * as types from './types';
 
 export default function reducer (
   state = { current: null, ready: false, functions: {}, paused: false, changed: false },
-  { type, canvas, name, renderObj }
+  { type, canvas, name, action }
 ) {
   switch (type) {
     case types.CREATE:
@@ -19,7 +19,7 @@ export default function reducer (
       state.current.setSize(window.innerWidth, window.innerHeight);
       return { ...state, ready: true };
     case types.ADD_FUNCTION:
-      state.functions[name] = renderObj;
+      state.functions[name] = action;
       state.changed = true;
       return state;
     case types.REMOVE_FUNCTION:
@@ -29,6 +29,9 @@ export default function reducer (
     case types.DUMP_FUNCTIONS:
       state.functions = {};
       state.changed = true;
+      return state;
+    case types.UNCHANGED:
+      state.changed = false;
       return state;
     case types.DUMP_LISTS:
       state.current.renderLists.dispose();
