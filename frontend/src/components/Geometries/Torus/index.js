@@ -10,7 +10,6 @@ import {
   ReadyGeometryPos,
   ReadyGeometryRot
 } from '../../../store/engine/geometries/actions';
-import { DumpRenderLists } from '../../../store/engine/renderer/actions';
 import { AddToScene, RemoveFromScene } from '../../../store/engine/scenes/actions';
 
 export default function Torus ({
