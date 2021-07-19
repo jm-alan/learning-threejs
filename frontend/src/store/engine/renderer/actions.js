@@ -15,7 +15,8 @@ export const DestroyRenderer = () => ({
 
 export const AddRenderFunction = (name, action) => ({
   type: types.ADD_FUNCTION,
-  renderObj: { name, action }
+  name,
+  action
 });
 
 export const RemoveRenderFunction = name => ({
