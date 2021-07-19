@@ -24,6 +24,7 @@ export default function reducer (
                 wireframe: props.materialWireframe
               })
             ),
+            trashable: false,
             ready: false,
             readyPos: false,
             readyRot: false,
@@ -44,6 +45,17 @@ export default function reducer (
         ...state,
         all: {
           ...state.all
+        }
+      };
+    case types.TRASHABLE:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [name]: {
+            ...state.all[name],
+            trashable: true
+          }
         }
       };
     case types.READY_POS:
