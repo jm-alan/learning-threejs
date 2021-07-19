@@ -7,3 +7,5 @@ export const DUMP_FUNCTIONS = 'engine/RENDERER/FUNCTIONS/DUMP';
 export const DUMP_LISTS = 'engine/RENDERER/LISTS/DUMP';
 export const PAUSE = 'engine/RENDERER/PAUSE';
 export const UNPAUSE = 'engine/RENDERER/UNPAUSE';
+export const CHANGED = 'engine/RENDERER/FUNCTIONS/CHANGED';
+export const UNCHANGED = 'engine/RENDERER/FUNCTIONS/UNCHANGED';
