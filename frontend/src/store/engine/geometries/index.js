@@ -40,11 +40,14 @@ export default function reducer (
       state.all[name].object.material.dispose();
       return state;
     case types.DESTROY_MESH:
-      delete state.all[name];
+      delete state.all[name].object;
       return {
         ...state,
         all: {
-          ...state.all
+          ...state.all,
+          [name]: {
+            ...state.name
+          }
         }
       };
     case types.TRASHABLE:
