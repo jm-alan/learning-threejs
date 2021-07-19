@@ -28,5 +28,6 @@ export const AddToScene = (name, { object }) => ({
 
 export const RemoveFromScene = (name, { object }) => ({
   type: types.REMOVE,
+  name,
   object
 });
