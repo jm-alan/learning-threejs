@@ -46,7 +46,11 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            ...state.all[name]
+            ...state.all[name],
+            object: null,
+            ready: false,
+            readyRot: false,
+            readyPos: false
           }
         }
       };
@@ -57,10 +61,7 @@ export default function reducer (
           ...state.all,
           [name]: {
             ...state.all[name],
-            trashable: true,
-            ready: false,
-            readyRot: false,
-            readyPos: false
+            trashable: true
           }
         }
       };
