@@ -39,6 +39,11 @@ export const TrashGeometry = name => ({
   name
 });
 
+export const UntrashGeometry = name => ({
+  type: types.UNTRASHABLE,
+  name
+});
+
 export const ReadyGeometry = name => ({
   type: types.READY,
   name
