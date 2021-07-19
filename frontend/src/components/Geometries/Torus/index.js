@@ -59,7 +59,7 @@ export default function Torus ({
   }, [object, rotZ]);
 
   useEffect(() => {
-    renderReady && !torus &&
+    renderReady && !object && !trashable &&
       dispatch(CreateGeometry(
         name,
         'Torus',
@@ -70,44 +70,41 @@ export default function Torus ({
         initialPosition,
         initialRotation
       ));
-    return () => {
-      trashable && dispatch(DestroyMaterial(name));
-      trashable && dispatch(DestroyStructure(name));
-      trashable && dispatch(RemoveFromScene(sceneName, torus));
-      trashable && dispatch(DestroyMesh(name));
-      trashable && dispatch(DumpRenderLists());
-    };
+    object && trashable && dispatch(DestroyMaterial(name));
+    object && trashable && dispatch(DestroyStructure(name));
+    object && trashable && dispatch(RemoveFromScene(sceneName, torus));
+    object && trashable && dispatch(DestroyMesh(name));
   }, [
     dispatch, name, specs, material, color, wireframe,
     initialPosition, initialRotation, torus, renderReady,
-    trashable, sceneName
+    trashable, sceneName, object
   ]);
 
   useEffect(() => {
-    objectReady && dispatch(AddToScene(sceneName, torus));
-  }, [dispatch, sceneName, objectReady, torus]);
+    !trashable && objectReady && dispatch(AddToScene(sceneName, torus));
+  }, [dispatch, sceneName, objectReady, torus, trashable]);
 
   useEffect(() => {
-    object && !readyPos && (() => {
+    !trashable && object && !readyPos && (() => {
       initialPosition && object.position.setX(initialPosition.posX);
       initialPosition && object.position.setY(initialPosition.posY);
       initialPosition && object.position.setZ(initialPosition.posZ);
       dispatch(ReadyGeometryPos(name));
     })();
-  }, [dispatch, object, readyPos, initialPosition, name]);
+  }, [dispatch, object, readyPos, initialPosition, name, trashable]);
 
   useEffect(() => {
-    object && !readyRot && (() => {
+    !trashable && object && !readyRot && (() => {
       initialRotation && object.rotateX(initialRotation.rotX);
       initialRotation && object.rotateY(initialRotation.rotY);
       initialRotation && object.rotateZ(initialRotation.rotZ);
       dispatch(ReadyGeometryRot(name));
     })();
-  }, [dispatch, object, readyRot, initialRotation, name]);
+  }, [dispatch, object, readyRot, initialRotation, name, trashable]);
 
   useEffect(() => {
-    !objectReady && readyPos && readyRot && dispatch(ReadyGeometry(name));
-  });
+    !trashable && !objectReady && readyPos && readyRot && dispatch(ReadyGeometry(name));
+  }, [dispatch, trashable, objectReady, readyPos, readyRot, name]);
 
   return (torus && children && children(name)) ?? null;
 }
