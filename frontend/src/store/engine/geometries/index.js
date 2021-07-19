@@ -46,7 +46,7 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            ...state.name
+            ...state.all[name]
           }
         }
       };
