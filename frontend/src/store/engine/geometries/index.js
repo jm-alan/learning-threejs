@@ -57,7 +57,10 @@ export default function reducer (
           ...state.all,
           [name]: {
             ...state.all[name],
-            trashable: true
+            trashable: true,
+            ready: false,
+            readyRot: false,
+            readyPos: false
           }
         }
       };
