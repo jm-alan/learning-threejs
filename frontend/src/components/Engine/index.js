@@ -45,17 +45,6 @@ export default function Engine ({ children }) {
   }, [dispatch, scene, camera, canvas, renderer]);
 
   useEffect(() => {
-    console.log('=================================');
-    console.log('=================================');
-    console.log('=================================');
-    console.log('=================================');
-    console.log('=================================');
-    console.log(renderKeys.current, renderObjects);
-    console.log('=================================');
-    console.log('=================================');
-    console.log('=================================');
-    console.log('=================================');
-    console.log('=================================');
     const animate = () => {
       if (ready && !renderProps.current.paused) {
         renderer.render(scene, camera);
