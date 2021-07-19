@@ -3,7 +3,7 @@ import * as Three from 'three';
 import * as types from './types';
 
 export default function reducer (
-  state = { current: null, ready: false, functions: {}, paused: false },
+  state = { current: null, ready: false, functions: {}, paused: false, changed: false },
   { type, canvas, name, renderObj }
 ) {
   switch (type) {
@@ -20,12 +20,15 @@ export default function reducer (
       return { ...state, ready: true };
     case types.ADD_FUNCTION:
       state.functions[name] = renderObj;
+      state.changed = true;
       return state;
     case types.REMOVE_FUNCTION:
       delete state.functions[name];
+      state.changed = true;
       return state;
     case types.DUMP_FUNCTIONS:
-      state.functions.splice(0, state.functions.length);
+      state.functions = {};
+      state.changed = true;
       return state;
     case types.DUMP_LISTS:
       state.current.renderLists.dispose();
