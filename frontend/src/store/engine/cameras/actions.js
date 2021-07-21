@@ -46,6 +46,17 @@ export const ReadyCameraRot = name => ({
   name
 });
 
+export const AddVisibilityFunction = (name, action) => ({
+  type: types.ADD_FUNCTION,
+  name,
+  action
+});
+
+export const RemoveVisibilityFunction = name => ({
+  type: types.REMOVE_FUNCTION,
+  name
+});
+
 export const MoveCameraX = {
   relative (name, posX) {
     return {
