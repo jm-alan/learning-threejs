@@ -1,10 +1,8 @@
-import * as Three from 'three';
-
 import * as types from './types';
 
 export default function reducer (
   state = { all: {} },
-  { type, name, color, intensity }
+  { type, object, name, color, intensity }
 ) {
   switch (type) {
     case types.NEW:
@@ -13,7 +11,7 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            object: new Three.AmbientLight(color, intensity),
+            object,
             color,
             intensity
           }
