@@ -62,6 +62,7 @@ export default function App () {
                       specs={[5, 2, 30, 30]}
                       material='MeshStandard'
                       initialPosition={{ posX: -10, posY: 0, posZ: 0 }}
+                      visibleRange={500}
                     >
                       {objectKey => (
                         <Rotate
@@ -77,6 +78,7 @@ export default function App () {
                       specs={[5, 2, 30, 30]}
                       material='MeshStandard'
                       initialPosition={{ posX: 10, posY: 0, posZ: 0 }}
+                      visibleRange={500}
                     >
                       {objectKey => (
                         <Rotate
