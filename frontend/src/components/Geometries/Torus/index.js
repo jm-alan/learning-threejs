@@ -110,8 +110,9 @@ export default function Torus ({
 
   useEffect(() => {
     const amVisible = (cameraX, cameraY, cameraZ) => (
-      (Math.sqrt(((posX - cameraX) ** 2) + ((posY - cameraY) ** 2) + ((posZ - cameraZ) ** 2)) < visibleRange) &&
-      ((trashable && dispatch(UntrashGeometry(name))) || true)
+      ((((posX - cameraX) ** 2) + ((posY - cameraY) ** 2) + ((posZ - cameraZ) ** 2)) < visibleRange ** 2
+      ) && (
+        (trashable && dispatch(UntrashGeometry(name))) || true)
     ) || (!trashable && dispatch(TrashGeometry(name)));
     dispatch(AddVisibilityFunction(`${name}CheckVisible`, amVisible));
     return () => dispatch(RemoveVisibilityFunction(`${name}CheckVisible`));
