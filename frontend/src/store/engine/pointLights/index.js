@@ -1,10 +1,8 @@
-import * as Three from 'three';
-
 import * as types from './types';
 
 export default function reducer (
   state = { all: {} },
-  { type, name, props, color, offset, intensity }
+  { type, name, object, props, color, offset, intensity }
 ) {
   switch (type) {
     case types.NEW:
@@ -13,12 +11,7 @@ export default function reducer (
         all: {
           ...state.all,
           [name]: {
-            object: new Three.PointLight(
-              props.color,
-              props.intensity,
-              props.distance,
-              props.decay
-            ),
+            object,
             color: props.color,
             intensity: props.intensity,
             distance: props.distance,

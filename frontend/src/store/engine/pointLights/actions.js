@@ -9,11 +9,20 @@ export const CreatePointLight = (
   initialPosition = {
     posX: 0, posY: 0, posZ: 0
   }
-) => ({
-  type: types.NEW,
-  name,
-  props: { color, intensity, distance, decay, initialPosition }
-});
+) => async dispatch => {
+  const { PointLight } = await import('three');
+  dispatch({
+    type: types.NEW,
+    name,
+    object: new PointLight(
+      color,
+      intensity,
+      distance,
+      decay
+    ),
+    props: { color, intensity, distance, decay, initialPosition }
+  });
+};
 
 export const DestroyPointLight = (name, parent) => ({
   type: types.DESTROY,
