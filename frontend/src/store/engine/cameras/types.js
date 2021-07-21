@@ -17,3 +17,5 @@ export const ROTZ_RELATIVE = 'engine/CAMERAS/ROTZ/RELATIVE';
 export const ROTX_ABSOLUTE = 'engine/CAMERAS/ROTX/ABSOLUTE';
 export const ROTY_ABSOLUTE = 'engine/CAMERAS/ROTY/ABSOLUTE';
 export const ROTZ_ABSOLUTE = 'engine/CAMERAS/ROTZ/ABSOLUTE';
+export const ADD_FUNCTION = 'engine/CAMERAS/FUNCTIONS/ADD';
+export const REMOVE_FUNCTION = 'engine/CAMERAS/FUNCTIONS/REMOVE';
