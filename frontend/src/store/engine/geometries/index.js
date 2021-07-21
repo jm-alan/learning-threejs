@@ -1,5 +1,3 @@
-import * as Three from 'three';
-
 import * as types from './types';
 
 export default function reducer (
@@ -7,41 +5,18 @@ export default function reducer (
   {
     type, name, props,
     posX, posY, posZ,
-    rotX, rotY, rotZ
+    rotX, rotY, rotZ,
+    object, exists
   }
 ) {
   switch (type) {
     case types.NEW:
-      if (state.all[name]) {
-        return {
-          ...state,
-          all: {
-            ...state.all,
-            [name]: {
-              ...state.all[name],
-              object: new Three.Mesh(
-                new Three[`${state.all[name].type}Geometry`](...state.all[name].specs),
-                new Three[`${state.all[name].material}Material`]({
-                  color: state.all[name].color,
-                  wireframe: state.all[name].wireframe
-                })
-              )
-            }
-          }
-        };
-      }
       return {
         ...state,
         all: {
           ...state.all,
           [name]: {
-            object: new Three.Mesh(
-              new Three[`${props.geometryType}Geometry`](...props.geometrySpecs),
-              new Three[`${props.materialType}Material`]({
-                color: props.materialColor,
-                wireframe: props.materialWireframe
-              })
-            ),
+            object,
             specs: props.geometrySpecs,
             type: props.geometryType,
             material: props.materialType,

@@ -5,19 +5,29 @@ export const CreateGeometry = (
   materialType, materialColor = 0xFFFFFF, materialWireframe = false,
   initialPosition = { posX: 0, posY: 0, posZ: 0 },
   initialRotation = { rotX: 0, rotY: 0, rotZ: 0 }
-) => ({
-  type: types.NEW,
-  name,
-  props: {
-    geometryType,
-    geometrySpecs,
-    materialType,
-    materialColor,
-    materialWireframe,
-    initialPosition,
-    initialRotation
-  }
-});
+) => async dispatch => {
+  const Three = await import('three');
+  dispatch({
+    type: types.NEW,
+    name,
+    props: {
+      geometryType,
+      geometrySpecs,
+      materialType,
+      materialColor,
+      materialWireframe,
+      initialPosition,
+      initialRotation
+    },
+    object: new Three.Mesh(
+      new Three[`${geometryType}Geometry`](...geometrySpecs),
+      new Three[`${materialType}Material`]({
+        color: materialColor,
+        wireframe: materialWireframe
+      })
+    )
+  });
+};
 
 export const DestroyStructure = name => ({
   type: types.DESTROY_STRUCTURE,
