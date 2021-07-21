@@ -1,5 +1,3 @@
-import * as Three from 'three';
-
 import * as types from './types';
 
 export default function reducer (
@@ -11,13 +9,13 @@ export default function reducer (
     paused: false,
     changed: false
   },
-  { type, canvas, name, action }
+  { type, object, name, action }
 ) {
   switch (type) {
     case types.CREATE:
       return {
         ...state,
-        current: new Three.WebGLRenderer({ canvas })
+        current: object
       };
     case types.DESTROY:
       return { ...state, current: null, ready: false };

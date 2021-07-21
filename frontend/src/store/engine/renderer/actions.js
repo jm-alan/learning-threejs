@@ -4,10 +4,13 @@ export const BuildDefault = () => ({
   type: types.BUILD_DEFAULT
 });
 
-export const CreateRenderer = canvas => ({
-  type: types.CREATE,
-  canvas
-});
+export const CreateRenderer = canvas => async dispatch => {
+  const { WebGLRenderer } = await import('three');
+  dispatch({
+    type: types.CREATE,
+    object: new WebGLRenderer({ canvas })
+  });
+};
 
 export const DestroyRenderer = () => ({
   type: types.DESTROY
