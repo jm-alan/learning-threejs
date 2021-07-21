@@ -38,7 +38,7 @@ export default function Engine ({ children }) {
     fitToWindow();
     add.resize(fitToWindow);
     return () => remove.resize(fitToWindow);
-  }, [dispatch, add, remove, scene, camera, canvas, renderer]);
+  }, [dispatch, add, remove, scene, camera, renderer]);
 
   useEffect(() => {
     const animate = t => {
@@ -60,8 +60,8 @@ export default function Engine ({ children }) {
           }
           cameraTimeRef.current = t;
         }
-        window.requestAnimationFrame(animate);
       }
+      window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
   }, [scene, camera, ready, renderer, renderKeys, renderFunctions, visibilityKeys, visibilityFunctions]);
