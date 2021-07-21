@@ -11,12 +11,15 @@ export default function reducer (
   state = {
     current: { ...initialCamera },
     all: {},
-    called: null
+    called: null,
+    functions: {},
+    keys: []
   },
   {
     type, props, name,
     posX, posY, posZ,
-    rotX, rotY, rotZ
+    rotX, rotY, rotZ,
+    action
   }
 ) {
   switch (type) {
@@ -76,6 +79,14 @@ export default function reducer (
           ...state.all
         }
       };
+    case types.ADD_FUNCTION:
+      state.functions[name] = action;
+      state.keys.splice(0, state.keys.length, ...Object.keys(state.functions));
+      return state;
+    case types.REMOVE_FUNCTION:
+      delete state.functions[name];
+      state.keys.splice(0, state.keys.length, ...Object.keys(state.functions));
+      return state;
     case types.READY_POS:
       return {
         ...state,
