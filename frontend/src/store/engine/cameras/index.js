@@ -1,5 +1,3 @@
-import * as Three from 'three';
-
 import * as types from './types';
 
 const initialCamera = {
@@ -19,7 +17,7 @@ export default function reducer (
     type, props, name,
     posX, posY, posZ,
     rotX, rotY, rotZ,
-    action
+    action, object
   }
 ) {
   switch (type) {
@@ -45,12 +43,7 @@ export default function reducer (
             readyPos: false,
             readyRot: false,
             ready: false,
-            object: new Three.PerspectiveCamera(
-              props.FOV,
-              window.innerWidth / window.innerHeight,
-              props.frustNear,
-              props.frustFar
-            ),
+            object,
             ...props.initialPosition,
             ...props.initialRotation
           }

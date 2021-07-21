@@ -4,17 +4,26 @@ export const CreatePerspectiveCamera = (
   name, FOV = 75, frustNear = 0.1,
   frustFar = 1000, initialPosition = { posX: 0, posY: 0, posZ: 0 },
   initialRotation = { rotX: 0, rotY: 0, rotZ: 0 }
-) => ({
-  type: types.CREATE,
-  name,
-  props: {
-    FOV,
-    frustNear,
-    frustFar,
-    initialPosition,
-    initialRotation
-  }
-});
+) => async dispatch => {
+  const { PerspectiveCamera } = await import('three');
+  dispatch({
+    type: types.CREATE,
+    name,
+    props: {
+      FOV,
+      frustNear,
+      frustFar,
+      initialPosition,
+      initialRotation
+    },
+    object: new PerspectiveCamera(
+      FOV,
+      window.innerWidth / window.innerHeight,
+      frustNear,
+      frustFar
+    )
+  });
+};
 
 export const DestroyPerspectiveCamera = name => ({
   type: types.DESTROY,
