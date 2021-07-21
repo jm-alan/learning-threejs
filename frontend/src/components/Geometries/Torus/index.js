@@ -109,21 +109,13 @@ export default function Torus ({
   }, [dispatch, trashable, objectReady, readyPos, readyRot, name]);
 
   useEffect(() => {
-    const ceilX = posX + visibleRange;
-    const floorX = posX - visibleRange;
-    const ceilY = posY + visibleRange;
-    const floorY = posY - visibleRange;
-    const ceilZ = posZ + visibleRange;
-    const floorZ = posZ - visibleRange;
     const amVisible = (cameraX, cameraY, cameraZ) => (
-      floorX < cameraX && cameraX < ceilX &&
-      floorY < cameraY && cameraY < ceilY &&
-      floorZ < cameraZ && cameraZ < ceilZ &&
-      trashable && dispatch(UntrashGeometry(name))
+      (Math.sqrt(((posX - cameraX) ** 2) + ((posY - cameraY) ** 2) + ((posZ - cameraZ) ** 2)) < visibleRange) &&
+      ((trashable && dispatch(UntrashGeometry(name))) || true)
     ) || (!trashable && dispatch(TrashGeometry(name)));
     dispatch(AddVisibilityFunction(`${name}CheckVisible`, amVisible));
     return () => dispatch(RemoveVisibilityFunction(`${name}CheckVisible`));
-  }, [dispatch, trashable, name, posX, posY, posZ, visibleRange]);
+  }, [dispatch, objectReady, trashable, name, posX, posY, posZ, visibleRange]);
 
   return (torus && children && children(name)) ?? null;
 }
