@@ -43,7 +43,7 @@ export default function Engine ({ children }) {
   useEffect(() => {
     const animate = t => {
       if (ready && !pausedRef.current) {
-        if (t - renderTimeRef.current > 16.65) {
+        if (t - renderTimeRef.current > 16.64) {
           for (let i = 0; i < renderKeys.length; i++) {
             renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
           }
