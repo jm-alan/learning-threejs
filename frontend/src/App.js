@@ -1,19 +1,20 @@
-// import { useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
-import Canvas from './components/Canvas';
-import Torus from './components/Geometries/Torus';
-import Camera from './components/Camera';
-import PointLight from './components/Lights/PointLight';
-import Engine from './components/Engine';
-import KeyListener from './components/Engine/KeyListener';
-import Movement from './components/Camera/Movement';
-import Overlays from './components/Overlays';
-import Director from './components/Director';
-import Rotate from './components/Geometries/Animations/Rotate';
-import Scene from './components/Scene';
 import Home from './components/Home';
+
+const Scene = lazy(() => import('./components/Scene'));
+const Canvas = lazy(() => import('./components/Canvas'));
+const Camera = lazy(() => import('./components/Camera'));
+const Engine = lazy(() => import('./components/Engine'));
+const Director = lazy(() => import('./components/Director'));
+const Overlays = lazy(() => import('./components/Overlays'));
+const Torus = lazy(() => import('./components/Geometries/Torus'));
+const Movement = lazy(() => import('./components/Camera/Movement'));
+const PointLight = lazy(() => import('./components/Lights/PointLight'));
+const KeyListener = lazy(() => import('./components/Engine/KeyListener'));
+const Rotate = lazy(() => import('./components/Geometries/Animations/Rotate'));
 // import csrfetch from './store/csrfetch';
 // import { RestoreUser } from './store/session';
 
@@ -34,69 +35,91 @@ export default function App () {
     <>
       <Switch>
         <Route exact path='/stages/0/'>
-          <Engine>
-            <Director>
-              <Camera
-                objectKey='cameraOne'
-                FOV={90}
-                initialPosition={{ posX: 0, posY: 0, posZ: 20 }}
-                initialRotation={{ rotX: 0, rotY: 0, rotZ: 0 }}
-              />
-              <Scene name='main'>
-                {sceneName => (
-                  <>
-                    <PointLight
-                      sceneName={sceneName}
-                      objectKey='pointOne'
-                      initialPosition={{ posX: 100, posY: 0, posZ: 10 }}
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Engine>
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Director>
+                  <Suspense fallback={<h1>Loading...</h1>}>
+                    <Camera
+                      objectKey='cameraOne'
+                      FOV={90}
+                      initialPosition={{ posX: 0, posY: 0, posZ: 20 }}
+                      initialRotation={{ rotX: 0, rotY: 0, rotZ: 0 }}
                     />
-                    <PointLight
-                      sceneName={sceneName}
-                      objectKey='pointTwo'
-                      initialPosition={{ posX: -100, posY: 0, posZ: 10 }}
-                      initialColor={0xFF0000}
-                    />
-                    <Torus
-                      sceneName={sceneName}
-                      name='torusOne'
-                      specs={[5, 2, 30, 30]}
-                      material='MeshStandard'
-                      initialPosition={{ posX: -10, posY: 0, posZ: 0 }}
-                      visibleRange={50}
-                    >
-                      {objectKey => (
-                        <Rotate
-                          objectKey={objectKey}
-                          name='testTorusRotateYStandard'
-                          rotY={0.01}
-                        />
-                      )}
-                    </Torus>
-                    <Torus
-                      sceneName={sceneName}
-                      name='torusTwo'
-                      specs={[5, 2, 30, 30]}
-                      material='MeshStandard'
-                      initialPosition={{ posX: 10, posY: 0, posZ: 0 }}
-                      visibleRange={50}
-                    >
-                      {objectKey => (
-                        <Rotate
-                          objectKey={objectKey}
-                          name='testTorusRotateX'
-                          rotX={-0.01}
-                        />
-                      )}
-                    </Torus>
-                  </>
-                )}
-              </Scene>
-            </Director>
-            <Overlays />
-            <KeyListener />
-            <Movement />
-            <Canvas />
-          </Engine>
+                  </Suspense>
+                  <Scene name='main'>
+                    {sceneName => (
+                      <>
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                          <PointLight
+                            sceneName={sceneName}
+                            objectKey='pointOne'
+                            initialPosition={{ posX: 100, posY: 0, posZ: 10 }}
+                          />
+                        </Suspense>
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                          <PointLight
+                            sceneName={sceneName}
+                            objectKey='pointTwo'
+                            initialPosition={{ posX: -100, posY: 0, posZ: 10 }}
+                            initialColor={0xFF0000}
+                          />
+                        </Suspense>
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                          <Torus
+                            sceneName={sceneName}
+                            name='torusOne'
+                            specs={[5, 2, 30, 30]}
+                            material='MeshStandard'
+                            initialPosition={{ posX: -10, posY: 0, posZ: 0 }}
+                            visibleRange={50}
+                          >
+                            {objectKey => (
+                              <Rotate
+                                objectKey={objectKey}
+                                name='testTorusRotateYStandard'
+                                rotY={0.01}
+                              />
+                            )}
+                          </Torus>
+                        </Suspense>
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                          <Torus
+                            sceneName={sceneName}
+                            name='torusTwo'
+                            specs={[5, 2, 30, 30]}
+                            material='MeshStandard'
+                            initialPosition={{ posX: 10, posY: 0, posZ: 0 }}
+                            visibleRange={50}
+                          >
+                            {objectKey => (
+                              <Rotate
+                                objectKey={objectKey}
+                                name='testTorusRotateX'
+                                rotX={-0.01}
+                              />
+                            )}
+                          </Torus>
+                        </Suspense>
+                      </>
+                    )}
+                  </Scene>
+                </Director>
+              </Suspense>
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Overlays />
+              </Suspense>
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <KeyListener />
+              </Suspense>
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Movement />
+              </Suspense>
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Canvas />
+              </Suspense>
+            </Engine>
+          </Suspense>
         </Route>
         <Route exacth path='/'>
           <Home />
