@@ -10,10 +10,14 @@ export const SetScene = name => ({
   name
 });
 
-export const CreateScene = name => ({
-  type: types.CREATE,
-  name
-});
+export const CreateScene = name => async dispatch => {
+  const { Scene } = await import('three');
+  dispatch({
+    type: types.CREATE,
+    name,
+    object: new Scene()
+  });
+};
 
 export const DestroyScene = name => ({
   type: types.DESTROY,

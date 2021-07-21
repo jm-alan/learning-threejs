@@ -1,5 +1,3 @@
-import * as Three from 'three';
-
 import * as types from './types';
 
 const initialScene = {
@@ -34,7 +32,7 @@ export default function reducer (
         ...state,
         all: {
           ...state.all,
-          [name]: new Three.Scene()
+          [name]: object
         }
       };
     case types.DESTROY:
