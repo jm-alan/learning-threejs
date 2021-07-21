@@ -1,60 +1,56 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BuildDefault, CreateRenderer, DestroyRenderer, MarkFunctionsUnchanged } from '../../store/engine/renderer/actions';
+import { BuildDefault, CreateRenderer, DestroyRenderer } from '../../store/engine/renderer/actions';
+import { useEventListener } from '../../utils/hooks';
 
 export default function Engine ({ children }) {
   const dispatch = useDispatch();
 
   const ready = useSelector(state => state.engine.renderer.ready);
   const canvas = useSelector(state => state.engine.canvas.current);
+  const paused = useSelector(state => state.engine.renderer.paused);
   const renderer = useSelector(state => state.engine.renderer.current);
   const scene = useSelector(state => state.engine.scenes.current.object);
   const camera = useSelector(state => state.engine.cameras.current.object);
-  const renderObjects = useSelector(state => state.engine.renderer.functions);
-  const paused = useSelector(state => state.engine.renderer.paused);
-  const functionsChanged = useSelector(state => state.engine.renderer.changed);
+  const renderFunctions = useSelector(state => state.engine.renderer.functions);
+  const renderKeys = useSelector(state => state.engine.renderer.keys);
 
-  const renderProps = useRef({ paused: false });
-  const renderKeys = useRef([]);
+  const timeRef = useRef(null);
+  const pausedRef = useRef(false);
+
+  const [add, remove] = useEventListener(window);
 
   useEffect(() => {
-    renderProps.current.paused = paused;
+    pausedRef.current = paused;
   }, [paused]);
 
   useEffect(() => {
-    if (functionsChanged) {
-      renderKeys.current = Object.keys(renderObjects);
-    }
-    dispatch(MarkFunctionsUnchanged());
-  }, [dispatch, functionsChanged, renderObjects]);
-
-  useEffect(() => {
-    if (canvas) {
-      dispatch(CreateRenderer(canvas));
-    }
-    return () => {
-      dispatch(DestroyRenderer());
-    };
+    canvas && dispatch(CreateRenderer(canvas));
+    return () => dispatch(DestroyRenderer());
   }, [dispatch, canvas]);
 
   useEffect(() => {
-    if (scene && camera && renderer) {
-      dispatch(BuildDefault());
-    }
-  }, [dispatch, scene, camera, canvas, renderer]);
+    const fitToWindow = () => scene && camera && renderer && dispatch(BuildDefault());
+    fitToWindow();
+    add.resize(fitToWindow);
+    return () => remove.resize(fitToWindow);
+  }, [dispatch, add, remove, scene, camera, canvas, renderer]);
 
   useEffect(() => {
-    const animate = () => {
-      if (ready && !renderProps.current.paused) {
+    const animate = t => {
+      if (ready && !pausedRef.current) {
+        for (let i = 0; i < renderKeys.length; i++) {
+          (t - timeRef.current > 16.65) && renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
+        }
+        timeRef.current = t;
         renderer.render(scene, camera);
-        for (let i = 0; i < renderKeys.current.length; i++) renderObjects[renderKeys.current[i]]();
-        return window.requestAnimationFrame(animate);
+        window.requestAnimationFrame(animate);
       }
     };
     const captureFrame = window.requestAnimationFrame(animate);
     return () => window.cancelAnimationFrame(captureFrame);
-  }, [dispatch, scene, camera, ready, renderer, renderObjects, paused]);
+  }, [dispatch, renderKeys, scene, camera, ready, renderer, renderFunctions, paused]);
 
   return children;
 }
