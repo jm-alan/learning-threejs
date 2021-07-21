@@ -120,7 +120,7 @@ export default function Torus ({
       floorY < cameraY && cameraY < ceilY &&
       floorZ < cameraZ && cameraZ < ceilZ &&
       trashable && dispatch(UntrashGeometry(name))
-    ) || dispatch(TrashGeometry(name));
+    ) || (!trashable && dispatch(TrashGeometry(name)));
     dispatch(AddVisibilityFunction(`${name}CheckVisible`, amVisible));
     return () => dispatch(RemoveVisibilityFunction(`${name}CheckVisible`));
   }, [dispatch, trashable, name, posX, posY, posZ, visibleRange]);
