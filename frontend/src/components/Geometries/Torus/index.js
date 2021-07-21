@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AddVisibilityFunction, RemoveVisibilityFunction } from '../../../store/engine/cameras/actions';
 
 import {
   CreateGeometry,
@@ -8,13 +9,15 @@ import {
   DestroyStructure,
   ReadyGeometry,
   ReadyGeometryPos,
-  ReadyGeometryRot
+  ReadyGeometryRot,
+  TrashGeometry,
+  UntrashGeometry
 } from '../../../store/engine/geometries/actions';
 import { AddToScene, RemoveFromScene } from '../../../store/engine/scenes/actions';
 
 export default function Torus ({
   name, specs, material,
-  sceneName, color, wireframe,
+  sceneName, color, wireframe, visibleRange,
   initialPosition, initialRotation, children
 }) {
   const dispatch = useDispatch();
@@ -104,6 +107,23 @@ export default function Torus ({
   useEffect(() => {
     !trashable && !objectReady && readyPos && readyRot && dispatch(ReadyGeometry(name));
   }, [dispatch, trashable, objectReady, readyPos, readyRot, name]);
+
+  useEffect(() => {
+    const ceilX = posX + visibleRange;
+    const floorX = posX - visibleRange;
+    const ceilY = posY + visibleRange;
+    const floorY = posY - visibleRange;
+    const ceilZ = posZ + visibleRange;
+    const floorZ = posZ - visibleRange;
+    const amVisible = (cameraX, cameraY, cameraZ) => (
+      floorX < cameraX && cameraX < ceilX &&
+      floorY < cameraY && cameraY < ceilY &&
+      floorZ < cameraZ && cameraZ < ceilZ &&
+      trashable && dispatch(UntrashGeometry(name))
+    ) || dispatch(TrashGeometry(name));
+    dispatch(AddVisibilityFunction(`${name}CheckVisible`, amVisible));
+    return () => dispatch(RemoveVisibilityFunction(`${name}CheckVisible`));
+  }, [dispatch, trashable, name, posX, posY, posZ, visibleRange]);
 
   return (torus && children && children(name)) ?? null;
 }
