@@ -48,9 +48,8 @@ export default function Engine ({ children }) {
         window.requestAnimationFrame(animate);
       }
     };
-    const captureFrame = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(captureFrame);
-  }, [dispatch, renderKeys, scene, camera, ready, renderer, renderFunctions, paused]);
+    window.requestAnimationFrame(animate);
+  }, [renderKeys, scene, camera, ready, renderer, renderFunctions]);
 
   return children;
 }
