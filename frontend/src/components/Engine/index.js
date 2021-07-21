@@ -13,10 +13,13 @@ export default function Engine ({ children }) {
   const renderer = useSelector(state => state.engine.renderer.current);
   const scene = useSelector(state => state.engine.scenes.current.object);
   const camera = useSelector(state => state.engine.cameras.current.object);
-  const renderFunctions = useSelector(state => state.engine.renderer.functions);
   const renderKeys = useSelector(state => state.engine.renderer.keys);
+  const renderFunctions = useSelector(state => state.engine.renderer.functions);
+  const visibilityKeys = useSelector(state => state.engine.cameras.keys);
+  const visibilityFunctions = useSelector(state => state.engine.cameras.functions);
 
-  const timeRef = useRef(null);
+  const renderTimeRef = useRef(0);
+  const cameraTimeRef = useRef(0);
   const pausedRef = useRef(false);
 
   const [add, remove] = useEventListener(window);
@@ -40,16 +43,28 @@ export default function Engine ({ children }) {
   useEffect(() => {
     const animate = t => {
       if (ready && !pausedRef.current) {
-        for (let i = 0; i < renderKeys.length; i++) {
-          (t - timeRef.current > 16.65) && renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
+        if (t - renderTimeRef.current > 16.65) {
+          for (let i = 0; i < renderKeys.length; i++) {
+            renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
+          }
+          renderTimeRef.current = t;
+          renderer.render(scene, camera);
         }
-        timeRef.current = t;
-        renderer.render(scene, camera);
+        if (t - cameraTimeRef.current >= 100) {
+          for (let i = 0; i < visibilityKeys.length; i++) {
+            visibilityFunctions[visibilityKeys[i]] && visibilityFunctions[visibilityKeys[i]](
+              camera.position.x,
+              camera.position.y,
+              camera.position.z
+            );
+          }
+          cameraTimeRef.current = t;
+        }
         window.requestAnimationFrame(animate);
       }
     };
     window.requestAnimationFrame(animate);
-  }, [renderKeys, scene, camera, ready, renderer, renderFunctions]);
+  }, [scene, camera, ready, renderer, renderKeys, renderFunctions, visibilityKeys, visibilityFunctions]);
 
   return children;
 }
