@@ -109,7 +109,7 @@ export default function Torus ({
   }, [dispatch, trashable, objectReady, readyPos, readyRot, name]);
 
   useEffect(() => {
-    const amVisible = (cameraX, cameraY, cameraZ) => (
+    const amVisible = async (cameraX, cameraY, cameraZ) => (
       ((
         ((posX - cameraX) ** 2) +
         ((posY - cameraY) ** 2) +

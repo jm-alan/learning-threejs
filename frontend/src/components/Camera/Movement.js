@@ -17,7 +17,7 @@ export default function Movement () {
 
   useEffect(() => {
     if (calledCamera) {
-      const moveForward = () => dispatch(MoveCameraZ.relative(calledCamera, -1));
+      const moveForward = async () => dispatch(MoveCameraZ.relative(calledCamera, -1));
       if (W) dispatch(AddRenderFunction('forward', moveForward));
       if (!W) dispatch(RemoveRenderFunction('forward'));
     }
@@ -25,7 +25,7 @@ export default function Movement () {
 
   useEffect(() => {
     if (calledCamera) {
-      const moveBackward = () => dispatch(MoveCameraZ.relative(calledCamera, 1));
+      const moveBackward = async () => dispatch(MoveCameraZ.relative(calledCamera, 1));
       if (S) dispatch(AddRenderFunction('backward', moveBackward));
       if (!S) dispatch(RemoveRenderFunction('backward'));
     }
@@ -33,7 +33,7 @@ export default function Movement () {
 
   useEffect(() => {
     if (calledCamera) {
-      const moveLeft = () => dispatch(MoveCameraX.relative(calledCamera, -1));
+      const moveLeft = async () => dispatch(MoveCameraX.relative(calledCamera, -1));
       if (A) dispatch(AddRenderFunction('left', moveLeft));
       if (!A) dispatch(RemoveRenderFunction('left'));
     }
@@ -41,7 +41,7 @@ export default function Movement () {
 
   useEffect(() => {
     if (calledCamera) {
-      const moveRight = () => dispatch(MoveCameraX.relative(calledCamera, 1));
+      const moveRight = async () => dispatch(MoveCameraX.relative(calledCamera, 1));
       if (D) dispatch(AddRenderFunction('right', moveRight));
       if (!D) dispatch(RemoveRenderFunction('right'));
     }
@@ -49,7 +49,7 @@ export default function Movement () {
 
   useEffect(() => {
     if (calledCamera) {
-      const moveUp = () => dispatch(MoveCameraY.relative(calledCamera, 1));
+      const moveUp = async () => dispatch(MoveCameraY.relative(calledCamera, 1));
       if (Space) dispatch(AddRenderFunction('up', moveUp));
       if (!Space) dispatch(RemoveRenderFunction('up'));
     }
@@ -57,7 +57,7 @@ export default function Movement () {
 
   useEffect(() => {
     if (calledCamera) {
-      const moveDown = () => dispatch(MoveCameraY.relative(calledCamera, -1));
+      const moveDown = async () => dispatch(MoveCameraY.relative(calledCamera, -1));
       if (ShiftLeft) dispatch(AddRenderFunction('down', moveDown));
       if (!ShiftLeft) dispatch(RemoveRenderFunction('down'));
     }
