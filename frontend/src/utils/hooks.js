@@ -363,15 +363,37 @@ export function useEventListener (element) {
   return [addEventListener, removeEventListener];
 }
 
-const renderContext = {};
+const renderContext = {
+  ready: false,
+  renderer: null,
+  renderFunctions: {},
+  renderKeys: [],
+  addRenderFunction () {},
+  removeRenderFunction () {},
+  destroyRenderer () {}
+};
 
 export const useRenderer = canvas => {
-  if (!canvas) return [];
-  const destroy = () => {
+  if (!canvas) return renderContext;
+  if (renderContext.ready) return renderContext;
+  const { renderKeys, renderFunctions } = renderContext;
+  const updateKeys = () => renderKeys.splice(0, renderKeys.length, ...Object.keys(renderFunctions));
+  const destroyRenderer = () => {
     renderContext.renderer.dispose();
-    delete renderContext.renderer;
+    renderContext.renderer = null;
   };
-  if (renderContext.renderer) return [renderContext.renderer, destroy];
+  const addRenderFunction = (key, action) => {
+    renderFunctions[key] = action;
+    updateKeys();
+  };
+  const removeRenderFunction = key => {
+    delete renderFunctions[key];
+    updateKeys();
+  };
   renderContext.renderer = new WebGLRenderer({ canvas });
-  return [renderContext.renderer, destroy];
+  renderContext.addRenderFunction = addRenderFunction;
+  renderContext.removeRenderFunction = removeRenderFunction;
+  renderContext.destroyRenderer = destroyRenderer;
+  renderContext.ready = true;
+  return renderContext;
 };
