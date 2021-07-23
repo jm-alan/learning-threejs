@@ -363,6 +363,14 @@ export function useEventListener (element) {
   return [addEventListener, removeEventListener];
 }
 
-let renderContainer = null;
+const renderContext = {};
 
-export const useRenderer = canvas => canvas && (renderContainer ?? (renderContainer = new WebGLRenderer({ canvas })));
+export const useRenderer = canvas => {
+  const destroy = () => {
+    renderContext.renderer.dispose();
+    delete renderContext.renderer;
+  };
+  if (renderContext.renderer) return [renderContext.renderer, destroy];
+  renderContext.renderer = new WebGLRenderer({ canvas });
+  return [renderContext.renderer, destroy];
+};
