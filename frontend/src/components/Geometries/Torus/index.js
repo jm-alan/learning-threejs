@@ -97,9 +97,9 @@ export default function Torus ({
 
   useEffect(() => {
     !trashable && object && !readyRot && initialRotation && (() => {
-      object.rotateX(initialRotation.rotX);
-      object.rotateY(initialRotation.rotY);
-      object.rotateZ(initialRotation.rotZ);
+      object.rotation.x = initialRotation.rotX;
+      object.rotation.y = initialRotation.rotY;
+      object.rotation.z = initialRotation.rotZ;
     })();
     !readyRot && dispatch(ReadyGeometryRot(name));
   }, [dispatch, object, readyRot, initialRotation, name, trashable]);
