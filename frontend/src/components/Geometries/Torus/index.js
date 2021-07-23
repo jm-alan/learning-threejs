@@ -87,12 +87,12 @@ export default function Torus ({
   }, [dispatch, sceneName, objectReady, torus, trashable]);
 
   useEffect(() => {
-    !trashable && object && !readyPos && (() => {
-      initialPosition && object.position.setX(initialPosition.posX);
-      initialPosition && object.position.setY(initialPosition.posY);
-      initialPosition && object.position.setZ(initialPosition.posZ);
-      dispatch(ReadyGeometryPos(name));
+    !trashable && object && !readyPos && initialPosition && (() => {
+      object.position.setX(initialPosition.posX);
+      object.position.setY(initialPosition.posY);
+      object.position.setZ(initialPosition.posZ);
     })();
+    !readyPos && dispatch(ReadyGeometryPos(name));
   }, [dispatch, object, readyPos, initialPosition, name, trashable]);
 
   useEffect(() => {

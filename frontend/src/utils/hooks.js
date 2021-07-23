@@ -1,3 +1,5 @@
+import { WebGLRenderer } from 'three';
+
 const events = [
   'abort',
   'ended',
@@ -360,3 +362,7 @@ export function useEventListener (element) {
   const removeEventListener = events.reduce((acc, next) => (acc[next] = eventRemover(next)) && acc, {});
   return [addEventListener, removeEventListener];
 }
+
+let renderContainer = null;
+
+export const useRenderer = canvas => renderContainer ?? (renderContainer = new WebGLRenderer({ canvas }));
