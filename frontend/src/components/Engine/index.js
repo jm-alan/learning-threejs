@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BuildDefault, CreateRenderer, DestroyRenderer } from '../../store/engine/renderer/actions';
-import { useEventListener } from '../../utils/hooks';
+import { BuildDefault } from '../../store/engine/renderer/actions';
+import { useEventListener, useRenderer } from '../../utils/hooks';
 
 export default function Engine ({ children }) {
   const dispatch = useDispatch();
@@ -10,13 +10,14 @@ export default function Engine ({ children }) {
   const ready = useSelector(state => state.engine.renderer.ready);
   const canvas = useSelector(state => state.engine.canvas.current);
   const paused = useSelector(state => state.engine.renderer.paused);
-  const renderer = useSelector(state => state.engine.renderer.current);
   const scene = useSelector(state => state.engine.scenes.current.object);
   const camera = useSelector(state => state.engine.cameras.current.object);
   const renderKeys = useSelector(state => state.engine.renderer.keys);
   const renderFunctions = useSelector(state => state.engine.renderer.functions);
   const visibilityKeys = useSelector(state => state.engine.cameras.keys);
   const visibilityFunctions = useSelector(state => state.engine.cameras.functions);
+
+  const [renderer, disposeRenderer] = useRenderer(canvas);
 
   const renderTimeRef = useRef(0);
   const cameraTimeRef = useRef(0);
@@ -27,11 +28,6 @@ export default function Engine ({ children }) {
   useEffect(() => {
     pausedRef.current = paused;
   }, [paused]);
-
-  useEffect(() => {
-    canvas && dispatch(CreateRenderer(canvas));
-    return () => dispatch(DestroyRenderer());
-  }, [dispatch, canvas]);
 
   useEffect(() => {
     const fitToWindow = () => scene && camera && renderer && dispatch(BuildDefault());
@@ -65,6 +61,8 @@ export default function Engine ({ children }) {
     };
     window.requestAnimationFrame(animate);
   }, [scene, camera, ready, renderer, renderKeys, renderFunctions, visibilityKeys, visibilityFunctions]);
+
+  useEffect(() => disposeRenderer, []);
 
   return children;
 }
