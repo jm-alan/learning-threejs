@@ -366,6 +366,7 @@ export function useEventListener (element) {
 const renderContext = {};
 
 export const useRenderer = canvas => {
+  if (!canvas) return [];
   const destroy = () => {
     renderContext.renderer.dispose();
     delete renderContext.renderer;
