@@ -12,12 +12,10 @@ export default function Engine ({ children }) {
   const paused = useSelector(state => state.engine.renderer.paused);
   const scene = useSelector(state => state.engine.scenes.current.object);
   const camera = useSelector(state => state.engine.cameras.current.object);
-  const renderKeys = useSelector(state => state.engine.renderer.keys);
-  const renderFunctions = useSelector(state => state.engine.renderer.functions);
   const visibilityKeys = useSelector(state => state.engine.cameras.keys);
   const visibilityFunctions = useSelector(state => state.engine.cameras.functions);
 
-  const [renderer, disposeRenderer] = useRenderer(canvas);
+  const { renderer, renderKeys, renderFunctions, destroyRenderer } = useRenderer(canvas);
 
   const renderTimeRef = useRef(0);
   const cameraTimeRef = useRef(0);
@@ -62,7 +60,7 @@ export default function Engine ({ children }) {
     window.requestAnimationFrame(animate);
   }, [scene, camera, ready, renderer, renderKeys, renderFunctions, visibilityKeys, visibilityFunctions]);
 
-  useEffect(() => disposeRenderer, []);
+  useEffect(() => destroyRenderer, []);
 
   return children;
 }
