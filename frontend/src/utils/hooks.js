@@ -365,4 +365,4 @@ export function useEventListener (element) {
 
 let renderContainer = null;
 
-export const useRenderer = canvas => renderContainer ?? (renderContainer = new WebGLRenderer({ canvas }));
+export const useRenderer = canvas => canvas && (renderContainer ?? (renderContainer = new WebGLRenderer({ canvas })));
