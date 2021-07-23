@@ -114,7 +114,7 @@ export default function Torus ({
         ((posX - cameraX) ** 2) +
         ((posY - cameraY) ** 2) +
         ((posZ - cameraZ) ** 2)
-      ) < visibleRange ** 2) &&
+      ) < (visibleRange ** 2)) &&
       ((trashable && dispatch(UntrashGeometry(name))) || true)
     ) || (!trashable && dispatch(TrashGeometry(name)));
     dispatch(AddVisibilityFunction(`${name}CheckVisible`, amVisible));
