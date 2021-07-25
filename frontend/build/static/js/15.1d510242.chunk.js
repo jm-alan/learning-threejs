@@ -1,0 +1,2 @@
+(this["webpackJsonplearning-threejs"]=this["webpackJsonplearning-threejs"]||[]).push([[15],{78:function(e,n,t){"use strict";t.r(n),t.d(n,"default",(function(){return a}));var r=t(1),c=t(8),u=t(29),s=t(2);function a(){var e=Object(c.b)(),n=Object(r.useRef)(null);return Object(r.useEffect)((function(){var t;return e((t=n.current,{type:u.a,current:t})),function(){return e({type:u.b})}}),[e]),Object(s.jsx)("canvas",{ref:n,id:"canvas"})}}}]);
+//# sourceMappingURL=15.1d510242.chunk.js.map

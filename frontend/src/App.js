@@ -33,11 +33,11 @@ export default function App () {
   return (
     <Switch>
       <Route exact path='/stages/0/'>
-        <Suspense fallback={<h1>Loading Engine...</h1>}>
+        <Suspense fallback={<h1 className='loading'>Loading Main Engine...</h1>}>
           <Engine>
-            <Suspense fallback={<h1>Loading Director...</h1>}>
+            <Suspense fallback={<h1 className='loading'>Loading Camera and Scene Management...</h1>}>
               <Director>
-                <Suspense fallback={<h1>Loading Camera One...</h1>}>
+                <Suspense fallback={<h1 className='loading'>Loading Camera One...</h1>}>
                   <Camera
                     objectKey='cameraOne'
                     FOV={90}
@@ -45,18 +45,18 @@ export default function App () {
                     initialRotation={{ rotX: 0, rotY: 0, rotZ: 0 }}
                   />
                 </Suspense>
-                <Suspense fallback={<h1>Loading Main Scene...</h1>}>
+                <Suspense fallback={<h1 className='loading'>Loading Main Scene...</h1>}>
                   <Scene name='main'>
                     {sceneName => (
                       <>
-                        <Suspense fallback={<h1>Loading PointLight One...</h1>}>
+                        <Suspense fallback={<h1 className='loading'>Loading PointLight One...</h1>}>
                           <PointLight
                             sceneName={sceneName}
                             objectKey='pointOne'
                             initialPosition={{ posX: 100, posY: 0, posZ: 10 }}
                           />
                         </Suspense>
-                        <Suspense fallback={<h1>Loading PointLight Two...</h1>}>
+                        <Suspense fallback={<h1 className='loading'>Loading PointLight Two...</h1>}>
                           <PointLight
                             sceneName={sceneName}
                             objectKey='pointTwo'
@@ -64,7 +64,7 @@ export default function App () {
                             initialColor={0xFF0000}
                           />
                         </Suspense>
-                        <Suspense fallback={<h1>Loading Torus One...</h1>}>
+                        <Suspense fallback={<h1 className='loading'>Loading Torus One...</h1>}>
                           <Torus
                             sceneName={sceneName}
                             name='torusOne'
@@ -74,7 +74,7 @@ export default function App () {
                             visibleRange={50}
                           >
                             {objectKey => (
-                              <Suspense fallback={<h1>Loading Torus One Rotate Animation...</h1>}>
+                              <Suspense fallback={<h1 className='loading'>Loading Torus One Rotate Animation...</h1>}>
                                 <Rotate
                                   objectKey={objectKey}
                                   name='testTorusRotateYStandard'
@@ -84,7 +84,7 @@ export default function App () {
                             )}
                           </Torus>
                         </Suspense>
-                        <Suspense fallback={<h1>Loading Torus Two...</h1>}>
+                        <Suspense fallback={<h1 className='loading'>Loading Torus Two...</h1>}>
                           <Torus
                             sceneName={sceneName}
                             name='torusTwo'
@@ -94,7 +94,7 @@ export default function App () {
                             visibleRange={50}
                           >
                             {objectKey => (
-                              <Suspense fallback={<h1>Loading Torus Two Rotate Animation...</h1>}>
+                              <Suspense fallback={<h1 className='loading'>Loading Torus Two Rotate Animation...</h1>}>
                                 <Rotate
                                   objectKey={objectKey}
                                   name='testTorusRotateX'
@@ -110,23 +110,23 @@ export default function App () {
                 </Suspense>
               </Director>
             </Suspense>
-            <Suspense fallback={<h1>Loading Overlays...</h1>}>
+            <Suspense fallback={<h1 className='loading'>Loading Overlays...</h1>}>
               <Overlays />
             </Suspense>
-            <Suspense fallback={<h1>Loading Keybindings...</h1>}>
+            <Suspense fallback={<h1 className='loading'>Loading Keybindings...</h1>}>
               <KeyListener />
             </Suspense>
-            <Suspense fallback={<h1>Loading Camera Movement Control...</h1>}>
+            <Suspense fallback={<h1 className='loading'>Loading Camera Movement Control...</h1>}>
               <Movement />
             </Suspense>
-            <Suspense fallback={<h1>Loading Main Canvas...</h1>}>
+            <Suspense fallback={<h1 className='loading'>Loading Main Canvas...</h1>}>
               <Canvas />
             </Suspense>
           </Engine>
         </Suspense>
       </Route>
       <Route exacth path='/'>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<h1 className='loading'>Loading...</h1>}>
           <Home />
         </Suspense>
       </Route>

@@ -10,3 +10,9 @@ canvas#canvas {
   position: fixed;
   inset: 0;
 }
+
+h1.loading {
+  position: relative;
+  z-index: 999;
+  color: red;
+}
