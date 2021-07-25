@@ -368,34 +368,34 @@ export function useEventListener (element) {
 const renderContext = {
   ready: false,
   renderer: null,
-  renderFunctions: {},
-  renderKeys: [],
+  functions: {},
+  keys: [],
   __dispatch: null,
   captureDispatch (dispatch) {
     this.__dispatch = dispatch;
   },
-  buildRenderer (canvas) {
+  build (canvas) {
     this.renderer = new WebGLRenderer({ canvas });
     this.__dispatch(ReadyRenderer());
   },
-  resizeRenderer () {
+  resize () {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   },
-  addRenderFunction (key, action) {
-    this.renderFunctions[key] = action;
+  addFunction (key, action) {
+    this.functions[key] = action;
     this.__updateKeys();
   },
-  removeRenderFunction (name) {
-    delete this.renderFunctions[name];
+  removeFunction (name) {
+    delete this.functions[name];
     this.__updateKeys();
   },
-  destroyRenderer () {
+  destroy () {
     this.renderer.dispose();
     this.renderer = null;
   },
   __updateKeys () {
-    this.renderKeys.splice(0, this.renderKeys.length, ...Object.keys(this.renderFunctions));
+    this.keys.splice(0, this.keys.length, ...Object.keys(this.functions));
   }
 };
 
