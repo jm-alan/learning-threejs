@@ -51,9 +51,6 @@ export default function Engine ({ children }) {
         );
       }
       cameraTimeRef.current = t;
-        }
-      }
-      window.requestAnimationFrame(animate);
     };
     const timerFunctions = t => {
       t - renderTimeRef.current > 16.64 && runRender(t);

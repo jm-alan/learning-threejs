@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { WebGLRenderer } from 'three';
 
 const events = [
@@ -368,32 +369,39 @@ const renderContext = {
   renderer: null,
   renderFunctions: {},
   renderKeys: [],
-  addRenderFunction () {},
-  removeRenderFunction () {},
-  destroyRenderer () {}
+  __trigger: null,
+  captureTrigger (trigger) {
+    this.__trigger = trigger;
+    return this;
+  },
+  buildRenderer (canvas) {
+    this.renderer = new WebGLRenderer({ canvas });
+    this.ready = true;
+    this.__trigger();
+  },
+  resizeRenderer () {
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+  },
+  addRenderFunction (key, action) {
+    this.renderFunctions[key] = action;
+    this.__updateKeys();
+  },
+  removeRenderFunction (name) {
+    delete this.renderFunctions[name];
+    this.__updateKeys();
+  },
+  destroyRenderer () {
+    this.renderer.dispose();
+    this.renderer = null;
+  },
+  __updateKeys () {
+    this.renderKeys.splice(0, this.renderKeys.length, ...Object.keys(this.renderFunctions));
+  }
 };
 
-export const useRenderer = canvas => {
-  if (!canvas) return renderContext;
+export const useRenderer = () => {
+  const [, setReady] = useState(renderContext.ready);
   if (renderContext.ready) return renderContext;
-  const { renderKeys, renderFunctions } = renderContext;
-  const updateKeys = () => renderKeys.splice(0, renderKeys.length, ...Object.keys(renderFunctions));
-  const destroyRenderer = () => {
-    renderContext.renderer.dispose();
-    renderContext.renderer = null;
-  };
-  const addRenderFunction = (key, action) => {
-    renderFunctions[key] = action;
-    updateKeys();
-  };
-  const removeRenderFunction = key => {
-    delete renderFunctions[key];
-    updateKeys();
-  };
-  renderContext.renderer = new WebGLRenderer({ canvas });
-  renderContext.addRenderFunction = addRenderFunction;
-  renderContext.removeRenderFunction = removeRenderFunction;
-  renderContext.destroyRenderer = destroyRenderer;
-  renderContext.ready = true;
-  return renderContext;
+  return renderContext.captureTrigger(setReady);
 };
