@@ -1,2 +1,0 @@
-(this["webpackJsonplearning-threejs"]=this["webpackJsonplearning-threejs"]||[]).push([[16],{69:function(e,n,r){"use strict";r.r(n),r.d(n,"default",(function(){return i}));var s=r(8),t=r(2);function i(){var e=Object(s.c)((function(e){return e.session.user}));return e?Object(t.jsxs)("h1",{children:["Hello, ",e.username,"!"]}):Object(t.jsx)("h1",{children:"Hello! Please either log in or sign up!"})}}}]);
-//# sourceMappingURL=16.7175f986.chunk.js.map
