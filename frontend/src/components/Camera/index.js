@@ -22,12 +22,6 @@ export default function Camera ({
   const object = useSelector(state => state.engine.cameras.all[objectKey]?.object);
   const readyPos = useSelector(state => state.engine.cameras.all[objectKey]?.readyPos);
   const readyRot = useSelector(state => state.engine.cameras.all[objectKey]?.readyRot);
-  const posX = useSelector(state => state.engine.cameras.all[objectKey]?.posX);
-  const posY = useSelector(state => state.engine.cameras.all[objectKey]?.posY);
-  const posZ = useSelector(state => state.engine.cameras.all[objectKey]?.posZ);
-  const rotX = useSelector(state => state.engine.cameras.all[objectKey]?.rotX);
-  const rotY = useSelector(state => state.engine.cameras.all[objectKey]?.rotY);
-  const rotZ = useSelector(state => state.engine.cameras.all[objectKey]?.rotZ);
 
   useEffect(() => {
     dispatch(CreatePerspectiveCamera(
@@ -40,30 +34,6 @@ export default function Camera ({
     ));
     return () => dispatch(DestroyPerspectiveCamera(objectKey));
   }, [dispatch, objectKey, FOV, frustNear, frustFar, initialPosition, initialRotation]);
-
-  useEffect(() => {
-    object && object.position.setX(posX);
-  }, [object, posX]);
-
-  useEffect(() => {
-    object && object.position.setY(posY);
-  }, [object, posY]);
-
-  useEffect(() => {
-    object && object.position.setZ(posZ);
-  }, [object, posZ]);
-
-  useEffect(() => {
-    object && object.rotateX(rotX);
-  }, [object, rotX]);
-
-  useEffect(() => {
-    object && object.rotateY(rotY);
-  }, [object, rotY]);
-
-  useEffect(() => {
-    object && object.rotateZ(rotZ);
-  }, [object, rotZ]);
 
   useEffect(() => {
     object && !readyPos && (() => {
