@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useRenderer } from '../../../utils/hooks';
@@ -10,8 +10,6 @@ export default function Rotate ({ objectKey, name, rotX = 0, rotY = 0, rotZ = 0 
   const renderReady = useSelector(state => state.engine.renderer.ready);
   const objectReady = useSelector(state => state.engine.geometries.all[objectKey]?.ready);
   const renderer = useRenderer();
-
-  console.log(React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
 
   useEffect(() => {
     if (renderReady && objectReady) {
