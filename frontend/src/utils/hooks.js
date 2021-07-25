@@ -367,15 +367,18 @@ export function useEventListener (element) {
 
 const renderContext = {
   ready: false,
-  renderer: null,
+  render (scene, camera) {
+    this.__renderer.render(scene, camera);
+  },
   functions: {},
   keys: [],
   __dispatch: null,
+  __renderer: null,
   captureDispatch (dispatch) {
     this.__dispatch = dispatch;
   },
   build (canvas) {
-    this.renderer = new WebGLRenderer({ canvas });
+    this.__renderer = new WebGLRenderer({ canvas });
     this.__dispatch(ReadyRenderer());
   },
   resize () {
