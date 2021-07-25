@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BuildDefault } from '../../store/engine/renderer/actions';
 import { useEventListener, useRenderer } from '../../utils/hooks';
 
 export default function Engine ({ children }) {
@@ -15,29 +14,37 @@ export default function Engine ({ children }) {
   const visibilityKeys = useSelector(state => state.engine.cameras.keys);
   const visibilityFunctions = useSelector(state => state.engine.cameras.functions);
 
-  const { renderer, renderKeys, renderFunctions, destroyRenderer } = useRenderer(canvas);
-
   const renderTimeRef = useRef(0);
   const cameraTimeRef = useRef(0);
   const pausedRef = useRef(false);
 
   const [add, remove] = useEventListener(window);
 
+  const renderer = useRenderer();
+
   useEffect(() => {
     pausedRef.current = paused;
   }, [paused]);
 
   useEffect(() => {
-    const fitToWindow = () => scene && camera && renderer && dispatch(BuildDefault());
+    !ready && renderer.captureDispatch(dispatch);
+  }, [dispatch, renderer, ready]);
+
+  useEffect(() => {
+    canvas && !ready && renderer.build(canvas);
+  }, [canvas, ready]);
+
+  useEffect(() => {
+    const fitToWindow = () => scene && camera && ready && renderer.resize();
     fitToWindow();
     add.resize(fitToWindow);
     return () => remove.resize(fitToWindow);
-  }, [dispatch, add, remove, scene, camera, renderer]);
+  }, [add, remove, scene, camera, ready]);
 
   useEffect(() => {
     const runRender = t => {
-      for (let i = 0; i < renderKeys.length; i++) {
-        renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
+      for (let i = 0; i < renderer.keys.length; i++) {
+        renderer.functions[renderer.keys[i]] && renderer.functions[renderer.keys[i]]();
       }
       renderTimeRef.current = t;
       renderer.render(scene, camera);
@@ -61,9 +68,9 @@ export default function Engine ({ children }) {
       window.requestAnimationFrame(runEngine);
     };
     window.requestAnimationFrame(runEngine);
-  }, [scene, camera, ready, renderer, renderKeys, renderFunctions, visibilityKeys, visibilityFunctions]);
+  }, [scene, camera, ready, renderer, renderer.keys, renderer.functions, visibilityKeys, visibilityFunctions]);
 
-  useEffect(() => destroyRenderer, []);
+  useEffect(() => renderer.destroy(), []);
 
   return children;
 }
