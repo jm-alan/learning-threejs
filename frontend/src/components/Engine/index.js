@@ -35,29 +35,35 @@ export default function Engine ({ children }) {
   }, [dispatch, add, remove, scene, camera, renderer]);
 
   useEffect(() => {
-    const animate = t => {
-      if (ready && !pausedRef.current) {
-        if (t - renderTimeRef.current > 16.64) {
-          for (let i = 0; i < renderKeys.length; i++) {
-            renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
-          }
-          renderTimeRef.current = t;
-          renderer.render(scene, camera);
-        }
-        if (t - cameraTimeRef.current >= 100) {
-          for (let i = 0; i < visibilityKeys.length; i++) {
-            visibilityFunctions[visibilityKeys[i]] && visibilityFunctions[visibilityKeys[i]](
-              camera.position.x,
-              camera.position.y,
-              camera.position.z
-            );
-          }
-          cameraTimeRef.current = t;
+    const runRender = t => {
+      for (let i = 0; i < renderKeys.length; i++) {
+        renderFunctions[renderKeys[i]] && renderFunctions[renderKeys[i]]();
+      }
+      renderTimeRef.current = t;
+      renderer.render(scene, camera);
+    };
+    const checkVisibility = t => {
+      for (let i = 0; i < visibilityKeys.length; i++) {
+        visibilityFunctions[visibilityKeys[i]] && visibilityFunctions[visibilityKeys[i]](
+          camera.position.x,
+          camera.position.y,
+          camera.position.z
+        );
+      }
+      cameraTimeRef.current = t;
         }
       }
       window.requestAnimationFrame(animate);
     };
-    window.requestAnimationFrame(animate);
+    const timerFunctions = t => {
+      t - renderTimeRef.current > 16.64 && runRender(t);
+      t - cameraTimeRef.current >= 100 && checkVisibility(t);
+    };
+    const runEngine = t => {
+      ready && !pausedRef.current && timerFunctions(t);
+      window.requestAnimationFrame(runEngine);
+    };
+    window.requestAnimationFrame(runEngine);
   }, [scene, camera, ready, renderer, renderKeys, renderFunctions, visibilityKeys, visibilityFunctions]);
 
   useEffect(() => destroyRenderer, []);
