@@ -1,6 +1,6 @@
 import { WebGLRenderer } from 'three';
 
-import { ReadyRenderer } from '../store/engine/renderer/actions';
+import { ReadyRenderer, UnreadyRenderer } from '../store/engine/renderer/actions';
 
 const events = [
   'abort',
@@ -382,8 +382,8 @@ const renderContext = {
     this.__dispatch(ReadyRenderer());
   },
   resize () {
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.__renderer.setPixelRatio(window.devicePixelRatio);
+    this.__renderer.setSize(window.innerWidth, window.innerHeight);
   },
   addFunction (key, action) {
     this.functions[key] = action;
@@ -394,8 +394,9 @@ const renderContext = {
     this.__updateKeys();
   },
   destroy () {
-    this.renderer.dispose();
-    this.renderer = null;
+    this.__renderer && this.__renderer.dispose();
+    this.__dispatch(UnreadyRenderer());
+    this.__renderer = null;
   },
   __updateKeys () {
     this.keys.splice(0, this.keys.length, ...Object.keys(this.functions));
