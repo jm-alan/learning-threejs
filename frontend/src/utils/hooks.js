@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import { WebGLRenderer } from 'three';
+
+import { ReadyRenderer } from '../store/engine/renderer/actions';
 
 const events = [
   'abort',
@@ -369,15 +370,13 @@ const renderContext = {
   renderer: null,
   renderFunctions: {},
   renderKeys: [],
-  __trigger: null,
-  captureTrigger (trigger) {
-    this.__trigger = trigger;
-    return this;
+  __dispatch: null,
+  captureDispatch (dispatch) {
+    this.__dispatch = dispatch;
   },
   buildRenderer (canvas) {
     this.renderer = new WebGLRenderer({ canvas });
-    this.ready = true;
-    this.__trigger();
+    this.__dispatch(ReadyRenderer());
   },
   resizeRenderer () {
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -400,8 +399,4 @@ const renderContext = {
   }
 };
 
-export const useRenderer = () => {
-  const [, setReady] = useState(renderContext.ready);
-  if (renderContext.ready) return renderContext;
-  return renderContext.captureTrigger(setReady);
-};
+export const useRenderer = () => renderContext;
