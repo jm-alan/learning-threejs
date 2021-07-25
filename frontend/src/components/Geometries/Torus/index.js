@@ -7,6 +7,12 @@ import {
   DestroyMaterial,
   DestroyMesh,
   DestroyStructure,
+  MoveGeometryX,
+  MoveGeometryY,
+  MoveGeometryZ,
+  RotGeometryX,
+  RotGeometryY,
+  RotGeometryZ,
   ReadyGeometry,
   ReadyGeometryPos,
   ReadyGeometryRot,
@@ -28,37 +34,10 @@ export default function Torus ({
   const posX = useSelector(state => state.engine.geometries.all[name]?.posX);
   const posY = useSelector(state => state.engine.geometries.all[name]?.posY);
   const posZ = useSelector(state => state.engine.geometries.all[name]?.posZ);
-  const rotX = useSelector(state => state.engine.geometries.all[name]?.rotX);
-  const rotY = useSelector(state => state.engine.geometries.all[name]?.rotY);
-  const rotZ = useSelector(state => state.engine.geometries.all[name]?.rotZ);
   const readyPos = useSelector(state => state.engine.geometries.all[name]?.readyPos);
   const readyRot = useSelector(state => state.engine.geometries.all[name]?.readyRot);
   const objectReady = useSelector(state => state.engine.geometries.all[name]?.ready);
   const trashable = useSelector(state => state.engine.geometries.all[name]?.trashable);
-
-  useEffect(() => {
-    object && object.position.setX(posX);
-  }, [object, posX]);
-
-  useEffect(() => {
-    object && object.position.setY(posY);
-  }, [object, posY]);
-
-  useEffect(() => {
-    object && object.position.setZ(posZ);
-  }, [object, posZ]);
-
-  useEffect(() => {
-    object && (object.rotation.x = rotX);
-  }, [object, rotX]);
-
-  useEffect(() => {
-    object && (object.rotation.y = rotY);
-  }, [object, rotY]);
-
-  useEffect(() => {
-    object && (object.rotation.z = rotZ);
-  }, [object, rotZ]);
 
   useEffect(() => {
     renderReady && !object && !trashable &&
@@ -83,25 +62,38 @@ export default function Torus ({
   ]);
 
   useEffect(() => {
-    !trashable && objectReady && dispatch(AddToScene(sceneName, torus));
-  }, [dispatch, sceneName, objectReady, torus, trashable]);
+    !trashable && object && objectReady && dispatch(AddToScene(sceneName, torus));
+    return () => object && dispatch(RemoveFromScene(sceneName, torus));
+  }, [dispatch, object, sceneName, objectReady, torus, trashable]);
 
   useEffect(() => {
-    !trashable && object && !readyPos && initialPosition && (() => {
+    const readyGeometryPosition = () => {
       object.position.setX(initialPosition.posX);
+      dispatch(MoveGeometryX.absolute(name, initialPosition.posX));
       object.position.setY(initialPosition.posY);
+      dispatch(MoveGeometryY.absolute(name, initialPosition.posY));
       object.position.setZ(initialPosition.posZ);
+      dispatch(MoveGeometryZ.absolute(name, initialPosition.posZ));
+    };
+    !trashable && object && !readyPos && (() => {
+      initialPosition && readyGeometryPosition();
+      dispatch(ReadyGeometryPos(name));
     })();
-    !readyPos && dispatch(ReadyGeometryPos(name));
   }, [dispatch, object, readyPos, initialPosition, name, trashable]);
 
   useEffect(() => {
-    !trashable && object && !readyRot && initialRotation && (() => {
+    const readyGeometryRotation = () => {
       object.rotation.x = initialRotation.rotX;
+      dispatch(RotGeometryX.absolute(name, initialRotation.rotX));
       object.rotation.y = initialRotation.rotY;
+      dispatch(RotGeometryY.absolute(name, initialRotation.rotY));
       object.rotation.z = initialRotation.rotZ;
+      dispatch(RotGeometryZ.absolute(name, initialRotation.rotZ));
+    };
+    !trashable && object && !readyRot && (() => {
+      initialRotation && readyGeometryRotation();
+      dispatch(ReadyGeometryRot(name));
     })();
-    !readyRot && dispatch(ReadyGeometryRot(name));
   }, [dispatch, object, readyRot, initialRotation, name, trashable]);
 
   useEffect(() => {
@@ -109,7 +101,7 @@ export default function Torus ({
   }, [dispatch, trashable, objectReady, readyPos, readyRot, name]);
 
   useEffect(() => {
-    const amVisible = async (cameraX, cameraY, cameraZ) => (
+    const amVisible = (cameraX, cameraY, cameraZ) => (
       ((
         ((posX - cameraX) ** 2) +
         ((posY - cameraY) ** 2) +
@@ -119,7 +111,7 @@ export default function Torus ({
     ) || (!trashable && dispatch(TrashGeometry(name)));
     dispatch(AddVisibilityFunction(`${name}CheckVisible`, amVisible));
     return () => dispatch(RemoveVisibilityFunction(`${name}CheckVisible`));
-  }, [dispatch, objectReady, trashable, name, posX, posY, posZ, visibleRange]);
+  }, [dispatch, posX, posY, posZ, object, trashable, name, visibleRange]);
 
   return (torus && children && children(name)) ?? null;
 }
