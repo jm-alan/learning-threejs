@@ -32,14 +32,14 @@ export default function Engine ({ children }) {
 
   useEffect(() => {
     canvas && !ready && renderer.build(canvas);
-  }, [canvas, ready]);
+  }, [canvas, renderer, ready]);
 
   useEffect(() => {
     const fitToWindow = () => scene && camera && ready && renderer.resize();
     fitToWindow();
     add.resize(fitToWindow);
     return () => remove.resize(fitToWindow);
-  }, [add, remove, scene, camera, ready]);
+  }, [add, remove, scene, camera, ready, renderer]);
 
   useEffect(() => {
     const runRender = t => {
@@ -64,13 +64,13 @@ export default function Engine ({ children }) {
       t - cameraTimeRef.current >= 100 && checkVisibility(t);
     };
     const runEngine = t => {
-      ready && !pausedRef.current && timerFunctions(t);
+      ready && !pausedRef.current && scene && camera && timerFunctions(t);
       window.requestAnimationFrame(runEngine);
     };
     window.requestAnimationFrame(runEngine);
-  }, [scene, camera, ready, renderer, renderer.keys, renderer.functions, visibilityKeys, visibilityFunctions]);
+  }, [scene, camera, ready, renderer, visibilityKeys, visibilityFunctions]);
 
-  useEffect(() => renderer.destroy(), []);
+  useEffect(() => renderer.destroy(), [renderer]);
 
   return children;
 }
