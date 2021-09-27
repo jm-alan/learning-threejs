@@ -6,9 +6,6 @@ import { Provider, useDispatch } from 'react-redux';
 import App from './App';
 import Modal from './components/Modal';
 import configureStore from './store';
-import Errors from './components/Errors';
-import csrfetch from './store/csrfetch';
-import findCookie from './utils/findCookie';
 import { SetModalMooring } from './store/modal';
 import { SetOverlayMooring } from './store/engine/overlays/actions';
 
@@ -20,8 +17,6 @@ const store = configureStore();
 if (process.env.NODE_ENV !== 'production') {
   window.store = store;
   window.dispatch = store.dispatch;
-  window.csrfetch = csrfetch;
-  window.findCookie = findCookie;
 }
 
 function Root () {
@@ -36,7 +31,6 @@ function Root () {
 
   return (
     <BrowserRouter>
-      <Errors />
       <App />
       <Modal />
       <div ref={modalMooringRef} id='modal' />

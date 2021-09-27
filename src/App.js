@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
 
-const Home = lazy(() => import('./components/Home'));
 const Scene = lazy(() => import('./components/Scene'));
 const Canvas = lazy(() => import('./components/Canvas'));
 const Camera = lazy(() => import('./components/Camera'));
@@ -18,21 +17,9 @@ const Rotate = lazy(() => import('./components/Geometries/Animations/Rotate'));
 // import { RestoreUser } from './store/session';
 
 export default function App () {
-  // const dispatch = useDispatch();
-
-  // const loaded = useSelector(state => state.session.loaded);
-
-  // useEffect(() => {
-  //   csrfetch.captureDispatch(dispatch);
-  //   csrfetch.restoreCSRF();
-  //   dispatch(RestoreUser());
-  // }, [dispatch]);
-
-  // ! RESTORE "loaded &&"
-
   return (
     <Switch>
-      <Route exact path='/stages/0/'>
+      <Route exact path='/'>
         <Suspense fallback={<h1 className='loading'>Loading Main Engine...</h1>}>
           <Engine>
             <Suspense fallback={<h1 className='loading'>Loading Camera and Scene Management...</h1>}>
@@ -123,11 +110,6 @@ export default function App () {
               <Canvas />
             </Suspense>
           </Engine>
-        </Suspense>
-      </Route>
-      <Route exacth path='/'>
-        <Suspense fallback={<h1 className='loading'>Loading...</h1>}>
-          <Home />
         </Suspense>
       </Route>
     </Switch>

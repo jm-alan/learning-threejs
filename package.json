@@ -1,24 +1,51 @@
 {
-  "name": "learning-threejs",
-  "version": "1.0.0",
-  "engines": {
-    "node": ">=16.x"
+  "name": "react-starter",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/eslint-parser": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "cacache": "^15.2.0",
+    "css": "https://github.com/jm-alan/css-compat.git",
+    "eslint-config-react-app": "https://github.com/jm-alan/eslint-config-react-app-compat.git",
+    "normalize-url": "https://github.com/jm-alan/normalize-url-compat.git",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.1.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "snapdragon": "https://github.com/jm-alan/snapdragon-compat.git",
+    "source-map-resolve": "^0.6.0",
+    "three": "^0.132.2",
+    "webpack-log": "https://github.com/jm-alan/webpack-log-compat",
+    "workbox-build": "https://github.com/jm-alan/workbox-build-compat.git"
   },
-  "description": "Barebones full stack webapp starter with 0 frotnend vulnerabilities as of July 2021. React/Redux/Express/Sequelize",
-  "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "npm run build --prefix webapp",
-    "install": "npm --prefix backend install backend && npm --prefix webapp install webapp",
-    "sequelize": "npm run --prefix backend sequelize",
-    "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start --prefix backend"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
     "rules": {
-      "no-extend-native": "off"
+      "default-param-last": "off"
     }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:5000"
 }

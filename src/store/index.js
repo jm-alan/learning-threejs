@@ -3,15 +3,11 @@ import thunk from 'redux-thunk';
 
 import modal from './modal';
 import UX from './UX';
-import session from './session';
-import errors from './errors';
 import engine from './engine';
 
 const rootReducer = combineReducers({
-  session,
   UX,
   modal,
-  errors,
   engine
 });
 
