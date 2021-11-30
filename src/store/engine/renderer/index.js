@@ -9,7 +9,7 @@ export default function reducer (
     paused: false,
     changed: false
   },
-  { type, object, name, action }
+  { type }
 ) {
   switch (type) {
     case types.READY:
